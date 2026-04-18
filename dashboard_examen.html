@@ -1,0 +1,2099 @@
+<!doctype html>
+<html lang="nl" class="scroll-smooth">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>HAVO Economie · Examen Dashboard</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          consumer: { 50:'#eff6ff', 100:'#dbeafe', 300:'#93c5fd', 500:'#3b82f6', 600:'#2563eb', 700:'#1d4ed8' },
+          producer:  { 50:'#f0fdf4', 100:'#dcfce7', 300:'#86efac', 500:'#22c55e', 600:'#16a34a', 700:'#15803d' },
+          govmarket: { 50:'#faf5ff', 100:'#f3e8ff', 300:'#d8b4fe', 500:'#a855f7', 600:'#9333ea', 700:'#7e22ce' },
+        }
+      }
+    }
+  }
+</script>
+<style>
+  /* ---- base ---- */
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; }
+  :target { scroll-margin-top: 70px; }
+
+  /* ---- custom scrollbar ---- */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: #f1f5f9; }
+  ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+
+  /* ---- Matrix cells ---- */
+  .nash-cell { background: #fef9c3 !important; border: 2px solid #eab308 !important; }
+  .br-row { text-decoration: underline; text-underline-offset: 3px; color: #16a34a; font-weight: 700; }
+  .br-col { text-decoration: underline double; text-underline-offset: 3px; color: #2563eb; font-weight: 700; }
+
+  /* ---- perspective badge ---- */
+  .badge-consumer  { background: #dbeafe; color: #1d4ed8; border: 1px solid #93c5fd; }
+  .badge-producer  { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
+  .badge-govmarket { background: #f3e8ff; color: #7e22ce; border: 1px solid #d8b4fe; }
+
+  /* ---- card accent borders ---- */
+  .card-consumer  { border-left: 4px solid #3b82f6; }
+  .card-producer  { border-left: 4px solid #22c55e; }
+  .card-govmarket { border-left: 4px solid #a855f7; }
+
+  /* ---- checklist ---- */
+  .check-item input:checked + label { text-decoration: line-through; color: #94a3b8; }
+  .check-item input:checked ~ .check-icon { background: #22c55e; border-color: #22c55e; }
+  .check-item input:checked ~ .check-icon::after { content: "✓"; color: white; font-size: 10px; display: block; text-align: center; line-height: 16px; }
+
+  /* ---- tooltip ---- */
+  .tooltip-trigger { cursor: pointer; border-bottom: 1px dashed #94a3b8; position: relative; }
+  .tooltip-trigger:hover .tooltip-box { display: block; }
+  .tooltip-box { display: none; position: absolute; bottom: 125%; left: 50%; transform: translateX(-50%); z-index: 50; width: 220px; background: #1e293b; color: #f1f5f9; font-size: 11px; border-radius: 8px; padding: 8px 10px; line-height: 1.5; box-shadow: 0 4px 20px rgba(0,0,0,.25); }
+  .tooltip-box::after { content: ""; position: absolute; top: 100%; left: 50%; margin-left: -5px; border: 5px solid transparent; border-top-color: #1e293b; }
+
+  /* ---- nav active ---- */
+  .nav-link.active { background: #e0e7ff; color: #4338ca; font-weight: 600; }
+
+  /* ---- logic box ---- */
+  .logic-box { background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); border-left: 3px solid #6366f1; }
+
+  /* ---- formula card ---- */
+  .formula { background: linear-gradient(135deg, #faf5ff, #f5f3ff); border: 1px solid #c4b5fd; }
+
+  /* ---- progress bar ---- */
+  .progress-bar-inner { transition: width .5s cubic-bezier(.16,1,.3,1); }
+
+  /* ---- collapsible ---- */
+  details summary { cursor: pointer; list-style: none; }
+  details summary::-webkit-details-marker { display: none; }
+  details[open] .chevron { transform: rotate(180deg); }
+  .chevron { transition: transform .25s ease; display: inline-block; }
+
+  /* ---- sticky nav backdrop ---- */
+  nav { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+
+  /* ---- examen accordion ---- */
+  .exam-card { background:#fff; border:1px solid #e2e8f0; border-radius:14px; overflow:hidden; box-shadow:0 1px 2px rgba(15,23,42,.03); transition:border-color .2s, box-shadow .2s; }
+  .exam-card:hover { border-color:#c7d2fe; box-shadow:0 4px 12px rgba(99,102,241,.08); }
+  .exam-card > summary { padding:12px 14px; display:flex; align-items:flex-start; gap:10px; flex-wrap:wrap; }
+  .exam-card[open] > summary { border-bottom:1px solid #eef2f7; background:#f8fafc; }
+  .exam-year { font-size:10px; font-weight:700; letter-spacing:.04em; padding:2px 7px; border-radius:999px; text-transform:uppercase; white-space:nowrap; }
+  .exam-year-2023 { background:#ecfeff; color:#0e7490; border:1px solid #a5f3fc; }
+  .exam-year-2024 { background:#eef2ff; color:#4338ca; border:1px solid #c7d2fe; }
+  .exam-year-2025 { background:#fef3c7; color:#b45309; border:1px solid #fcd34d; }
+  .exam-pts { font-size:10px; font-weight:700; color:#15803d; background:#dcfce7; border:1px solid #86efac; padding:2px 7px; border-radius:999px; white-space:nowrap; }
+  .exam-body { padding:14px; display:flex; flex-direction:column; gap:12px; }
+  .exam-context { font-size:12px; color:#475569; background:#f8fafc; border-left:3px solid #cbd5e1; padding:8px 10px; border-radius:6px; line-height:1.55; }
+  .exam-ask { font-size:13px; color:#0f172a; font-weight:500; line-height:1.55; }
+  .exam-reveal-btn { background:#4338ca; color:#fff; font-size:11px; font-weight:600; padding:6px 12px; border-radius:999px; cursor:pointer; border:0; align-self:flex-start; transition:background .15s; }
+  .exam-reveal-btn:hover { background:#3730a3; }
+  .exam-reveal-btn[aria-expanded="true"] { background:#475569; }
+  .exam-model { background:linear-gradient(135deg,#f0fdf4 0%,#ecfdf5 100%); border:1px solid #a7f3d0; border-radius:10px; padding:12px 14px; font-size:12px; }
+  .exam-model-title { font-weight:700; color:#065f46; font-size:11px; text-transform:uppercase; letter-spacing:.05em; margin-bottom:8px; }
+  .exam-model-step { display:flex; align-items:baseline; gap:8px; padding:4px 0; border-bottom:1px dashed #d1fae5; color:#14532d; line-height:1.55; }
+  .exam-model-step:last-child { border-bottom:0; }
+  .exam-model-pts { font-size:10px; font-weight:700; color:#047857; background:#d1fae5; padding:1px 6px; border-radius:4px; white-space:nowrap; }
+  .exam-note { font-size:11px; color:#92400e; background:#fef3c7; border-left:3px solid #f59e0b; padding:6px 10px; border-radius:4px; }
+
+  /* ---- search highlight ---- */
+  .search-hidden { display:none !important; }
+  mark.hit { background:#fde68a; padding:0 2px; border-radius:3px; }
+
+  @media print {
+    nav, .no-print { display: none !important; }
+    .page-break { page-break-before: always; }
+    .exam-card > summary { display:none; }
+    .exam-body, .exam-model { display:block !important; height:auto !important; }
+  }
+</style>
+</head>
+<body class="bg-slate-50 text-slate-800 text-sm">
+
+<!-- ============================================================
+     TOP NAV
+     ============================================================ -->
+<nav class="sticky top-0 z-50 bg-white/90 border-b border-slate-200 shadow-sm">
+  <div class="max-w-7xl mx-auto px-4 py-2 flex items-center gap-3">
+    <span class="text-base font-bold text-indigo-700 whitespace-nowrap">📚 Economie</span>
+
+    <div class="flex items-center gap-1 overflow-x-auto flex-nowrap flex-1 min-w-0 scrollbar-thin">
+      <a href="#h1" class="nav-link rounded-full px-3 py-1 text-xs font-medium text-slate-600 hover:bg-slate-100 whitespace-nowrap">H1</a>
+      <a href="#p11" class="nav-link rounded-full px-2.5 py-1 text-xs font-medium text-slate-600 hover:bg-slate-100 whitespace-nowrap">§1.1</a>
+      <a href="#p12" class="nav-link rounded-full px-2.5 py-1 text-xs font-medium text-slate-600 hover:bg-slate-100 whitespace-nowrap">§1.2</a>
+      <a href="#p13" class="nav-link rounded-full px-2.5 py-1 text-xs font-medium text-slate-600 hover:bg-slate-100 whitespace-nowrap">§1.3</a>
+      <a href="#p14" class="nav-link rounded-full px-2.5 py-1 text-xs font-medium text-slate-600 hover:bg-slate-100 whitespace-nowrap">§1.4</a>
+      <a href="#p15" class="nav-link rounded-full px-2.5 py-1 text-xs font-medium text-slate-600 hover:bg-slate-100 whitespace-nowrap">§1.5</a>
+      <span class="w-px h-5 bg-slate-200 mx-0.5"></span>
+      <a href="#h2" class="nav-link rounded-full px-3 py-1 text-xs font-medium text-slate-600 hover:bg-slate-100 whitespace-nowrap">H2</a>
+      <a href="#p21" class="nav-link rounded-full px-2.5 py-1 text-xs font-medium text-slate-600 hover:bg-slate-100 whitespace-nowrap">§2.1</a>
+      <a href="#p22" class="nav-link rounded-full px-2.5 py-1 text-xs font-medium text-slate-600 hover:bg-slate-100 whitespace-nowrap">§2.2</a>
+      <a href="#p23" class="nav-link rounded-full px-2.5 py-1 text-xs font-medium text-slate-600 hover:bg-slate-100 whitespace-nowrap">§2.3</a>
+      <span class="w-px h-5 bg-slate-200 mx-0.5"></span>
+      <a href="#overig" class="nav-link rounded-full px-3 py-1 text-xs font-semibold text-amber-700 bg-amber-50 hover:bg-amber-100 whitespace-nowrap">🗂️ Overig</a>
+    </div>
+
+    <div class="flex items-center gap-2 whitespace-nowrap no-print">
+      <div class="relative hidden md:block">
+        <input id="search-input" type="search" placeholder="Zoeken in theorie &amp; examens…" class="pl-7 pr-2 py-1 text-xs w-56 rounded-full border border-slate-300 bg-slate-50 focus:bg-white focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100"/>
+        <span class="absolute left-2 top-1/2 -translate-y-1/2 text-slate-400 text-xs">🔍</span>
+      </div>
+      <div class="hidden sm:flex items-center gap-2">
+        <span class="text-xs text-slate-500" id="prog-label">0 / 24</span>
+        <div class="w-20 h-2 bg-slate-200 rounded-full overflow-hidden">
+          <div class="progress-bar-inner h-full bg-indigo-500 rounded-full" id="prog-bar" style="width:0%"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- mobile-only search -->
+  <div class="md:hidden border-t border-slate-100 px-4 py-2 no-print">
+    <div class="relative">
+      <input id="search-input-mobile" type="search" placeholder="Zoeken in theorie &amp; examens…" class="w-full pl-7 pr-2 py-1 text-xs rounded-full border border-slate-300 bg-slate-50 focus:bg-white focus:border-indigo-400 focus:outline-none"/>
+      <span class="absolute left-2 top-1/2 -translate-y-1/2 text-slate-400 text-xs">🔍</span>
+    </div>
+  </div>
+
+  <div id="search-status" class="hidden px-4 py-1 text-[11px] text-center text-indigo-600 bg-indigo-50 border-t border-indigo-100"></div>
+</nav>
+
+<!-- hero -->
+<header class="bg-gradient-to-br from-indigo-700 via-violet-600 to-purple-700 text-white py-12 px-4" id="top">
+  <div class="max-w-4xl mx-auto text-center">
+    <div class="text-4xl mb-3">📊</div>
+    <h1 class="text-3xl md:text-4xl font-extrabold mb-2 tracking-tight">Examen Dashboard</h1>
+    <p class="text-indigo-200 text-base max-w-xl mx-auto">Hoofdstuk 1 · Samenwerken is een spel &nbsp;·&nbsp; Hoofdstuk 2 · Risico &amp; Informatie</p>
+    <div class="flex gap-2 justify-center mt-4 flex-wrap text-xs">
+      <span class="badge-consumer rounded-full px-3 py-1">👤 Consument</span>
+      <span class="badge-producer rounded-full px-3 py-1">🏭 Producent</span>
+      <span class="badge-govmarket rounded-full px-3 py-1">🏛️ Markt / Overheid</span>
+    </div>
+  </div>
+</header>
+
+<main class="max-w-6xl mx-auto px-4 py-8 space-y-16">
+
+<!-- ================================================================
+     HOOFDSTUK 1
+     ================================================================ -->
+<div id="h1">
+  <div class="flex items-center gap-3 mb-6">
+    <div class="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white text-lg">🎲</div>
+    <div>
+      <h2 class="text-2xl font-extrabold text-slate-900">Hoofdstuk 1 — Samenwerken is een spel</h2>
+      <p class="text-slate-500 text-xs mt-0.5">Paragraaf 1.1 t/m 1.5 · Speltheorie, prijzenoorlog, onderhandelen, externe effecten, EU</p>
+    </div>
+  </div>
+
+  <!-- ---- PARAGRAAF 1.1 ---- -->
+  <section id="p11" class="space-y-6">
+    <div class="flex items-center gap-2">
+      <span class="bg-indigo-100 text-indigo-700 font-bold rounded-lg px-3 py-1 text-sm">§ 1.1</span>
+      <h3 class="text-xl font-bold text-slate-800">Speltheorie</h3>
+    </div>
+
+    <!-- leerdoelen -->
+    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
+      <h4 class="font-bold text-slate-700 mb-3 flex items-center gap-2">
+        <svg class="w-4 h-4 text-indigo-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        Leerdoelen — vink af als je het snapt
+      </h4>
+      <div class="space-y-2" id="goals-11">
+        <div class="check-item flex items-center gap-3">
+          <input type="checkbox" id="g11-1" class="sr-only" onchange="updateProgress()">
+          <div class="check-icon w-4 h-4 rounded border-2 border-slate-300 flex-shrink-0 cursor-pointer" onclick="document.getElementById('g11-1').click()"></div>
+          <label for="g11-1" class="cursor-pointer text-slate-700">Ik kan uitleggen wat <strong>speltheorie</strong> is en de 3 dimensies benoemen</label>
+        </div>
+        <div class="check-item flex items-center gap-3">
+          <input type="checkbox" id="g11-2" class="sr-only" onchange="updateProgress()">
+          <div class="check-icon w-4 h-4 rounded border-2 border-slate-300 flex-shrink-0 cursor-pointer" onclick="document.getElementById('g11-2').click()"></div>
+          <label for="g11-2" class="cursor-pointer text-slate-700">Ik kan een <strong>opbrengstenmatrix</strong> lezen en de best-response-methode toepassen</label>
+        </div>
+        <div class="check-item flex items-center gap-3">
+          <input type="checkbox" id="g11-3" class="sr-only" onchange="updateProgress()">
+          <div class="check-icon w-4 h-4 rounded border-2 border-slate-300 flex-shrink-0 cursor-pointer" onclick="document.getElementById('g11-3').click()"></div>
+          <label for="g11-3" class="cursor-pointer text-slate-700">Ik kan een <strong>Nash-evenwicht</strong> aanwijzen en uitleggen</label>
+        </div>
+        <div class="check-item flex items-center gap-3">
+          <input type="checkbox" id="g11-4" class="sr-only" onchange="updateProgress()">
+          <div class="check-icon w-4 h-4 rounded border-2 border-slate-300 flex-shrink-0 cursor-pointer" onclick="document.getElementById('g11-4').click()"></div>
+          <label for="g11-4" class="cursor-pointer text-slate-700">Ik kan de 7 voorwaarden van een <strong>gevangenendilemma</strong> opnoemen</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3 perspectieven -->
+    <div class="grid md:grid-cols-3 gap-4">
+      <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-4 card-consumer">
+        <span class="badge-consumer rounded-full text-xs px-2 py-0.5 font-semibold">👤 Consument</span>
+        <p class="mt-2 text-slate-700 text-xs leading-relaxed">Mijn keuze (kopen/wegblijven) hangt af van wat anderen doen. Bij een veiling of onderhandeling ben ik medespeler. Mijn nut hangt af van de uitkomst van het spel.</p>
+      </div>
+      <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-4 card-producer">
+        <span class="badge-producer rounded-full text-xs px-2 py-0.5 font-semibold">🏭 Producent</span>
+        <p class="mt-2 text-slate-700 text-xs leading-relaxed">Ik kies een strategie (prijs, kwaliteit) met de reactie van mijn concurrent in gedachten. De opbrengstenmatrix laat zien wat elke combinatie van keuzes oplevert.</p>
+      </div>
+      <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-4 card-govmarket">
+        <span class="badge-govmarket rounded-full text-xs px-2 py-0.5 font-semibold">🏛️ Markt / Overheid</span>
+        <p class="mt-2 text-slate-700 text-xs leading-relaxed">Markten kunnen vastlopen in een gevangenendilemma. De overheid kan via regels (kartelverbod, belasting) het collectieve belang boven het individuele belang stellen.</p>
+      </div>
+    </div>
+
+    <!-- 3 dimensies tabel -->
+    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
+      <h4 class="font-bold text-slate-700 mb-3">🗂 De 3 dimensies van een spel</h4>
+      <div class="overflow-x-auto">
+        <table class="w-full text-xs border-collapse">
+          <thead>
+            <tr class="bg-indigo-50">
+              <th class="p-2 text-left text-indigo-700 border border-indigo-100 rounded-tl-lg">Dimensie</th>
+              <th class="p-2 text-left text-indigo-700 border border-indigo-100">Type A</th>
+              <th class="p-2 text-left text-indigo-700 border border-indigo-100 rounded-tr-lg">Type B</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="hover:bg-slate-50"><td class="p-2 font-semibold border border-slate-100">⏱ Tijd</td><td class="p-2 border border-slate-100"><strong>Simultaan</strong> — tegelijk beslissen</td><td class="p-2 border border-slate-100"><strong>Sequentieel</strong> — om de beurt</td></tr>
+            <tr class="hover:bg-slate-50"><td class="p-2 font-semibold border border-slate-100">🔁 Herhaling</td><td class="p-2 border border-slate-100"><strong>Eenmalig</strong> — één ronde</td><td class="p-2 border border-slate-100"><strong>Herhaald</strong> — meerdere rondes</td></tr>
+            <tr class="hover:bg-slate-50"><td class="p-2 font-semibold border border-slate-100">🤝 Samenwerking</td><td class="p-2 border border-slate-100"><strong>Coöperatief</strong> — afstemmen</td><td class="p-2 border border-slate-100"><strong>Niet-coöperatief</strong> — eigen belang</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="text-slate-500 text-xs mt-2 italic">Ezelsbruggetje: "Tegelijk of om de beurt? Eén keer of vaker? Samen of solo?"</p>
+    </div>
+
+    <!-- pay-off matrix + best response -->
+    <div class="grid md:grid-cols-2 gap-4">
+      <!-- Bibi/Stefan matrix -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
+        <h4 class="font-bold text-slate-700 mb-1">📊 Opbrengstenmatrix · Bibi vs. Stefan</h4>
+        <p class="text-xs text-slate-500 mb-3">Trouwfoto's. <span class="br-row">Groen onderstreept</span> = best response rijspeler (Bibi). <span class="br-col">Blauw</span> = kolomspeler (Stefan). Geel = Nash.</p>
+        <div class="overflow-x-auto">
+          <table class="w-full text-xs text-center border-collapse">
+            <thead>
+              <tr><th class="p-2 border border-slate-200"></th><th class="p-2 border border-slate-200 text-indigo-700 font-bold">Stefan: Wel</th><th class="p-2 border border-slate-200 text-indigo-700 font-bold">Stefan: Geen</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="p-2 border border-slate-200 text-indigo-700 font-bold text-left">Bibi: Wel</td>
+                <td class="p-2 border border-slate-200">(–1.000 ; <span class="br-col">0</span>)</td>
+                <td class="p-2 border border-slate-200">(<span class="br-row">2.000</span> ; –500)</td>
+              </tr>
+              <tr>
+                <td class="p-2 border border-slate-200 text-indigo-700 font-bold text-left">Bibi: Geen</td>
+                <td class="p-2 border border-slate-200 nash-cell">(<span class="br-row">1.000</span> ; <span class="br-col">3.000</span>) ⭐</td>
+                <td class="p-2 border border-slate-200">(0 ; 0)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="logic-box rounded-lg p-3 mt-3 text-xs text-slate-700">
+          <strong>Stappenplan best-response:</strong><br>
+          1. Kijk per kolom: Bibi's beste getal vóór de komma. 2. Kijk per rij: Stefan's beste getal na de komma. 3. Cel met beide gearceerd = Nash (1.000 ; 3.000).
+        </div>
+      </div>
+
+      <!-- Nash + gevangenendilemma -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
+        <h4 class="font-bold text-slate-700 mb-1">🔒 Gevangenendilemma · Jesse vs. Finn</h4>
+        <p class="text-xs text-slate-500 mb-3">Jaren cel. Geel = Nash (suboptimaal voor beiden!)</p>
+        <div class="overflow-x-auto">
+          <table class="w-full text-xs text-center border-collapse">
+            <thead>
+              <tr><th class="p-2 border border-slate-200"></th><th class="p-2 border border-slate-200 text-indigo-700 font-bold">Finn: Bekennen</th><th class="p-2 border border-slate-200 text-indigo-700 font-bold">Finn: Niet</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="p-2 border border-slate-200 text-indigo-700 font-bold text-left">Jesse: Bekennen</td>
+                <td class="p-2 border border-slate-200 nash-cell">(<span class="br-row">3</span> ; <span class="br-col">3</span>) ⭐ maar suboptimaal</td>
+                <td class="p-2 border border-slate-200">(<span class="br-row">vrij</span> ; 5)</td>
+              </tr>
+              <tr>
+                <td class="p-2 border border-slate-200 text-indigo-700 font-bold text-left">Jesse: Niet</td>
+                <td class="p-2 border border-slate-200">(5 ; <span class="br-col">vrij</span>)</td>
+                <td class="p-2 border border-slate-200 bg-green-50 border-green-200">(1 ; 1) ← collectief optimum</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="logic-box rounded-lg p-3 mt-3 text-xs text-slate-700">
+          <strong>Waarom is dit een dilemma?</strong> Nash = (3;3) maar (1;1) is beter voor beide. Individueel rationeel → collectief irrationeel.
+        </div>
+      </div>
+    </div>
+
+    <!-- 7 voorwaarden PD -->
+    <details class="bg-white rounded-2xl border border-slate-200 shadow-sm">
+      <summary class="p-5 font-bold text-slate-700 flex items-center justify-between">
+        <span>📋 7 Voorwaarden gevangenendilemma — klik om uit te klappen</span>
+        <span class="chevron text-slate-400 text-lg">▾</span>
+      </summary>
+      <div class="px-5 pb-5 grid sm:grid-cols-2 gap-2">
+        <div class="flex items-start gap-2 text-xs"><span class="w-5 h-5 bg-indigo-100 text-indigo-700 rounded-full flex items-center justify-center font-bold flex-shrink-0">1</span><p>Beslissen <strong>tegelijkertijd</strong></p></div>
+        <div class="flex items-start gap-2 text-xs"><span class="w-5 h-5 bg-indigo-100 text-indigo-700 rounded-full flex items-center justify-center font-bold flex-shrink-0">2</span><p>Beslissingen <strong>onafhankelijk</strong>, uitkomst afhankelijk</p></div>
+        <div class="flex items-start gap-2 text-xs"><span class="w-5 h-5 bg-indigo-100 text-indigo-700 rounded-full flex items-center justify-center font-bold flex-shrink-0">3</span><p><strong>Eenmalige</strong> beslissing</p></div>
+        <div class="flex items-start gap-2 text-xs"><span class="w-5 h-5 bg-indigo-100 text-indigo-700 rounded-full flex items-center justify-center font-bold flex-shrink-0">4</span><p>Beide spelers hebben <strong>dezelfde informatie</strong></p></div>
+        <div class="flex items-start gap-2 text-xs"><span class="w-5 h-5 bg-indigo-100 text-indigo-700 rounded-full flex items-center justify-center font-bold flex-shrink-0">5</span><p>Iedereen kiest voor <strong>eigen belang</strong></p></div>
+        <div class="flex items-start gap-2 text-xs"><span class="w-5 h-5 bg-indigo-100 text-indigo-700 rounded-full flex items-center justify-center font-bold flex-shrink-0">6</span><p>Slechts <strong>twee alternatieven</strong> per speler</p></div>
+        <div class="flex items-start gap-2 text-xs sm:col-span-2"><span class="w-5 h-5 bg-indigo-100 text-indigo-700 rounded-full flex items-center justify-center font-bold flex-shrink-0">7</span><p>Geen <strong>overleg</strong> mogelijk</p></div>
+      </div>
+    </details>
+
+    <!-- begrippen strip -->
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+      <div class="bg-indigo-50 rounded-xl p-3 border border-indigo-100"><p class="font-bold text-indigo-800 text-xs">Speltheorie</p><p class="text-slate-600 text-xs mt-1">Theorie over beslissingen waarbij je rekening houdt met de keuze van anderen.</p></div>
+      <div class="bg-indigo-50 rounded-xl p-3 border border-indigo-100"><p class="font-bold text-indigo-800 text-xs">Rationeel gedrag</p><p class="text-slate-600 text-xs mt-1">Kiezen wat jou het meeste oplevert, op basis van verstand, niet emotie.</p></div>
+      <div class="bg-indigo-50 rounded-xl p-3 border border-indigo-100"><p class="font-bold text-indigo-800 text-xs">Dominante strategie</p><p class="text-slate-600 text-xs mt-1">Keuze die altijd het beste is, <em>ongeacht</em> wat de ander doet.</p></div>
+      <div class="bg-indigo-50 rounded-xl p-3 border border-indigo-100"><p class="font-bold text-indigo-800 text-xs">Nash-evenwicht</p><p class="text-slate-600 text-xs mt-1">Geen speler heeft reden om van strategie te veranderen, gegeven de keuze van de ander.</p></div>
+      <div class="bg-indigo-50 rounded-xl p-3 border border-indigo-100"><p class="font-bold text-indigo-800 text-xs">Gevangenendilemma</p><p class="text-slate-600 text-xs mt-1">Spel waarbij het Nash-evenwicht <strong>niet optimaal</strong> is voor beide spelers.</p></div>
+      <div class="bg-indigo-50 rounded-xl p-3 border border-indigo-100"><p class="font-bold text-indigo-800 text-xs">Collectief belang</p><p class="text-slate-600 text-xs mt-1">Hoogste gezamenlijke opbrengst voor alle spelers samen.</p></div>
+    </div>
+    <div class="exam-slot mt-4" data-par="1.1"></div>
+  </section>
+
+  <div class="border-t border-slate-200 my-6"></div>
+
+  <!-- ---- PARAGRAAF 1.2 ---- -->
+  <section id="p12" class="space-y-6">
+    <div class="flex items-center gap-2">
+      <span class="bg-green-100 text-green-700 font-bold rounded-lg px-3 py-1 text-sm">§ 1.2</span>
+      <h3 class="text-xl font-bold text-slate-800">Strategie in een prijzenoorlog</h3>
+    </div>
+
+    <!-- leerdoelen -->
+    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
+      <h4 class="font-bold text-slate-700 mb-3 flex items-center gap-2">
+        <svg class="w-4 h-4 text-green-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        Leerdoelen
+      </h4>
+      <div class="space-y-2">
+        <div class="check-item flex items-center gap-3"><input type="checkbox" id="g12-1" class="sr-only" onchange="updateProgress()"><div class="check-icon w-4 h-4 rounded border-2 border-slate-300 flex-shrink-0 cursor-pointer" onclick="document.getElementById('g12-1').click()"></div><label for="g12-1" class="cursor-pointer">Ik kan het verschil uitleggen tussen <strong>nul-som</strong> en <strong>niet-nul-som</strong></label></div>
+        <div class="check-item flex items-center gap-3"><input type="checkbox" id="g12-2" class="sr-only" onchange="updateProgress()"><div class="check-icon w-4 h-4 rounded border-2 border-slate-300 flex-shrink-0 cursor-pointer" onclick="document.getElementById('g12-2').click()"></div><label for="g12-2" class="cursor-pointer">Ik kan uitleggen waarom een <strong>prijzenoorlog</strong> een gevangenendilemma is</label></div>
+        <div class="check-item flex items-center gap-3"><input type="checkbox" id="g12-3" class="sr-only" onchange="updateProgress()"><div class="check-icon w-4 h-4 rounded border-2 border-slate-300 flex-shrink-0 cursor-pointer" onclick="document.getElementById('g12-3').click()"></div><label for="g12-3" class="cursor-pointer">Ik kan <strong>oligopolie</strong> herkennen en 2 kenmerken benoemen</label></div>
+      </div>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-4">
+      <!-- nul-som tabel -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
+        <h4 class="font-bold text-slate-700 mb-3">⚖️ Nul-som vs. Niet-nul-som</h4>
+        <table class="w-full text-xs border-collapse">
+          <thead><tr class="bg-green-50"><th class="p-2 border border-green-100 text-left text-green-700">Type spel</th><th class="p-2 border border-green-100 text-green-700">Kenmerk</th><th class="p-2 border border-green-100 text-green-700">Voorbeeld</th></tr></thead>
+          <tbody>
+            <tr class="hover:bg-slate-50"><td class="p-2 border border-slate-100 font-semibold">Nul-som</td><td class="p-2 border border-slate-100">Wat de één wint, verliest de ander</td><td class="p-2 border border-slate-100">Schaken, poker</td></tr>
+            <tr class="hover:bg-slate-50"><td class="p-2 border border-slate-100 font-semibold">Niet-nul-som</td><td class="p-2 border border-slate-100">Beiden kunnen winnen of verliezen</td><td class="p-2 border border-slate-100">Gevangenendilemma, prijzenoorlog</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- oligopolie kenmerken -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 card-producer">
+        <span class="badge-producer rounded-full text-xs px-2 py-0.5 font-semibold">🏭 Producent</span>
+        <h4 class="font-bold text-slate-700 mt-2 mb-2">🏢 Oligopolie — 3 kenmerken (examen!)</h4>
+        <div class="space-y-2 text-xs">
+          <div class="flex items-start gap-2"><span class="w-5 h-5 bg-green-100 text-green-700 rounded-full flex items-center justify-center font-bold flex-shrink-0 text-xs">1</span><p><strong>Beperkt aantal aanbieders</strong> domineren de markt.</p></div>
+          <div class="flex items-start gap-2"><span class="w-5 h-5 bg-green-100 text-green-700 rounded-full flex items-center justify-center font-bold flex-shrink-0 text-xs">2</span><p><strong>Toetredingsbarrières</strong> maken het moeilijk voor nieuwe bedrijven.</p></div>
+          <div class="flex items-start gap-2"><span class="w-5 h-5 bg-green-100 text-green-700 rounded-full flex items-center justify-center font-bold flex-shrink-0 text-xs">3</span><p><strong>Marktmacht</strong>: spelers kunnen de prijs beïnvloeden.</p></div>
+        </div>
+        <p class="text-xs text-slate-500 mt-3 italic">Voorbeelden: telecom, supermarkten, zorgverzekeraars, oliemarkt.</p>
+      </div>
+    </div>
+
+    <!-- prijzenoorlog SVG flowchart -->
+    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
+      <h4 class="font-bold text-slate-700 mb-3">📉 Prijzenoorlog — causale keten</h4>
+      <div class="overflow-x-auto">
+        <svg viewBox="0 0 760 90" class="w-full max-w-2xl mx-auto" xmlns="http://www.w3.org/2000/svg" style="min-width:520px">
+          <!-- boxes -->
+          <rect x="0"   y="20" width="130" height="50" rx="10" fill="#dcfce7" stroke="#86efac" stroke-width="1.5"/>
+          <rect x="160" y="20" width="130" height="50" rx="10" fill="#fef9c3" stroke="#fde047" stroke-width="1.5"/>
+          <rect x="320" y="20" width="130" height="50" rx="10" fill="#fee2e2" stroke="#fca5a5" stroke-width="1.5"/>
+          <rect x="480" y="20" width="130" height="50" rx="10" fill="#fce7f3" stroke="#f9a8d4" stroke-width="1.5"/>
+          <rect x="640" y="20" width="110" height="50" rx="10" fill="#e0e7ff" stroke="#a5b4fc" stroke-width="1.5"/>
+          <!-- arrows -->
+          <line x1="130" y1="45" x2="158" y2="45" stroke="#94a3b8" stroke-width="2" marker-end="url(#arr)"/>
+          <line x1="290" y1="45" x2="318" y2="45" stroke="#94a3b8" stroke-width="2" marker-end="url(#arr)"/>
+          <line x1="450" y1="45" x2="478" y2="45" stroke="#94a3b8" stroke-width="2" marker-end="url(#arr)"/>
+          <line x1="610" y1="45" x2="638" y2="45" stroke="#94a3b8" stroke-width="2" marker-end="url(#arr)"/>
+          <defs><marker id="arr" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="#94a3b8"/></marker></defs>
+          <!-- labels -->
+          <text x="65"  y="42" text-anchor="middle" font-size="9" font-weight="600" fill="#15803d">Bedrijf A</text>
+          <text x="65"  y="55" text-anchor="middle" font-size="9" fill="#15803d">verlaagt prijs</text>
+          <text x="225" y="42" text-anchor="middle" font-size="9" font-weight="600" fill="#92400e">Bedrijf B reageert:</text>
+          <text x="225" y="55" text-anchor="middle" font-size="9" fill="#92400e">ook verlagen</text>
+          <text x="385" y="42" text-anchor="middle" font-size="9" font-weight="600" fill="#b91c1c">Neerwaartse</text>
+          <text x="385" y="55" text-anchor="middle" font-size="9" fill="#b91c1c">prijsspiraal</text>
+          <text x="545" y="42" text-anchor="middle" font-size="9" font-weight="600" fill="#be185d">Winstmarges</text>
+          <text x="545" y="55" text-anchor="middle" font-size="9" fill="#be185d">dalen voor allen</text>
+          <text x="695" y="42" text-anchor="middle" font-size="9" font-weight="600" fill="#3730a3">Gevangen-</text>
+          <text x="695" y="55" text-anchor="middle" font-size="9" fill="#3730a3">dilemma!</text>
+        </svg>
+      </div>
+      <div class="logic-box rounded-lg p-3 mt-2 text-xs text-slate-700">
+        <strong>Let op:</strong> Prijzenoorlog is <em>toegestaan</em>. Prijsafspraken tussen concurrenten zijn <strong>verboden</strong> (Mededingingswet / kartelverbod).
+      </div>
+    </div>
+
+    <!-- begrippen -->
+    <div class="grid sm:grid-cols-2 gap-3">
+      <div class="bg-green-50 rounded-xl p-3 border border-green-100"><p class="font-bold text-green-800 text-xs">Prijzenoorlog</p><p class="text-slate-600 text-xs mt-1">Situatie waarbij concurrenten elkaar bestrijden via prijsverlagingen om marktaandeel te veroveren.</p></div>
+      <div class="bg-green-50 rounded-xl p-3 border border-green-100"><p class="font-bold text-green-800 text-xs">Oligopolie</p><p class="text-slate-600 text-xs mt-1">Markt met slechts een paar grote aanbieders (telecom, supermarkten, olie, zorgverzekeraars).</p></div>
+    </div>
+    <div class="exam-slot mt-4" data-par="1.2"></div>
+  </section>
+
+  <div class="border-t border-slate-200 my-6"></div>
+
+  <!-- ---- PARAGRAAF 1.3 ---- -->
+  <section id="p13" class="space-y-6">
+    <div class="flex items-center gap-2">
+      <span class="bg-amber-100 text-amber-700 font-bold rounded-lg px-3 py-1 text-sm">§ 1.3</span>
+      <h3 class="text-xl font-bold text-slate-800">Onderhandelen en samenwerken</h3>
+    </div>
+
+    <!-- leerdoelen -->
+    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
+      <h4 class="font-bold text-slate-700 mb-3 flex items-center gap-2">
+        <svg class="w-4 h-4 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        Leerdoelen
+      </h4>
+      <div class="space-y-2">
+        <div class="check-item flex items-center gap-3"><input type="checkbox" id="g13-1" class="sr-only" onchange="updateProgress()"><div class="check-icon w-4 h-4 rounded border-2 border-slate-300 flex-shrink-0 cursor-pointer" onclick="document.getElementById('g13-1').click()"></div><label for="g13-1" class="cursor-pointer">Ik kan het <strong>ultimatumspel</strong> uitleggen en een minimaal bedrag bepalen</label></div>
+        <div class="check-item flex items-center gap-3"><input type="checkbox" id="g13-2" class="sr-only" onchange="updateProgress()"><div class="check-icon w-4 h-4 rounded border-2 border-slate-300 flex-shrink-0 cursor-pointer" onclick="document.getElementById('g13-2').click()"></div><label for="g13-2" class="cursor-pointer">Ik kan een <strong>spelboom</strong> tekenen en backwards induction toepassen</label></div>
+        <div class="check-item flex items-center gap-3"><input type="checkbox" id="g13-3" class="sr-only" onchange="updateProgress()"><div class="check-icon w-4 h-4 rounded border-2 border-slate-300 flex-shrink-0 cursor-pointer" onclick="document.getElementById('g13-3').click()"></div><label for="g13-3" class="cursor-pointer">Ik weet wat <strong>verzonken kosten</strong> zijn en waarom ze géén rol mogen spelen</label></div>
+        <div class="check-item flex items-center gap-3"><input type="checkbox" id="g13-4" class="sr-only" onchange="updateProgress()"><div class="check-icon w-4 h-4 rounded border-2 border-slate-300 flex-shrink-0 cursor-pointer" onclick="document.getElementById('g13-4').click()"></div><label for="g13-4" class="cursor-pointer">Ik weet hoe <strong>herhaald spel</strong> en <strong>sociale normen</strong> gedrag beïnvloeden</label></div>
+      </div>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-4">
+      <!-- ultimatumspel card -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
+        <h4 class="font-bold text-slate-700 mb-2">🤝 Ultimatumspel</h4>
+        <ul class="text-xs text-slate-700 space-y-1 list-disc list-inside">
+          <li>Speler 1 doet een voorstel. Speler 2 accepteert of weigert.</li>
+          <li>Bij weigering: <strong>beiden</strong> krijgen niets.</li>
+          <li>Puur rationeel: speler 2 accepteert elk bedrag > 0.</li>
+          <li>In de praktijk: rechtvaardigheidsgevoel telt.</li>
+        </ul>
+        <div class="formula rounded-lg p-3 mt-3 text-xs">
+          <strong>Examenformule (minimum acceptatie):</strong><br>
+          Speler 2 accepteert bedrag ≥ eigen startkosten.<br>
+          <span class="text-purple-700 font-bold">Minimum = startkosten (of startkosten + €1)</span>
+        </div>
+        <div class="logic-box rounded-lg p-3 mt-2 text-xs">
+          <strong>Herhaald spel?</strong> Dan biedt speler 1 <em>hoger</em>, want vertrouwen voor de toekomst telt mee (reputatie-effect).
+        </div>
+      </div>
+
+      <!-- spelboom SVG -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
+        <h4 class="font-bold text-slate-700 mb-2">🌳 Spelboom — Unilever vs. Nestlé</h4>
+        <p class="text-xs text-slate-500 mb-2">Backwards induction: redeneer terug van de uitkomsten naar de eerste keuze.</p>
+        <svg viewBox="0 0 340 180" class="w-full" xmlns="http://www.w3.org/2000/svg">
+          <!-- Unilever node -->
+          <circle cx="60" cy="90" r="18" fill="#e0e7ff" stroke="#6366f1" stroke-width="2"/>
+          <text x="60" y="87" text-anchor="middle" font-size="8" font-weight="700" fill="#3730a3">Uni</text>
+          <text x="60" y="97" text-anchor="middle" font-size="8" fill="#3730a3">lever</text>
+          <!-- Nestlé nodes -->
+          <circle cx="180" cy="40" r="18" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+          <text x="180" y="37" text-anchor="middle" font-size="8" font-weight="700" fill="#15803d">Nestlé</text>
+          <text x="180" y="47" text-anchor="middle" font-size="8" fill="#15803d">(na ja)</text>
+          <circle cx="180" cy="140" r="18" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+          <text x="180" y="137" text-anchor="middle" font-size="8" font-weight="700" fill="#15803d">Nestlé</text>
+          <text x="180" y="147" text-anchor="middle" font-size="8" fill="#15803d">(na nee)</text>
+          <!-- outcome boxes -->
+          <rect x="275" y="14" width="60" height="26" rx="6" fill="#fef9c3" stroke="#eab308" stroke-width="1.5"/>
+          <text x="305" y="25" text-anchor="middle" font-size="9" font-weight="700" fill="#92400e">(4,5 ; 4,5)</text>
+          <text x="305" y="34" text-anchor="middle" font-size="8" fill="#6b7280">U-ja, N-ja</text>
+          <rect x="275" y="52" width="60" height="26" rx="6" fill="#e0e7ff" stroke="#6366f1" stroke-width="2"/>
+          <text x="305" y="63" text-anchor="middle" font-size="9" font-weight="700" fill="#3730a3">(6 ; 5,5) ⭐</text>
+          <text x="305" y="72" text-anchor="middle" font-size="8" fill="#6b7280">U-ja, N-nee</text>
+          <rect x="275" y="114" width="60" height="26" rx="6" fill="#e0e7ff" stroke="#6366f1" stroke-width="2"/>
+          <text x="305" y="125" text-anchor="middle" font-size="9" font-weight="700" fill="#3730a3">(5,5 ; 6)</text>
+          <text x="305" y="134" text-anchor="middle" font-size="8" fill="#6b7280">U-nee, N-ja</text>
+          <rect x="275" y="152" width="60" height="26" rx="6" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.5"/>
+          <text x="305" y="163" text-anchor="middle" font-size="9" fill="#6b7280">(5 ; 5)</text>
+          <text x="305" y="172" text-anchor="middle" font-size="8" fill="#6b7280">U-nee, N-nee</text>
+          <!-- lines -->
+          <line x1="78" y1="78" x2="162" y2="47" stroke="#94a3b8" stroke-width="1.5"/>
+          <line x1="78" y1="102" x2="162" y2="133" stroke="#94a3b8" stroke-width="1.5"/>
+          <line x1="198" y1="34" x2="274" y2="27" stroke="#94a3b8" stroke-width="1.5"/>
+          <line x1="198" y1="46" x2="274" y2="65" stroke="#94a3b8" stroke-width="1.5"/>
+          <line x1="198" y1="134" x2="274" y2="127" stroke="#94a3b8" stroke-width="1.5"/>
+          <line x1="198" y1="146" x2="274" y2="165" stroke="#94a3b8" stroke-width="1.5"/>
+          <!-- edge labels -->
+          <text x="115" y="55" font-size="8" fill="#4338ca" font-weight="600">ja (bio)</text>
+          <text x="115" y="122" font-size="8" fill="#4338ca" font-weight="600">nee</text>
+          <text x="238" y="32" font-size="7" fill="#6b7280">ja</text>
+          <text x="238" y="62" font-size="7" fill="#6b7280">nee</text>
+          <text x="238" y="124" font-size="7" fill="#6b7280">ja</text>
+          <text x="238" y="162" font-size="7" fill="#6b7280">nee</text>
+        </svg>
+        <p class="text-xs text-slate-500 mt-1">⭐ = Nash-evenwicht via backwards induction. Unilever kiest 'ja' → Nestlé kiest 'nee' → (6 ; 5,5).</p>
+      </div>
+    </div>
+
+    <!-- contract / sociale norm / zelfbinding tabel -->
+    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
+      <h4 class="font-bold text-slate-700 mb-3">🔐 Instrumenten om samenwerking te garanderen</h4>
+      <div class="overflow-x-auto">
+        <table class="w-full text-xs border-collapse">
+          <thead><tr class="bg-amber-50"><th class="p-2 border border-amber-100 text-amber-700 text-left">Instrument</th><th class="p-2 border border-amber-100 text-amber-700">Definitie</th><th class="p-2 border border-amber-100 text-amber-700">Afdwinging</th></tr></thead>
+          <tbody>
+            <tr class="hover:bg-slate-50"><td class="p-2 border border-slate-100 font-semibold">📄 Contract</td><td class="p-2 border border-slate-100">Schriftelijke afspraken met handtekening. Boete bij verbreken.</td><td class="p-2 border border-slate-100">⚖️ Rechter / wet</td></tr>
+            <tr class="hover:bg-slate-50"><td class="p-2 border border-slate-100 font-semibold">👥 Sociale norm</td><td class="p-2 border border-slate-100">Ongeschreven gedragsregels. Werkt via reputatie en gezichtsverlies.</td><td class="p-2 border border-slate-100">🗣 Sociale omgeving</td></tr>
+            <tr class="hover:bg-slate-50"><td class="p-2 border border-slate-100 font-semibold">🔒 Zelfbinding</td><td class="p-2 border border-slate-100">Keuze onomkeerbaar en geloofwaardig maken (bv. milieucertificaat, publieke CO₂-belofte).</td><td class="p-2 border border-slate-100">👁 Zichtbaarheid</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- verzonken kosten card -->
+    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 card-govmarket">
+      <span class="badge-govmarket rounded-full text-xs px-2 py-0.5 font-semibold">🏛️ Markt / Overheid</span>
+      <h4 class="font-bold text-slate-700 mt-2 mb-2">🕳️ Verzonken kosten (sunk costs)</h4>
+      <p class="text-xs text-slate-700 mb-2"><strong>Definitie:</strong> Kosten die al gemaakt zijn en <em>niet</em> terugkomen als de samenwerking stopt.</p>
+      <div class="logic-box rounded-lg p-3 text-xs">
+        <strong>Economische logica:</strong> Rationeel = kijk <em>vooruit</em>, niet achteruit. Verzonken kosten horen <strong>geen rol</strong> te spelen in toekomstige beslissingen (sunk cost fallacy).<br><br>
+        <strong>Paradox:</strong> Door hoge verzonken kosten zoeken bedrijven <em>nieuwe markten</em> om de investering terug te verdienen → productie ↑ → CO₂ kan per saldo gelijk blijven (Jevons-paradox).
+      </div>
+    </div>
+    <div class="exam-slot mt-4" data-par="1.3"></div>
+  </section>
+
+  <div class="border-t border-slate-200 my-6"></div>
+
+  <!-- ---- PARAGRAAF 1.4 ---- -->
+  <section id="p14" class="space-y-6">
+    <div class="flex items-center gap-2">
+      <span class="bg-purple-100 text-purple-700 font-bold rounded-lg px-3 py-1 text-sm">§ 1.4</span>
+      <h3 class="text-xl font-bold text-slate-800">Externe effecten &amp; collectieve goederen</h3>
+    </div>
+
+    <!-- leerdoelen -->
+    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
+      <h4 class="font-bold text-slate-700 mb-3 flex items-center gap-2">
+        <svg class="w-4 h-4 text-purple-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        Leerdoelen
+      </h4>
+      <div class="space-y-2">
+        <div class="check-item flex items-center gap-3"><input type="checkbox" id="g14-1" class="sr-only" onchange="updateProgress()"><div class="check-icon w-4 h-4 rounded border-2 border-slate-300 flex-shrink-0 cursor-pointer" onclick="document.getElementById('g14-1').click()"></div><label for="g14-1" class="cursor-pointer">Ik kan een <strong>negatief / positief extern effect</strong> herkennen en uitleggen</label></div>
+        <div class="check-item flex items-center gap-3"><input type="checkbox" id="g14-2" class="sr-only" onchange="updateProgress()"><div class="check-icon w-4 h-4 rounded border-2 border-slate-300 flex-shrink-0 cursor-pointer" onclick="document.getElementById('g14-2').click()"></div><label for="g14-2" class="cursor-pointer">Ik kan uitleggen hoe de overheid externe effecten <strong>internaliseert</strong></label></div>
+        <div class="check-item flex items-center gap-3"><input type="checkbox" id="g14-3" class="sr-only" onchange="updateProgress()"><div class="check-icon w-4 h-4 rounded border-2 border-slate-300 flex-shrink-0 cursor-pointer" onclick="document.getElementById('g14-3').click()"></div><label for="g14-3" class="cursor-pointer">Ik kan onderscheid maken tussen <strong>collectieve, quasi-collectieve en individuele goederen</strong></label></div>
+        <div class="check-item flex items-center gap-3"><input type="checkbox" id="g14-4" class="sr-only" onchange="updateProgress()"><div class="check-icon w-4 h-4 rounded border-2 border-slate-300 flex-shrink-0 cursor-pointer" onclick="document.getElementById('g14-4').click()"></div><label for="g14-4" class="cursor-pointer">Ik kan het <strong>free-rider probleem</strong> uitleggen</label></div>
+      </div>
+    </div>
+
+    <!-- extern effect flowchart -->
+    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 card-govmarket">
+      <span class="badge-govmarket rounded-full text-xs px-2 py-0.5 font-semibold">🏛️ Markt / Overheid</span>
+      <h4 class="font-bold text-slate-700 mt-2 mb-3">🌍 Van negatief extern effect naar internalisering</h4>
+      <div class="overflow-x-auto">
+        <svg viewBox="0 0 760 75" class="w-full" xmlns="http://www.w3.org/2000/svg" style="min-width:560px">
+          <defs><marker id="arr2" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="#94a3b8"/></marker></defs>
+          <rect x="0"   y="12" width="130" height="50" rx="8" fill="#fce7f3" stroke="#f9a8d4" stroke-width="1.5"/>
+          <rect x="155" y="12" width="130" height="50" rx="8" fill="#fee2e2" stroke="#fca5a5" stroke-width="1.5"/>
+          <rect x="310" y="12" width="140" height="50" rx="8" fill="#fef9c3" stroke="#fde047" stroke-width="1.5"/>
+          <rect x="475" y="12" width="130" height="50" rx="8" fill="#e0e7ff" stroke="#a5b4fc" stroke-width="1.5"/>
+          <rect x="630" y="12" width="125" height="50" rx="8" fill="#dcfce7" stroke="#86efac" stroke-width="1.5"/>
+          <line x1="130" y1="37" x2="153" y2="37" stroke="#94a3b8" stroke-width="2" marker-end="url(#arr2)"/>
+          <line x1="285" y1="37" x2="308" y2="37" stroke="#94a3b8" stroke-width="2" marker-end="url(#arr2)"/>
+          <line x1="450" y1="37" x2="473" y2="37" stroke="#94a3b8" stroke-width="2" marker-end="url(#arr2)"/>
+          <line x1="605" y1="37" x2="628" y2="37" stroke="#94a3b8" stroke-width="2" marker-end="url(#arr2)"/>
+          <text x="65"  y="34" text-anchor="middle" font-size="8.5" font-weight="600" fill="#9d174d">Productie/consumptie</text>
+          <text x="65"  y="46" text-anchor="middle" font-size="8" fill="#9d174d">bv. autorijden</text>
+          <text x="220" y="34" text-anchor="middle" font-size="8.5" font-weight="600" fill="#b91c1c">Bijkomstig gevolg</text>
+          <text x="220" y="46" text-anchor="middle" font-size="8" fill="#b91c1c">NIET in de prijs</text>
+          <text x="380" y="30" text-anchor="middle" font-size="8.5" font-weight="600" fill="#92400e">Maatschappelijke</text>
+          <text x="380" y="41" text-anchor="middle" font-size="8" fill="#92400e">kosten &gt; private</text>
+          <text x="380" y="52" text-anchor="middle" font-size="8" fill="#92400e">kosten → MARKTFALEN</text>
+          <text x="540" y="30" text-anchor="middle" font-size="8.5" font-weight="600" fill="#3730a3">Belasting / subsidie</text>
+          <text x="540" y="41" text-anchor="middle" font-size="8" fill="#3730a3">emissierechten</text>
+          <text x="540" y="52" text-anchor="middle" font-size="8" fill="#3730a3">verbod</text>
+          <text x="692" y="34" text-anchor="middle" font-size="8.5" font-weight="600" fill="#15803d">Geïnternaliseerd:</text>
+          <text x="692" y="46" text-anchor="middle" font-size="8" fill="#15803d">geen ext. effect</text>
+        </svg>
+      </div>
+      <div class="logic-box rounded-lg p-3 mt-3 text-xs text-slate-700">
+        <strong>Cruciale CV-zin:</strong> "De vervuiling <em>komt niet tot uitdrukking in de prijs</em>" → leidt tot maatschappelijke kosten. Door bijtelling/heffing betaalt de vervuiler → vervuiling wordt <strong>geïnternaliseerd</strong>.
+      </div>
+    </div>
+
+    <!-- soorten goederen tabel -->
+    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
+      <h4 class="font-bold text-slate-700 mb-3">📦 Soorten goederen</h4>
+      <div class="overflow-x-auto">
+        <table class="w-full text-xs border-collapse">
+          <thead>
+            <tr class="bg-purple-50">
+              <th class="p-2 border border-purple-100 text-purple-700 text-left">Goed</th>
+              <th class="p-2 border border-purple-100 text-purple-700">Rivaliserend?</th>
+              <th class="p-2 border border-purple-100 text-purple-700">Exclusief?</th>
+              <th class="p-2 border border-purple-100 text-purple-700 text-left">Voorbeeld</th>
+              <th class="p-2 border border-purple-100 text-purple-700 text-left">Wie betaalt?</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="hover:bg-slate-50">
+              <td class="p-2 border border-slate-100 font-bold text-green-700">Individueel goed</td>
+              <td class="p-2 border border-slate-100 text-center">✅ Ja</td>
+              <td class="p-2 border border-slate-100 text-center">✅ Ja</td>
+              <td class="p-2 border border-slate-100">Brood, kleding, auto</td>
+              <td class="p-2 border border-slate-100">🏪 Markt (prijs)</td>
+            </tr>
+            <tr class="hover:bg-slate-50 bg-purple-50/30">
+              <td class="p-2 border border-slate-100 font-bold text-purple-700">Collectief goed</td>
+              <td class="p-2 border border-slate-100 text-center">❌ Nee</td>
+              <td class="p-2 border border-slate-100 text-center">❌ Nee</td>
+              <td class="p-2 border border-slate-100">Dijken, defensie, verlichting</td>
+              <td class="p-2 border border-slate-100">🏛️ Overheid (belasting)</td>
+            </tr>
+            <tr class="hover:bg-slate-50">
+              <td class="p-2 border border-slate-100 font-bold text-amber-700">Quasi-collectief goed</td>
+              <td class="p-2 border border-slate-100 text-center">◐ Deels</td>
+              <td class="p-2 border border-slate-100 text-center">◐ Deels</td>
+              <td class="p-2 border border-slate-100">Onderwijs, zorg, OV</td>
+              <td class="p-2 border border-slate-100">🤝 Overheid + consument</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="mt-3 p-3 bg-amber-50 border border-amber-200 rounded-lg text-xs text-amber-800">
+        <strong>Free-rider / meeliftgedrag:</strong> Mensen gebruiken een collectief goed zonder te betalen. Daardoor levert de markt dit goed <em>niet</em> — de overheid moet ingrijpen via <strong>collectieve dwang</strong> (belasting).
+      </div>
+    </div>
+    <div class="exam-slot mt-4" data-par="1.4"></div>
+  </section>
+
+  <div class="border-t border-slate-200 my-6"></div>
+
+  <!-- ---- PARAGRAAF 1.5 ---- -->
+  <section id="p15" class="space-y-6">
+    <div class="flex items-center gap-2">
+      <span class="bg-teal-100 text-teal-700 font-bold rounded-lg px-3 py-1 text-sm">§ 1.5</span>
+      <h3 class="text-xl font-bold text-slate-800">Arbeidsmarkt, CAO &amp; Europese Unie</h3>
+    </div>
+
+    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
+      <h4 class="font-bold text-slate-700 mb-3 flex items-center gap-2">
+        <svg class="w-4 h-4 text-teal-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        Leerdoelen
+      </h4>
+      <div class="space-y-2">
+        <div class="check-item flex items-center gap-3"><input type="checkbox" id="g15-1" class="sr-only" onchange="updateProgress()"><div class="check-icon w-4 h-4 rounded border-2 border-slate-300 flex-shrink-0 cursor-pointer" onclick="document.getElementById('g15-1').click()"></div><label for="g15-1" class="cursor-pointer">Ik weet wat een <strong>CAO</strong> is en welke partijen het afsluiten</label></div>
+        <div class="check-item flex items-center gap-3"><input type="checkbox" id="g15-2" class="sr-only" onchange="updateProgress()"><div class="check-icon w-4 h-4 rounded border-2 border-slate-300 flex-shrink-0 cursor-pointer" onclick="document.getElementById('g15-2').click()"></div><label for="g15-2" class="cursor-pointer">Ik ken de tijdlijn van de EU en de begrippen <strong>EMU, EGKS, Brexit</strong></label></div>
+        <div class="check-item flex items-center gap-3"><input type="checkbox" id="g15-3" class="sr-only" onchange="updateProgress()"><div class="check-icon w-4 h-4 rounded border-2 border-slate-300 flex-shrink-0 cursor-pointer" onclick="document.getElementById('g15-3').click()"></div><label for="g15-3" class="cursor-pointer">Ik ken de <strong>3 P's van MVO</strong> en lineaire vs. circulaire economie</label></div>
+      </div>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-4">
+      <!-- CAO flowchart -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
+        <h4 class="font-bold text-slate-700 mb-3">👷 Van individuele werknemer naar CAO</h4>
+        <div class="space-y-2">
+          <div class="flex items-center gap-2 text-xs">
+            <div class="bg-blue-100 text-blue-700 rounded-lg px-2 py-1 text-center w-28 flex-shrink-0 font-semibold">Werknemer<br>(zwak alleen)</div>
+            <span class="text-slate-400">→</span>
+            <div class="bg-blue-200 text-blue-800 rounded-lg px-2 py-1 text-center w-28 flex-shrink-0 font-semibold">Vakbond<br>(collectief)</div>
+          </div>
+          <div class="flex items-center gap-2 text-xs">
+            <div class="bg-green-100 text-green-700 rounded-lg px-2 py-1 text-center w-28 flex-shrink-0 font-semibold">Werkgever</div>
+            <span class="text-slate-400">→</span>
+            <div class="bg-green-200 text-green-800 rounded-lg px-2 py-1 text-center w-28 flex-shrink-0 font-semibold">Werkgevers-<br>organisatie</div>
+          </div>
+          <div class="flex justify-center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><line x1="12" y1="4" x2="12" y2="20"/><polyline points="8 16 12 20 16 16"/></svg></div>
+          <div class="bg-amber-100 text-amber-800 rounded-lg px-3 py-2 text-center text-xs font-bold">CAO — collectieve arbeidsovereenkomst</div>
+          <div class="flex justify-center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><line x1="12" y1="4" x2="12" y2="20"/><polyline points="8 16 12 20 16 16"/></svg></div>
+          <div class="bg-purple-100 text-purple-800 rounded-lg px-3 py-2 text-center text-xs">Minister SZW: <strong>Algemeen Verbindend Verklaren</strong><br>→ Geldt voor ALLE werknemers in de bedrijfstak</div>
+        </div>
+        <div class="mt-3 overflow-x-auto">
+          <table class="w-full text-xs border-collapse">
+            <thead><tr class="bg-teal-50"><th class="p-1.5 border border-teal-100 text-teal-700">Soort voorwaarden</th><th class="p-1.5 border border-teal-100 text-teal-700">Inhoud</th></tr></thead>
+            <tbody>
+              <tr><td class="p-1.5 border border-slate-100 font-semibold">Primaire</td><td class="p-1.5 border border-slate-100">Loon + werktijden</td></tr>
+              <tr><td class="p-1.5 border border-slate-100 font-semibold">Secundaire</td><td class="p-1.5 border border-slate-100">Vakantie, pensioen, ziekte, opleiding</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- EU tijdlijn + MVO -->
+      <div class="space-y-4">
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
+          <h4 class="font-bold text-slate-700 mb-3">🇪🇺 EU Tijdlijn</h4>
+          <div class="relative pl-5 space-y-3">
+            <div class="absolute left-0 top-0 bottom-0 w-0.5 bg-blue-200"></div>
+            <div class="relative"><div class="absolute -left-6 w-3 h-3 rounded-full bg-blue-400 border-2 border-white mt-0.5"></div><p class="text-xs"><strong class="text-blue-700">1951</strong> — EGKS (kolen &amp; staal)</p></div>
+            <div class="relative"><div class="absolute -left-6 w-3 h-3 rounded-full bg-blue-400 border-2 border-white mt-0.5"></div><p class="text-xs"><strong class="text-blue-700">1957</strong> — Verdrag van Rome / EEG</p></div>
+            <div class="relative"><div class="absolute -left-6 w-3 h-3 rounded-full bg-blue-500 border-2 border-white mt-0.5"></div><p class="text-xs"><strong class="text-blue-700">1992</strong> — Verdrag van Maastricht / EMU</p></div>
+            <div class="relative"><div class="absolute -left-6 w-3 h-3 rounded-full bg-blue-500 border-2 border-white mt-0.5"></div><p class="text-xs"><strong class="text-blue-700">2002</strong> — Euro als contant geld</p></div>
+            <div class="relative"><div class="absolute -left-6 w-3 h-3 rounded-full bg-blue-600 border-2 border-white mt-0.5"></div><p class="text-xs"><strong class="text-blue-700">2007</strong> — Verdrag van Lissabon</p></div>
+            <div class="relative"><div class="absolute -left-6 w-3 h-3 rounded-full bg-red-400 border-2 border-white mt-0.5"></div><p class="text-xs"><strong class="text-red-700">2020</strong> — <span class="tooltip-trigger">Brexit<span class="tooltip-box">VK verlaat de EU na referendum (2016). Officieel uitgetreden op 31 jan 2020.</span></span></p></div>
+          </div>
+        </div>
+
+        <!-- MVO + 3P -->
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
+          <h4 class="font-bold text-slate-700 mb-3">♻️ MVO &amp; De 3 P's</h4>
+          <div class="grid grid-cols-3 gap-2 text-center text-xs">
+            <div class="bg-blue-50 border border-blue-200 rounded-xl p-2"><p class="text-2xl">👥</p><p class="font-bold text-blue-700">People</p><p class="text-slate-500">Mens, arbeid, mensenrechten</p></div>
+            <div class="bg-green-50 border border-green-200 rounded-xl p-2"><p class="text-2xl">🌿</p><p class="font-bold text-green-700">Planet</p><p class="text-slate-500">Milieu, CO₂, biodiversiteit</p></div>
+            <div class="bg-amber-50 border border-amber-200 rounded-xl p-2"><p class="text-2xl">💰</p><p class="font-bold text-amber-700">Profit</p><p class="text-slate-500">Winst, continuïteit</p></div>
+          </div>
+          <div class="mt-3 grid grid-cols-2 gap-2 text-xs">
+            <div class="bg-slate-100 rounded-lg p-2 text-center"><p class="font-semibold text-slate-700">Lineaire economie</p><p class="text-slate-500">Grondstof → product → 🗑️ afval</p></div>
+            <div class="bg-green-100 rounded-lg p-2 text-center"><p class="font-semibold text-green-700">Circulaire economie</p><p class="text-slate-500">Materialen hergebruikt 🔄</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="exam-slot mt-4" data-par="1.5"></div>
+  </section>
+</div>
+
+<!-- ================================================================
+     HOOFDSTUK 2
+     ================================================================ -->
+<div id="h2" class="page-break">
+  <div class="flex items-center gap-3 mb-6">
+    <div class="w-10 h-10 rounded-xl bg-rose-600 flex items-center justify-center text-white text-lg">🛡️</div>
+    <div>
+      <h2 class="text-2xl font-extrabold text-slate-900">Hoofdstuk 2 — Risico &amp; Informatie</h2>
+      <p class="text-slate-500 text-xs mt-0.5">Paragraaf 2.1 t/m 2.3 · Verzekeren, averechtse selectie, moral hazard, instrumenten</p>
+    </div>
+  </div>
+
+  <!-- ---- PARAGRAAF 2.1 ---- -->
+  <section id="p21" class="space-y-6">
+    <div class="flex items-center gap-2">
+      <span class="bg-rose-100 text-rose-700 font-bold rounded-lg px-3 py-1 text-sm">§ 2.1</span>
+      <h3 class="text-xl font-bold text-slate-800">Risico nemen of vermijden</h3>
+    </div>
+
+    <!-- leerdoelen -->
+    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
+      <h4 class="font-bold text-slate-700 mb-3 flex items-center gap-2">
+        <svg class="w-4 h-4 text-rose-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        Leerdoelen
+      </h4>
+      <div class="space-y-2">
+        <div class="check-item flex items-center gap-3"><input type="checkbox" id="g21-1" class="sr-only" onchange="updateProgress()"><div class="check-icon w-4 h-4 rounded border-2 border-slate-300 flex-shrink-0 cursor-pointer" onclick="document.getElementById('g21-1').click()"></div><label for="g21-1" class="cursor-pointer">Ik kan de <strong>risicoformule</strong> toepassen: risico = kans × gemiddelde schade</label></div>
+        <div class="check-item flex items-center gap-3"><input type="checkbox" id="g21-2" class="sr-only" onchange="updateProgress()"><div class="check-icon w-4 h-4 rounded border-2 border-slate-300 flex-shrink-0 cursor-pointer" onclick="document.getElementById('g21-2').click()"></div><label for="g21-2" class="cursor-pointer">Ik kan de <strong>minimale gemiddelde premie</strong> berekenen</label></div>
+        <div class="check-item flex items-center gap-3"><input type="checkbox" id="g21-3" class="sr-only" onchange="updateProgress()"><div class="check-icon w-4 h-4 rounded border-2 border-slate-300 flex-shrink-0 cursor-pointer" onclick="document.getElementById('g21-3').click()"></div><label for="g21-3" class="cursor-pointer">Ik snap wat <strong>verplichte solidariteit</strong> is en waarom het de premie verlaagt</label></div>
+      </div>
+    </div>
+
+    <!-- formules + begrippen -->
+    <div class="grid md:grid-cols-2 gap-4">
+      <div class="space-y-3">
+        <div class="formula rounded-xl p-4 border">
+          <p class="text-xs font-bold text-purple-700 mb-1">📐 Formule 1 — Risico berekenen</p>
+          <p class="text-base font-mono font-bold text-slate-800">Risico = kans × gemiddelde schade</p>
+          <p class="text-xs text-slate-500 mt-2">Voorbeeld: kans op fietsdiefstal = 1/5, fiets kost € 700 → risico = 1/5 × 700 = <strong>€ 140</strong></p>
+        </div>
+        <div class="formula rounded-xl p-4 border">
+          <p class="text-xs font-bold text-purple-700 mb-1">📐 Formule 2 — Minimale gemiddelde premie</p>
+          <p class="text-base font-mono font-bold text-slate-800">Min. premie = totaal uitkering / aantal verzekerden</p>
+          <p class="text-xs text-slate-500 mt-2">Voorbeeld: 500.000 verzekerden, kans 1/2, gem. kosten € 2.700 → uitkering = 250.000 × 2.700 = € 675 mln → premie = € <strong>1.350</strong></p>
+        </div>
+        <div class="formula rounded-xl p-4 border">
+          <p class="text-xs font-bold text-purple-700 mb-1">📐 Formule 3 — Indexcijfer vergelijking</p>
+          <p class="text-base font-mono font-bold text-slate-800">Nieuw bedrag = oud × (nieuwe index / oude index)</p>
+          <p class="text-xs text-slate-500 mt-2">Voorbeeld: premie A (index 106,5) = € 1.150 → premie B (index 92,1) = 1.150 × 92,1/106,5 = <strong>€ 994,51</strong></p>
+        </div>
+      </div>
+
+      <div class="space-y-3">
+        <!-- vrijwillig/onvrijwillig -->
+        <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-4 card-consumer">
+          <span class="badge-consumer rounded-full text-xs px-2 py-0.5 font-semibold">👤 Consument</span>
+          <h4 class="font-bold text-slate-700 mt-2 mb-2">⚡ Vrijwillig vs. Onvrijwillig risico</h4>
+          <div class="grid grid-cols-2 gap-2 text-xs">
+            <div class="bg-blue-50 rounded-lg p-2"><p class="font-semibold text-blue-700">Vrijwillig</p><p class="text-slate-600">Je kiest het zelf: skiën, ondernemen, extreme sporten</p></div>
+            <div class="bg-orange-50 rounded-lg p-2"><p class="font-semibold text-orange-700">Onvrijwillig</p><p class="text-slate-600">Je kiest het niet: brand, overstroming, schade door derde</p></div>
+          </div>
+        </div>
+
+        <!-- solidariteit -->
+        <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-4 card-govmarket">
+          <span class="badge-govmarket rounded-full text-xs px-2 py-0.5 font-semibold">🏛️ Markt / Overheid</span>
+          <h4 class="font-bold text-slate-700 mt-2 mb-2">🤝 Verplichte solidariteit</h4>
+          <p class="text-xs text-slate-700">Goede én slechte risico's moeten meebetalen → meer verzekerden in pool → uitkeringen gespreid → premie daalt.</p>
+          <div class="mt-2 overflow-x-auto">
+            <table class="w-full text-xs border-collapse">
+              <thead><tr class="bg-purple-50"><th class="p-1 border border-purple-100 text-purple-700">Situatie</th><th class="p-1 border border-purple-100 text-purple-700">Verzekerden</th><th class="p-1 border border-purple-100 text-purple-700">Min. premie</th></tr></thead>
+              <tbody>
+                <tr><td class="p-1 border border-slate-100">Zonder solidariteit</td><td class="p-1 border border-slate-100 text-center">500.000</td><td class="p-1 border border-slate-100 font-semibold text-red-600">€ 1.350</td></tr>
+                <tr class="bg-green-50"><td class="p-1 border border-slate-100">Met solidariteit</td><td class="p-1 border border-slate-100 text-center">750.000</td><td class="p-1 border border-slate-100 font-semibold text-green-600">€ 1.080 ↓</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- verplichte verzekeringen -->
+        <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-4">
+          <h4 class="font-bold text-slate-700 mb-2 text-xs">⚖️ Verplichte verzekeringen</h4>
+          <div class="space-y-1 text-xs">
+            <div class="flex items-start gap-2"><span class="text-rose-500">🏥</span><p><strong>Basisverzekering zorg</strong> — iedereen toegang; voorkomt averechtse selectie</p></div>
+            <div class="flex items-start gap-2"><span class="text-blue-500">🚗</span><p><strong>WA-autoverzekering</strong> — bescherming van derden bij schade</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- begrippen strip -->
+    <div class="grid sm:grid-cols-3 gap-3">
+      <div class="bg-rose-50 rounded-xl p-3 border border-rose-100"><p class="font-bold text-rose-700 text-xs">Verzekeren</p><p class="text-slate-600 text-xs mt-1">Financieel risico overdragen aan een verzekeraar in ruil voor een premie.</p></div>
+      <div class="bg-rose-50 rounded-xl p-3 border border-rose-100"><p class="font-bold text-rose-700 text-xs">Polis</p><p class="text-slate-600 text-xs mt-1">Contract dat dient als bewijs van de verzekering.</p></div>
+      <div class="bg-rose-50 rounded-xl p-3 border border-rose-100"><p class="font-bold text-rose-700 text-xs">Risicoavers gedrag</p><p class="text-slate-600 text-xs mt-1">Het zo veel mogelijk vermijden van risico's; bereid hogere premie te betalen voor zekerheid.</p></div>
+    </div>
+    <div class="exam-slot mt-4" data-par="2.1"></div>
+  </section>
+
+  <div class="border-t border-slate-200 my-6"></div>
+
+  <!-- ---- PARAGRAAF 2.2 ---- -->
+  <section id="p22" class="space-y-6">
+    <div class="flex items-center gap-2">
+      <span class="bg-orange-100 text-orange-700 font-bold rounded-lg px-3 py-1 text-sm">§ 2.2</span>
+      <h3 class="text-xl font-bold text-slate-800">Verzekeren is niet eenvoudig</h3>
+    </div>
+
+    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
+      <h4 class="font-bold text-slate-700 mb-3 flex items-center gap-2">
+        <svg class="w-4 h-4 text-orange-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        Leerdoelen
+      </h4>
+      <div class="space-y-2">
+        <div class="check-item flex items-center gap-3"><input type="checkbox" id="g22-1" class="sr-only" onchange="updateProgress()"><div class="check-icon w-4 h-4 rounded border-2 border-slate-300 flex-shrink-0 cursor-pointer" onclick="document.getElementById('g22-1').click()"></div><label for="g22-1" class="cursor-pointer">Ik kan <strong>asymmetrische informatie</strong> uitleggen in de context van verzekeringen</label></div>
+        <div class="check-item flex items-center gap-3"><input type="checkbox" id="g22-2" class="sr-only" onchange="updateProgress()"><div class="check-icon w-4 h-4 rounded border-2 border-slate-300 flex-shrink-0 cursor-pointer" onclick="document.getElementById('g22-2').click()"></div><label for="g22-2" class="cursor-pointer">Ik ken het verschil: <strong>averechtse selectie</strong> (vóór afsluiten) vs. <strong>moral hazard</strong> (ná afsluiten)</label></div>
+      </div>
+    </div>
+
+    <!-- centrale begrippen -->
+    <div class="grid md:grid-cols-3 gap-4">
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 card-govmarket col-span-1">
+        <span class="badge-govmarket rounded-full text-xs px-2 py-0.5 font-semibold">🏛️ Markt</span>
+        <h4 class="font-bold text-slate-700 mt-2 mb-2">🔒 Informatieasymmetrie</h4>
+        <p class="text-xs text-slate-700">Verzekeraar en verzekerde beschikken <strong>niet over dezelfde informatie</strong>. De verzekerde weet meer over zijn eigen risico.</p>
+        <div class="mt-2 logic-box rounded-lg p-2 text-xs">Gevolg: verzekeraar kan geen perfecte premie rekenen → risico op selectie of hazard.
+        </div>
+      </div>
+
+      <div class="md:col-span-2 space-y-3">
+        <!-- averechtse selectie spiral -->
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
+          <h4 class="font-bold text-slate-700 mb-3">🔄 Averechtse selectie (vóór afsluiten) — spiraal</h4>
+          <div class="overflow-x-auto">
+            <svg viewBox="0 0 640 90" class="w-full" xmlns="http://www.w3.org/2000/svg" style="min-width:480px">
+              <defs><marker id="arr3" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="#f97316"/></marker></defs>
+              <rect x="0"   y="15" width="115" height="55" rx="8" fill="#fff7ed" stroke="#fdba74" stroke-width="1.5"/>
+              <rect x="135" y="15" width="115" height="55" rx="8" fill="#fef9c3" stroke="#fde047" stroke-width="1.5"/>
+              <rect x="270" y="15" width="115" height="55" rx="8" fill="#fee2e2" stroke="#fca5a5" stroke-width="1.5"/>
+              <rect x="405" y="15" width="115" height="55" rx="8" fill="#fce7f3" stroke="#f9a8d4" stroke-width="1.5"/>
+              <rect x="520" y="15" width="110" height="55" rx="8" fill="#fef2f2" stroke="#fca5a5" stroke-width="2"/>
+              <line x1="115" y1="42" x2="133" y2="42" stroke="#f97316" stroke-width="2" marker-end="url(#arr3)"/>
+              <line x1="250" y1="42" x2="268" y2="42" stroke="#f97316" stroke-width="2" marker-end="url(#arr3)"/>
+              <line x1="385" y1="42" x2="403" y2="42" stroke="#f97316" stroke-width="2" marker-end="url(#arr3)"/>
+              <line x1="505" y1="42" x2="518" y2="42" stroke="#f97316" stroke-width="2" marker-end="url(#arr3)"/>
+              <text x="57" y="38" text-anchor="middle" font-size="8" font-weight="600" fill="#9a3412">1 gemiddelde</text>
+              <text x="57" y="49" text-anchor="middle" font-size="8" fill="#9a3412">premie → goede</text>
+              <text x="57" y="60" text-anchor="middle" font-size="8" fill="#9a3412">risico's haken af</text>
+              <text x="193" y="38" text-anchor="middle" font-size="8" font-weight="600" fill="#854d0e">Alleen slechte</text>
+              <text x="193" y="49" text-anchor="middle" font-size="8" fill="#854d0e">risico's blijven</text>
+              <text x="193" y="60" text-anchor="middle" font-size="8" fill="#854d0e">verzekerd</text>
+              <text x="327" y="38" text-anchor="middle" font-size="8" font-weight="600" fill="#b91c1c">Gem. risico ↑</text>
+              <text x="327" y="49" text-anchor="middle" font-size="8" fill="#b91c1c">meer uitkeringen</text>
+              <text x="327" y="60" text-anchor="middle" font-size="8" fill="#b91c1c">nodig</text>
+              <text x="462" y="38" text-anchor="middle" font-size="8" font-weight="600" fill="#9d174d">Premie omhoog</text>
+              <text x="462" y="49" text-anchor="middle" font-size="8" fill="#9d174d">Nog meer goede</text>
+              <text x="462" y="60" text-anchor="middle" font-size="8" fill="#9d174d">risico's weg</text>
+              <text x="575" y="38" text-anchor="middle" font-size="8" font-weight="600" fill="#b91c1c">Verzekering</text>
+              <text x="575" y="49" text-anchor="middle" font-size="8" fill="#b91c1c">wordt</text>
+              <text x="575" y="60" text-anchor="middle" font-size="8" fill="#b91c1c">onbetaalbaar</text>
+            </svg>
+          </div>
+        </div>
+
+        <!-- moral hazard -->
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-4">
+          <h4 class="font-bold text-slate-700 mb-2">😈 Moral hazard — moreel wangedrag (ná afsluiten)</h4>
+          <p class="text-xs text-slate-700 mb-2"><strong>Definitie:</strong> opzettelijk onvoorzichtig gedrag van een verzekerde, omdat de kosten niet bij hém terechtkomen.</p>
+          <div class="grid sm:grid-cols-3 gap-2 text-xs">
+            <div class="bg-orange-50 rounded-lg p-2"><p class="font-semibold text-orange-700">Voorbeeld 1</p><p class="text-slate-600">Fiets minder goed op slot — 'dan ben ik verzekerd toch?'</p></div>
+            <div class="bg-orange-50 rounded-lg p-2"><p class="font-semibold text-orange-700">Voorbeeld 2</p><p class="text-slate-600">Onnodig naar de dokter (overconsumptie zorg)</p></div>
+            <div class="bg-orange-50 rounded-lg p-2"><p class="font-semibold text-orange-700">Voorbeeld 3</p><p class="text-slate-600">Roekeloos rijden want auto is volledig verzekerd</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- vergelijkingstabel -->
+    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
+      <h4 class="font-bold text-slate-700 mb-3">⚡ Onderscheid — examenvalkuil!</h4>
+      <div class="overflow-x-auto">
+        <table class="w-full text-xs border-collapse">
+          <thead><tr class="bg-orange-50"><th class="p-2 border border-orange-100 text-orange-700 text-left">Begrip</th><th class="p-2 border border-orange-100 text-orange-700">Wanneer?</th><th class="p-2 border border-orange-100 text-orange-700">Wie doet het?</th><th class="p-2 border border-orange-100 text-orange-700 text-left">Kern</th></tr></thead>
+          <tbody>
+            <tr class="hover:bg-slate-50">
+              <td class="p-2 border border-slate-100 font-bold text-blue-700">Averechtse selectie</td>
+              <td class="p-2 border border-slate-100 text-center font-semibold text-blue-600">VÓÓR afsluiten</td>
+              <td class="p-2 border border-slate-100">Verzekerde (keuze om te verzekeren)</td>
+              <td class="p-2 border border-slate-100">Slechte risico's kiezen vaker voor verzekering</td>
+            </tr>
+            <tr class="hover:bg-slate-50">
+              <td class="p-2 border border-slate-100 font-bold text-orange-700">Moral hazard</td>
+              <td class="p-2 border border-slate-100 text-center font-semibold text-orange-600">NÁ afsluiten</td>
+              <td class="p-2 border border-slate-100">Verzekerde (gedragsverandering)</td>
+              <td class="p-2 border border-slate-100">Verzekerde wordt roekelozer / claimt meer</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="exam-slot mt-4" data-par="2.2"></div>
+  </section>
+
+  <div class="border-t border-slate-200 my-6"></div>
+
+  <!-- ---- PARAGRAAF 2.3 ---- -->
+  <section id="p23" class="space-y-6">
+    <div class="flex items-center gap-2">
+      <span class="bg-emerald-100 text-emerald-700 font-bold rounded-lg px-3 py-1 text-sm">§ 2.3</span>
+      <h3 class="text-xl font-bold text-slate-800">Financiële risico's beperken</h3>
+    </div>
+
+    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
+      <h4 class="font-bold text-slate-700 mb-3 flex items-center gap-2">
+        <svg class="w-4 h-4 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        Leerdoelen
+      </h4>
+      <div class="space-y-2">
+        <div class="check-item flex items-center gap-3"><input type="checkbox" id="g23-1" class="sr-only" onchange="updateProgress()"><div class="check-icon w-4 h-4 rounded border-2 border-slate-300 flex-shrink-0 cursor-pointer" onclick="document.getElementById('g23-1').click()"></div><label for="g23-1" class="cursor-pointer">Ik snap hoe <strong>eigen risico</strong> werkt en welke problemen het aanpakt</label></div>
+        <div class="check-item flex items-center gap-3"><input type="checkbox" id="g23-2" class="sr-only" onchange="updateProgress()"><div class="check-icon w-4 h-4 rounded border-2 border-slate-300 flex-shrink-0 cursor-pointer" onclick="document.getElementById('g23-2').click()"></div><label for="g23-2" class="cursor-pointer">Ik kan <strong>premiedifferentiatie</strong> en de <strong>bonus-malusregeling</strong> uitleggen</label></div>
+        <div class="check-item flex items-center gap-3"><input type="checkbox" id="g23-3" class="sr-only" onchange="updateProgress()"><div class="check-icon w-4 h-4 rounded border-2 border-slate-300 flex-shrink-0 cursor-pointer" onclick="document.getElementById('g23-3').click()"></div><label for="g23-3" class="cursor-pointer">Ik ken het verschil: <strong>acceptatieplicht</strong> (basiszorg) vs. <strong>risicoselectie</strong> (aanvullend/auto)</label></div>
+      </div>
+    </div>
+
+    <!-- 3 instrumenten overview -->
+    <div class="grid md:grid-cols-3 gap-4">
+      <!-- 1. eigen risico -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 border-t-4 border-t-emerald-400">
+        <div class="flex items-center gap-2 mb-2">
+          <div class="w-7 h-7 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700 font-bold text-sm">1</div>
+          <h4 class="font-bold text-slate-700">Eigen risico</h4>
+        </div>
+        <p class="text-xs text-slate-700 mb-2">Deel van de schade dat de verzekerde <strong>zelf betaalt</strong>.</p>
+        <div class="space-y-1 text-xs">
+          <div class="bg-emerald-50 rounded-lg p-2"><p class="font-semibold text-emerald-700">Verplicht eigen risico (zorg 2017)</p><p>€ 385 per jaar · geldt bij medicijnen, ziekenhuis, ambulance, enz.</p></div>
+          <div class="bg-emerald-50 rounded-lg p-2"><p class="font-semibold text-emerald-700">Vrijwillig eigen risico</p><p>Kies extra bedrag bovenop verplicht → lagere premie.</p></div>
+        </div>
+        <div class="mt-2 overflow-x-auto">
+          <table class="w-full text-xs border-collapse">
+            <thead><tr class="bg-slate-50"><th class="p-1 border border-slate-100">Probleem</th><th class="p-1 border border-slate-100">Hoe?</th></tr></thead>
+            <tbody>
+              <tr><td class="p-1 border border-slate-100">Moral hazard</td><td class="p-1 border border-slate-100">Je betaalt zelf mee → meer voorzichtig</td></tr>
+              <tr><td class="p-1 border border-slate-100">Averechtse selectie</td><td class="p-1 border border-slate-100">Laag/hoog risico kiest ander pakket → signaling</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 2. premiedifferentiatie -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 border-t-4 border-t-blue-400">
+        <div class="flex items-center gap-2 mb-2">
+          <div class="w-7 h-7 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-bold text-sm">2</div>
+          <h4 class="font-bold text-slate-700">Premiedifferentiatie</h4>
+        </div>
+        <p class="text-xs text-slate-700 mb-2">Risicogroepen met een <strong>hoger risico betalen een hogere premie</strong>.</p>
+
+        <!-- bonus-malus ladder -->
+        <div class="space-y-1 text-xs mt-2">
+          <p class="font-semibold text-slate-600">Bonus-malusladder (auto):</p>
+          <div class="relative">
+            <div class="flex items-center gap-1 mb-1">
+              <div class="bg-green-100 text-green-700 rounded px-2 py-1 font-semibold flex-1 text-center">Trede 5+ · max korting</div>
+              <span class="text-green-600">↑ jaar zonder schade</span>
+            </div>
+            <div class="flex items-center gap-1 mb-1">
+              <div class="bg-emerald-50 text-emerald-700 rounded px-2 py-1 flex-1 text-center">Trede 3–4 · meer korting</div>
+            </div>
+            <div class="flex items-center gap-1 mb-1">
+              <div class="bg-yellow-50 text-yellow-700 border border-yellow-200 rounded px-2 py-1 flex-1 text-center font-bold">Trede 2 · start</div>
+            </div>
+            <div class="flex items-center gap-1 mb-1">
+              <div class="bg-orange-50 text-orange-700 rounded px-2 py-1 flex-1 text-center">Trede 0–1 · weinig korting</div>
+              <span class="text-red-500">↓ schade geclaimd</span>
+            </div>
+          </div>
+        </div>
+        <div class="mt-2 overflow-x-auto">
+          <table class="w-full text-xs border-collapse">
+            <thead><tr class="bg-slate-50"><th class="p-1 border border-slate-100">Probleem</th><th class="p-1 border border-slate-100">Hoe?</th></tr></thead>
+            <tbody>
+              <tr><td class="p-1 border border-slate-100">Moral hazard</td><td class="p-1 border border-slate-100">Claimen kost je korting → voorzichtiger rijden</td></tr>
+              <tr><td class="p-1 border border-slate-100">Averechtse selectie</td><td class="p-1 border border-slate-100">Goede rijders betalen minder → blijven in pool</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 3. informatie inwinnen -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 border-t-4 border-t-purple-400">
+        <div class="flex items-center gap-2 mb-2">
+          <div class="w-7 h-7 rounded-full bg-purple-100 flex items-center justify-center text-purple-700 font-bold text-sm">3</div>
+          <h4 class="font-bold text-slate-700">Informatie inwinnen</h4>
+        </div>
+        <p class="text-xs text-slate-700 mb-2">Verzekeraar vraagt informatie om risico beter in te schatten.</p>
+        <div class="space-y-1.5 text-xs">
+          <div class="bg-purple-50 rounded-lg p-2"><p class="font-semibold text-purple-700">Acceptatieplicht</p><p>Verzekeraar <em>moet</em> iedereen accepteren. Geldt voor <strong>basiszorgverzekering</strong>.</p></div>
+          <div class="bg-orange-50 rounded-lg p-2"><p class="font-semibold text-orange-700">Risicoselectie</p><p>Weigeren of hogere premie vragen. Toegestaan bij <strong>aanvullende zorg &amp; autoverzekering</strong>.</p></div>
+          <div class="bg-slate-50 rounded-lg p-2"><p class="font-semibold text-slate-600">Stichting CIS</p><p>Centraal informatiesysteem: verzekeraars delen fraude- en misbruikdata.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- overkoepelend overzicht -->
+    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
+      <h4 class="font-bold text-slate-700 mb-3">🗺️ Per instrument: welk probleem aanpakken?</h4>
+      <div class="overflow-x-auto">
+        <table class="w-full text-xs border-collapse">
+          <thead>
+            <tr class="bg-slate-100">
+              <th class="p-2 border border-slate-200 text-left">Instrument</th>
+              <th class="p-2 border border-slate-200">Averechtse selectie (vóór)?</th>
+              <th class="p-2 border border-slate-200">Moral hazard (ná)?</th>
+              <th class="p-2 border border-slate-200 text-left">Let op</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="hover:bg-slate-50">
+              <td class="p-2 border border-slate-100 font-semibold">Eigen risico</td>
+              <td class="p-2 border border-slate-100 text-center">✅ Ja (signaling)</td>
+              <td class="p-2 border border-slate-100 text-center">✅ Ja (eigen bijdrage)</td>
+              <td class="p-2 border border-slate-100">Chronisch zieken betalen altijd het volle eigen risico → solidariteit ↓</td>
+            </tr>
+            <tr class="hover:bg-slate-50">
+              <td class="p-2 border border-slate-100 font-semibold">Premiedifferentiatie</td>
+              <td class="p-2 border border-slate-100 text-center">✅ Ja (goede risico's blijven)</td>
+              <td class="p-2 border border-slate-100 text-center">✅ Ja (claimen kost korting)</td>
+              <td class="p-2 border border-slate-100">Bonus-malus niet voor basiszorg: gezondheid niet altijd beïnvloedbaar</td>
+            </tr>
+            <tr class="hover:bg-slate-50">
+              <td class="p-2 border border-slate-100 font-semibold">Informatie inwinnen</td>
+              <td class="p-2 border border-slate-100 text-center">✅ Ja (screening)</td>
+              <td class="p-2 border border-slate-100 text-center">❌ Beperkt</td>
+              <td class="p-2 border border-slate-100">Acceptatieplicht geldt voor basiszorg — risicoselectie niet toegestaan</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="exam-slot mt-4" data-par="2.3"></div>
+  </section>
+</div>
+
+<!-- ================================================================
+     OVERIG / INTEGRATIEOPGAVEN
+     ================================================================ -->
+<div id="overig" class="page-break bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 rounded-2xl border border-amber-200 p-6">
+  <div class="flex items-center gap-3 mb-2">
+    <div class="w-10 h-10 rounded-xl bg-amber-600 flex items-center justify-center text-white text-lg">🗂️</div>
+    <div>
+      <h2 class="text-2xl font-extrabold text-amber-900">Overig / Integratieopgaven</h2>
+      <p class="text-xs text-amber-700 mt-0.5">Examenvragen die niet 1-op-1 bij Hoofdstuk 1 of 2 horen — groepeer op examenjaar. Vaak domein-overstijgend (micro, macro, arbeidsmarkt, conjunctuur, surplus, belasting).</p>
+    </div>
+  </div>
+  <div id="overig-container" class="space-y-6 mt-4"></div>
+</div>
+
+<!-- ================================================================
+     SNELLE EXAMENCHECK (alle begrippen)
+     ================================================================ -->
+<div class="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-2xl border border-indigo-200 p-6">
+  <h2 class="text-xl font-extrabold text-indigo-900 mb-1">⚡ Snelle Examen-Check</h2>
+  <p class="text-xs text-indigo-600 mb-4">Controleer of je alle kernbegrippen kent — klik op een begrip voor de definitie.</p>
+
+  <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-2" id="term-list">
+    <!-- H1 terms -->
+    <button class="term-btn text-left bg-white rounded-lg px-3 py-2 border border-indigo-100 hover:border-indigo-400 transition text-xs font-semibold text-slate-700" data-def="Theorie over beslissingen waarbij je rekening houdt met de keuze van anderen.">🎲 Speltheorie</button>
+    <button class="term-btn text-left bg-white rounded-lg px-3 py-2 border border-indigo-100 hover:border-indigo-400 transition text-xs font-semibold text-slate-700" data-def="Keuze die altijd het beste is voor je, ongeacht wat de ander doet.">🔁 Dominante strategie</button>
+    <button class="term-btn text-left bg-white rounded-lg px-3 py-2 border border-indigo-100 hover:border-indigo-400 transition text-xs font-semibold text-slate-700" data-def="Combinatie van strategieën waarbij geen enkele speler reden heeft om te veranderen.">⚖️ Nash-evenwicht</button>
+    <button class="term-btn text-left bg-white rounded-lg px-3 py-2 border border-indigo-100 hover:border-indigo-400 transition text-xs font-semibold text-slate-700" data-def="Spel waarbij het Nash-evenwicht NIET optimaal is voor beide spelers samen.">🔒 Gevangenendilemma</button>
+    <button class="term-btn text-left bg-white rounded-lg px-3 py-2 border border-indigo-100 hover:border-indigo-400 transition text-xs font-semibold text-slate-700" data-def="Markt met slechts een paar grote aanbieders. Kenmerken: beperkt aantal, toetredingsbarrières, marktmacht.">🏢 Oligopolie</button>
+    <button class="term-btn text-left bg-white rounded-lg px-3 py-2 border border-indigo-100 hover:border-indigo-400 transition text-xs font-semibold text-slate-700" data-def="Situatie waarbij concurrenten elkaar bestrijden via prijsverlagingen.">⚔️ Prijzenoorlog</button>
+    <button class="term-btn text-left bg-white rounded-lg px-3 py-2 border border-indigo-100 hover:border-indigo-400 transition text-xs font-semibold text-slate-700" data-def="Speler 1 stelt voor, speler 2 zegt ja of nee. Bij nee: beiden niets.">🤝 Ultimatumspel</button>
+    <button class="term-btn text-left bg-white rounded-lg px-3 py-2 border border-indigo-100 hover:border-indigo-400 transition text-xs font-semibold text-slate-700" data-def="Terugredeneren van de laatste keuze naar de eerste om het evenwicht te vinden.">🌳 Backwards induction</button>
+    <button class="term-btn text-left bg-white rounded-lg px-3 py-2 border border-indigo-100 hover:border-indigo-400 transition text-xs font-semibold text-slate-700" data-def="Kosten die al gemaakt zijn en niet meer terugkomen — spelen geen rol in toekomstige beslissingen.">🕳️ Verzonken kosten</button>
+    <button class="term-btn text-left bg-white rounded-lg px-3 py-2 border border-indigo-100 hover:border-indigo-400 transition text-xs font-semibold text-slate-700" data-def="Een bijkomstig gevolg van productie of consumptie dat NIET in de prijs zit.">🌍 Extern effect</button>
+    <button class="term-btn text-left bg-white rounded-lg px-3 py-2 border border-indigo-100 hover:border-indigo-400 transition text-xs font-semibold text-slate-700" data-def="Goed dat niet individueel afrekenbaar is — geleverd door de overheid via belasting.">🏛️ Collectief goed</button>
+    <button class="term-btn text-left bg-white rounded-lg px-3 py-2 border border-indigo-100 hover:border-indigo-400 transition text-xs font-semibold text-slate-700" data-def="Mensen gebruiken een goed zonder ervoor te betalen.">🎭 Free-rider gedrag</button>
+    <button class="term-btn text-left bg-white rounded-lg px-3 py-2 border border-indigo-100 hover:border-indigo-400 transition text-xs font-semibold text-slate-700" data-def="Collectieve afspraken over arbeidsvoorwaarden in een bedrijfstak, gemaakt door vakbonden en werkgeversorganisaties.">📋 CAO</button>
+    <button class="term-btn text-left bg-white rounded-lg px-3 py-2 border border-indigo-100 hover:border-indigo-400 transition text-xs font-semibold text-slate-700" data-def="Samenwerking EU op economisch en monetair gebied. Gezamenlijk gebruik van de euro en één monetair beleid (ECB).">🇪🇺 EMU</button>
+    <!-- H2 terms -->
+    <button class="term-btn text-left bg-white rounded-lg px-3 py-2 border border-rose-100 hover:border-rose-400 transition text-xs font-semibold text-slate-700" data-def="Risico = kans op een voorval × gemiddeld schadebedrag van dat voorval.">📐 Risicoformule</button>
+    <button class="term-btn text-left bg-white rounded-lg px-3 py-2 border border-rose-100 hover:border-rose-400 transition text-xs font-semibold text-slate-700" data-def="Verzekeraar en verzekerde hebben niet dezelfde informatie over het risico.">🔍 Info-asymmetrie</button>
+    <button class="term-btn text-left bg-white rounded-lg px-3 py-2 border border-rose-100 hover:border-rose-400 transition text-xs font-semibold text-slate-700" data-def="VÓÓR afsluiten: alleen mensen met meer dan gemiddeld risico kiezen voor verzekering.">🔄 Averechtse selectie</button>
+    <button class="term-btn text-left bg-white rounded-lg px-3 py-2 border border-rose-100 hover:border-rose-400 transition text-xs font-semibold text-slate-700" data-def="NÁ afsluiten: verzekerde gedraagt zich onvoorzichtiger omdat kosten niet bij hem liggen.">😈 Moral hazard</button>
+    <button class="term-btn text-left bg-white rounded-lg px-3 py-2 border border-rose-100 hover:border-rose-400 transition text-xs font-semibold text-slate-700" data-def="Gedeelte van de schade dat de verzekerde zelf betaalt — aanpak tegen moral hazard en averechtse selectie.">💸 Eigen risico</button>
+    <button class="term-btn text-left bg-white rounded-lg px-3 py-2 border border-rose-100 hover:border-rose-400 transition text-xs font-semibold text-slate-700" data-def="Hogere risicogroep betaalt hogere premie. Bonus-malus: premie afhankelijk van schadeclaims.">📊 Premiedifferentiatie</button>
+    <button class="term-btn text-left bg-white rounded-lg px-3 py-2 border border-rose-100 hover:border-rose-400 transition text-xs font-semibold text-slate-700" data-def="Verzekeraar is VERPLICHT iemand te accepteren. Geldt voor BASISZORGVERZEKERING. Niet voor aanvullend of auto.">✅ Acceptatieplicht</button>
+    <button class="term-btn text-left bg-white rounded-lg px-3 py-2 border border-rose-100 hover:border-rose-400 transition text-xs font-semibold text-slate-700" data-def="Min. premie = totaal uitkeringsbedrag / aantal verzekerden. Break-even premie voor de verzekeraar.">🧮 Minimale premie</button>
+  </div>
+
+  <!-- definition popup -->
+  <div id="def-popup" class="hidden mt-3 p-4 bg-white border border-indigo-200 rounded-xl text-sm text-slate-700 shadow-sm">
+    <button class="float-right text-slate-400 hover:text-slate-600 font-bold text-base" onclick="document.getElementById('def-popup').classList.add('hidden')">✕</button>
+    <p id="def-text" class="pr-4"></p>
+  </div>
+</div>
+
+<!-- ================================================================
+     EXAMENTIPS
+     ================================================================ -->
+<div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+  <h2 class="text-xl font-extrabold text-slate-900 mb-4">🏆 Examentips — Checklist</h2>
+  <div class="grid sm:grid-cols-2 gap-2">
+    <div class="flex items-start gap-2 text-xs p-2 bg-indigo-50 rounded-lg"><span class="text-indigo-500 mt-0.5">1️⃣</span><p><strong>Best-response met arceringen</strong> altijd expliciet uitvoeren op het examenblad.</p></div>
+    <div class="flex items-start gap-2 text-xs p-2 bg-indigo-50 rounded-lg"><span class="text-indigo-500 mt-0.5">2️⃣</span><p><strong>7 voorwaarden checken</strong> voordat je iets een gevangenendilemma noemt.</p></div>
+    <div class="flex items-start gap-2 text-xs p-2 bg-green-50 rounded-lg"><span class="text-green-500 mt-0.5">3️⃣</span><p><strong>Sequentieel spel</strong> → altijd spelboom + backwards induction.</p></div>
+    <div class="flex items-start gap-2 text-xs p-2 bg-green-50 rounded-lg"><span class="text-green-500 mt-0.5">4️⃣</span><p><strong>Verzonken kosten</strong> spelen géén rol in toekomstige beslissingen.</p></div>
+    <div class="flex items-start gap-2 text-xs p-2 bg-purple-50 rounded-lg"><span class="text-purple-500 mt-0.5">5️⃣</span><p><strong>Extern effect?</strong> → controleer of negatief/positief én zeg dat het <em>niet in de prijs zit</em>.</p></div>
+    <div class="flex items-start gap-2 text-xs p-2 bg-purple-50 rounded-lg"><span class="text-purple-500 mt-0.5">6️⃣</span><p><strong>Collectief goed</strong> herkennen aan: niet-rivaliserend én niet-exclusief.</p></div>
+    <div class="flex items-start gap-2 text-xs p-2 bg-rose-50 rounded-lg"><span class="text-rose-500 mt-0.5">7️⃣</span><p><strong>Risicoformule</strong>: risico = kans × gemiddelde schade — altijd eerst berekenen.</p></div>
+    <div class="flex items-start gap-2 text-xs p-2 bg-rose-50 rounded-lg"><span class="text-rose-500 mt-0.5">8️⃣</span><p><strong>Averechtse selectie = vóór</strong> afsluiten. <strong>Moral hazard = ná</strong> afsluiten. Klassieke examenvalkuil!</p></div>
+    <div class="flex items-start gap-2 text-xs p-2 bg-orange-50 rounded-lg"><span class="text-orange-500 mt-0.5">9️⃣</span><p><strong>Acceptatieplicht</strong> geldt alleen voor basisverzekering — aanvullend mag de verzekeraar selecteren.</p></div>
+    <div class="flex items-start gap-2 text-xs p-2 bg-orange-50 rounded-lg"><span class="text-orange-500 mt-0.5">🔟</span><p><strong>Nash ≠ gevangenendilemma</strong>: check altijd of Nash ook collectief optimum is (2025 v16!).</p></div>
+  </div>
+</div>
+
+</main>
+
+<footer class="text-center text-xs text-slate-400 py-6 border-t border-slate-200 mt-4">
+  HAVO Economie · Examen Dashboard · Gegenereerd op basis van leerstof Hoofdstuk 1 &amp; 2 · B1-niveau
+</footer>
+
+<!-- ================================================================
+     JS: data + rendering + progress + search + nav highlight
+     ================================================================ -->
+<script>
+/* ===================================================================
+   EXAMEN-DATA  (HAVO Economie, tijdvak zoals in bron)
+   par === null  -> sectie 'Overig / Integratieopgaven'
+   =================================================================== */
+const QUESTIONS = [
+  /* =========== 2023 tv1 =========== */
+  { id:'2023-1',  year:'2023', tv:'tv1', op:'Opgave 1 · Brood op de plank', q:1,  pts:2, par:'2.1',
+    context:'Werknemers in loondienst zijn verplicht verzekerd tegen arbeidsongeschiktheid (omslagstelsel). Zzp\'ers moeten dit zelf individueel verzekeren — vaak duurder.',
+    ask:'Maak een economisch juiste redenering: <br>De aov voor werknemers is een …(1)… verzekering en wordt gefinancierd via het …(2)…. Bij individuele aov van zzp\'ers ontbreekt …(3)…, waardoor er sprake is van …(4)…. Kies: sociale/particuliere · omslag/kapitaaldekking · asymmetrische info/collectieve dwang/intertemporele ruil · averechtse selectie/meeliftgedrag/verzonken kosten.',
+    model:[
+      { t:'(1) sociale · (2) omslagstelsel — werkenden nu betalen voor uitkeringen nu.', p:1 },
+      { t:'(3) collectieve dwang · (4) averechtse selectie — alleen hoge risico\'s sluiten zich aan → premie stijgt.', p:1 }
+    ]
+  },
+  { id:'2023-5',  year:'2023', tv:'tv1', op:'Opgave 1 · Broodfonds', q:5, pts:3, par:'2.2',
+    context:'Bij een broodfonds verzekeren ~50 zzp\'ers elkaar onderling bij kortdurende ziekte. Deelnemers kennen elkaar persoonlijk.',
+    ask:'Leg uit waarom er bij het broodfonds <strong>geen asymmetrische informatie</strong> is, en waarom averechtse selectie en moral hazard zeer klein zijn.',
+    model:[
+      { t:'Deelnemers kennen elkaar → geen informatie-asymmetrie tussen de leden.', p:1 },
+      { t:'Ze kennen elkaars risico en er is een sociale norm om te helpen → averechtse selectie speelt nauwelijks.', p:1 },
+      { t:'Moral hazard is klein: deelnemers brengen hun gezondheid niet bewust in gevaar omdat zij de groep kennen.', p:1 }
+    ]
+  },
+  { id:'2023-6',  year:'2023', tv:'tv1', op:'Opgave 1 · Broodfonds (berekening)', q:6, pts:3, par:'2.3',
+    context:'Nelleke overweegt deelname aan broodfonds. Kosten: € 225 inschrijf + € 10 contributie/mnd + € 112,50 inleg/mnd. 24 maanden deelname, 4% van 50 deelnemers krijgt € 2.500×24 uitkering. Rest wordt gerestitueerd.',
+    ask:'Bereken hoeveel Nelleke per saldo betaalt over 2 jaar bij gezond blijven.',
+    model:[
+      { t:'Totale kosten: 24 × (10 + 112,50) + 225 = € 3.165.', p:1 },
+      { t:'Uitkeringen: 0,04 × 50 × € 2.500 × 24 = € 120.000 → per persoon € 2.400 bijdrage.', p:1 },
+      { t:'Inleg 24×112,50 = € 2.700. Restitutie 2.700 − 2.400 = € 300. Per saldo 3.165 − 300 = <strong>€ 2.865</strong>.', p:1 }
+    ]
+  },
+  { id:'2023-7',  year:'2023', tv:'tv1', op:'Opgave 2 · Wokakkoord', q:7, pts:2, par:'1.3',
+    context:'Aziatische restaurants scholen Nederlandse koks om, maar die bereiken niet het vereiste niveau voor specialiteitenkoks.',
+    ask:'Leg uit dat er sprake is van <strong>verzonken kosten</strong> voor de sector.',
+    model:[
+      { t:'Omgeschoolde koks halen het niveau niet → ze kunnen niet worden ingezet.', p:1 },
+      { t:'De scholingskosten kunnen op geen andere manier worden terugverdiend (sunk cost).', p:1 }
+    ]
+  },
+  { id:'2023-13', year:'2023', tv:'tv1', op:'Opgave 3 · Auto van de zaak', q:13, pts:2, par:'1.4',
+    context:'De fiscale bijtelling wordt CO₂-afhankelijk. De overheid wil de negatieve externe effecten van autorijden terugdringen.',
+    ask:'Leg uit dat deze regeling de <strong>negatieve externe effecten</strong> kan terugdringen.',
+    model:[
+      { t:'CO₂-uitstoot is een negatief extern effect: vervuiling zit niet in de prijs van autorijden → maatschappelijke kosten.', p:1 },
+      { t:'Door uitstoot-afhankelijke bijtelling betaalt de vervuiler méér → prijsmechanisme stimuleert keuze voor zuinige auto / internalisering.', p:1 }
+    ]
+  },
+  { id:'2023-20', year:'2023', tv:'tv1', op:'Opgave 5 · Olieprijs', q:20, pts:1, par:'1.2',
+    context:'Een krant: "Ten eerste werd in China vanwege corona een groot deel van de industrie stilgelegd. China is \'s werelds grootste olie-importeur."',
+    ask:'Citeer de zin waaruit blijkt dat de prijsdaling mede komt door een <strong>vraagverandering</strong>.',
+    model:[
+      { t:'"Ten eerste werd in China vanwege een uitbraak van het coronavirus een groot deel van de industrie tijdelijk stilgelegd." (Minder industrie → minder vraag naar olie.)', p:1 }
+    ]
+  },
+  { id:'2023-21', year:'2023', tv:'tv1', op:'Opgave 5 · Olieprijs', q:21, pts:2, par:'1.2',
+    context:'De oliemarkt wordt gedomineerd door Rusland, Saoedi-Arabië en VS; zij strijden om marktaandeel.',
+    ask:'Van welke <strong>marktvorm</strong> is sprake? Verklaar met twee kenmerken.',
+    model:[
+      { t:'<strong>Oligopolie</strong> + eerste kenmerk: beperkt aantal aanbieders (RU/SA/VS).', p:1 },
+      { t:'Tweede kenmerk: toetredingsbarrières (beschikking over oliebronnen) óf marktmacht (concurrentie om marktaandeel).', p:1 }
+    ]
+  },
+  { id:'2023-22', year:'2023', tv:'tv1', op:'Opgave 5 · Olieprijs', q:22, pts:2, par:'1.1',
+    context:'Simultaan spel: Rusland en Saoedi-Arabië kiezen tussen "hoog aanbod handhaven" en "aanbod verlagen". Matrix: (handhaven;handhaven) = (↓;↓), (verlagen;verlagen) = (↑;↑), afwijken = (↑↑;↓↓) of (↓↓;↑↑).',
+    ask:'Leg uit dat beide landen zich in een <strong>gevangenendilemma</strong> bevinden. • Dominante strategie • GD-check.',
+    model:[
+      { t:'Dominante strategie beide = "hoog aanbod handhaven": ongeacht de ander is het resultaat minst negatief / meest positief (↓ > ↓↓ én ↑↑ > ↑).', p:1 },
+      { t:'Nash (handhaven,handhaven) is suboptimaal — (verlagen,verlagen) zou voor beide beter zijn → gevangenendilemma.', p:1 }
+    ]
+  },
+  /* =========== 2024 tv2 =========== */
+  { id:'2024-11', year:'2024', tv:'tv2', op:'Opgave 2 · Tandartsen', q:11, pts:2, par:'1.2',
+    context:'Tandartsen mogen tarieven zelf bepalen. De overheid moet erop toezien dat tandartsen geen prijsafspraken maken.',
+    ask:'Noem <strong>twee gevolgen van prijsafspraken</strong> die nadelig zijn voor consumenten.',
+    model:[
+      { t:'Hogere prijzen (kartel → minder concurrentie op prijs).', p:1 },
+      { t:'Minder concurrentie op kwaliteit / service.', p:1 }
+    ]
+  },
+  { id:'2024-12', year:'2024', tv:'tv2', op:'Opgave 2 · Tandarts Denzel', q:12, pts:3, par:'2.1',
+    context:'Denzel (risiconeutraal) vergelijkt 3 opties voor 4 jaar: Mondmedisch (€28/halfjaar, €60 behandeling), De Concurrent (€26/halfjaar, €70), of verzekering (€69/jaar premie + €5 eigen risico). Vervolgbehandeling gemiddeld 1×/4 jaar.',
+    ask:'Toon met berekening welke keuze het beste past.',
+    model:[
+      { t:'4 jaar: Mondmedisch = 8×28+60 = €284.  De Concurrent = 8×26+70 = €278.', p:1 },
+      { t:'Verzekering: 4×69 + 5 = €281.', p:1 },
+      { t:'Laagste verwachte kosten → <strong>overstappen naar De Concurrent zonder verzekering</strong>.', p:1 }
+    ]
+  },
+  { id:'2024-14', year:'2024', tv:'tv2', op:'Opgave 3 · Studiekosten', q:14, pts:2, par:'2.2',
+    context:'De overheid geeft studiekostenaftrek, maar kan moeilijk controleren of een studie gericht is op een beroep.',
+    ask:'Leg uit dat <strong>asymmetrische informatie</strong> een financieel risico voor de overheid kan veroorzaken.',
+    model:[
+      { t:'Overheid weet minder goed dan de belastingplichtige of de studie aan de voorwaarde voldoet.', p:1 },
+      { t:'Gevolg: aftrek ook door mensen voor wie regeling niet bedoeld is → hogere uitgaven / lagere belastinginkomsten.', p:1 }
+    ]
+  },
+  { id:'2024-25', year:'2024', tv:'tv2', op:'Opgave 6 · Aanbesteding', q:25, pts:2, par:'1.3',
+    context:'Ultimatumspel: Bouwrijk verdeelt aanneemsom €485.000. Startkosten Bouwrijk €12.500, Schot in de Zaak €25.000. Schot accepteert of weigert (zonder onderhandelen). Schot streeft eigenbelang korte termijn.',
+    ask:'Welk minimaal verdelingsvoorstel zal Schot accepteren?',
+    model:[
+      { t:'Schot accepteert een bedrag waarmee minimaal de eigen startkosten worden terugverdiend.', p:1 },
+      { t:'Minimaal voorstel: <strong>€ 25.000</strong> (of € 25.001).', p:1 }
+    ]
+  },
+  { id:'2024-26', year:'2024', tv:'tv2', op:'Opgave 6 · Aanbesteding', q:26, pts:2, par:'1.3',
+    context:'Herhaald spel (toekomst): twee aannemers werken vaker samen (b) versus nooit meer (a).',
+    ask:'Wordt het voorstel van Bouwrijk in situatie b <strong>hoger of lager</strong> dan in a? Leg uit.',
+    model:[
+      { t:'Bij herhaald spel speelt vertrouwen voor toekomstige samenwerking een rol.', p:1 },
+      { t:'Bouwrijk zal een <strong>hoger</strong> bedrag voorstellen om vertrouwen te winnen.', p:1 }
+    ]
+  },
+  { id:'2024-27', year:'2024', tv:'tv2', op:'Opgave 6 · Aanbesteding', q:27, pts:2, par:'1.3',
+    context:'Aannemers houden rekening met een sociale norm in hun omgeving.',
+    ask:'Onderbouw met voorbeeld welke invloed een <strong>sociale norm</strong> op het gedrag heeft.',
+    model:[
+      { t:'Voorbeeld: sociale norm "gelijke verdeling bij gelijke prestatie".', p:1 },
+      { t:'Schot weigert te laag bod dat niet voldoet aan norm; Bouwrijk biedt hoger om gezichtsverlies te voorkomen.', p:1 }
+    ]
+  },
+  { id:'2024-28', year:'2024', tv:'tv2', op:'Opgave 6 · Aanbesteding', q:28, pts:2, par:'2.3',
+    context:'Verzekeraar biedt keuze hoog of laag eigen risico voor aansprakelijkheid.',
+    ask:'Geef <strong>twee redenen</strong> waarom verzekeraar lagere premie kan vragen bij hoger eigen risico.',
+    model:[
+      { t:'Verzekeraar keert minder uit — deel van de schade betaalt verzekerde zelf.', p:1 },
+      { t:'Verzekerde zal zich meer inspannen om schade te voorkomen → moral hazard wordt beperkt.', p:1 }
+    ]
+  },
+  /* =========== 2025 tv1 =========== */
+  { id:'2025-8',  year:'2025', tv:'tv1', op:'Opgave 2 · Fietsen Bonaire', q:8, pts:2, par:'1.2',
+    context:'Op Bonaire zijn beperkt aantal fietsverhuurders. Gewone fietsen + mountainbikes. Lokale bevolking gebruikt ook eigen fiets.',
+    ask:'Redenering: de markt is …(1)… met …(2)… producten. Huurfietsen en eigen fietsen zijn …(3)… goederen.',
+    model:[
+      { t:'(1) <strong>oligopolie</strong> · (2) <strong>heterogene</strong> · (3) <strong>substitutie</strong>.', p:2 }
+    ],
+    note:'Drie juist = 2p · Twee juist = 1p · Minder = 0p.'
+  },
+  { id:'2025-14', year:'2025', tv:'tv1', op:'Opgave 2 · Fietsen Bonaire', q:14, pts:2, par:'2.3',
+    context:'Toeristen laten huurfietsen overal staan → ergernis + schade. Directeur voert eigen risico in.',
+    ask:'Leg uit dat een <strong>eigen risico</strong> beide problemen kan oplossen.',
+    model:[
+      { t:'Toerist betaalt deel van de schade zelf → zorgvuldiger gedrag (moral hazard omlaag) → minder schade.', p:1 },
+      { t:'Fietsen worden netjes gestald in rekken → geen overlast voor bevolking.', p:1 }
+    ]
+  },
+  { id:'2025-15', year:'2025', tv:'tv1', op:'Opgave 3 · CO₂-rechten', q:15, pts:1, par:'1.4',
+    context:'EU geeft emissierechten; bedrijven kunnen ze onderling verhandelen. Wie meer wil uitstoten, koopt rechten van wie minder uitstoot.',
+    ask:'Verklaar waarom het <strong>emissierechtensysteem</strong> bedrijven prikkelt minder CO₂ uit te stoten.',
+    model:[
+      { t:'Rechten kopen verhoogt de kosten → prikkel tot duurzamer / minder produceren. OF verkopen levert extra opbrengst → duurzamer loont.', p:1 }
+    ]
+  },
+  { id:'2025-16', year:'2025', tv:'tv1', op:'Opgave 3 · CO₂-matrix', q:16, pts:2, par:'1.1',
+    context:'Winstveranderingen (€mln). Gas/Kolen kiezen: kopen emissierechten óf investeren in duurzame productie. Matrix: (70;80) (50;40) / (30;60) (35;45).',
+    ask:'Leg uit of er sprake is van een <strong>gevangenendilemma</strong>.',
+    model:[
+      { t:'Best response: Gas kiest kopen (70>30 én 50>35); Kolen kiest kopen (80>40 én 60>45) → beide kopen = dominante strategie.', p:1 },
+      { t:'Uitkomst (70;80) is óók voor beide tegelijk optimaal (hoogste opbrengst). Dus: <strong>geen gevangenendilemma</strong>.', p:1 }
+    ],
+    note:'Valkuil: dominante strategie + Nash ≠ automatisch PD! Check altijd collectief optimum.'
+  },
+  { id:'2025-17', year:'2025', tv:'tv1', op:'Opgave 3 · CO₂-rechten', q:17, pts:2, par:'1.3',
+    context:'Investeringen in duurzame productie → hoge verzonken kosten. Bedrijven zoeken nieuwe markten om terug te verdienen.',
+    ask:'Leg uit dat hoge <strong>verzonken kosten</strong> ervoor kunnen zorgen dat de totale CO₂-uitstoot niet daalt.',
+    model:[
+      { t:'Door verzonken kosten willen bedrijven meer afzet / nieuwe markten zoeken om te terugverdienen.', p:1 },
+      { t:'Productie neemt toe → zelfs bij schonere methode kan totale CO₂-uitstoot gelijk blijven of toenemen.', p:1 }
+    ]
+  },
+  { id:'2025-19', year:'2025', tv:'tv1', op:'Opgave 3 · CO₂-rechten', q:19, pts:2, par:'1.4',
+    context:'EU verlaagt het aantal emissierechten. Twee gevolgen voor het <em>groen bbp</em>.',
+    ask:'Leg beide gevolgen uit voor het <strong>groen bbp</strong>.',
+    model:[
+      { t:'Minder rechten → productie daalt → bbp (en daarmee groen bbp) daalt.', p:1 },
+      { t:'Minder productie/verduurzaming → minder milieuschade → groen bbp stijgt.', p:1 }
+    ]
+  },
+  { id:'2025-20', year:'2025', tv:'tv1', op:'Opgave 3 · CO₂-rechten', q:20, pts:1, par:'1.4',
+    context:'Alternatief systeem: prijs emissierecht = maatschappelijke kosten van uitstoot; onbeperkt inkoopbaar.',
+    ask:'Wat is het effect op de <strong>negatieve externe effecten</strong>?',
+    model:[
+      { t:'Prijs emissierecht = maatschappelijke kosten → vervuiler betaalt zelf → <strong>geen negatieve externe effecten meer</strong> (volledige internalisering).', p:1 }
+    ]
+  },
+  { id:'2025-26', year:'2025', tv:'tv1', op:'Opgave 5 · AI verzekering', q:26, pts:1, par:'2.1',
+    context:'Verzekeraars gebruiken AI om individuele risico\'s in te schatten en premies te personaliseren.',
+    ask:'Verklaar waarom de verzekeringsmarkt <strong>onvolkomen concurrentie</strong> is.',
+    model:[
+      { t:'Verzekeraar heeft invloed op de prijs (stelt premie vast met AI) OF geen transparantie (risico\'s moeilijk te zien) → onvolkomen concurrentie.', p:1 }
+    ]
+  },
+  { id:'2025-27', year:'2025', tv:'tv1', op:'Opgave 5 · AI verzekering', q:27, pts:2, par:'2.2',
+    context:'AI-gepersonaliseerde premies op basis van individueel risicoprofiel.',
+    ask:'Leg uit dat AI kan leiden tot <strong>afname van averechtse selectie</strong>.',
+    model:[
+      { t:'Gepersonaliseerde premies → lagere premie voor goede risico\'s / prikkel om risico te verlagen.', p:1 },
+      { t:'Goede risico\'s blijven zich verzekeren → relatief meer goede risico\'s → averechtse selectie voorkomen.', p:1 }
+    ]
+  },
+  { id:'2025-28', year:'2025', tv:'tv1', op:'Opgave 5 · AI verzekering', q:28, pts:2, par:'2.2',
+    context:'Toezichthouder: "AI-gepersonaliseerde premies zetten solidariteit onder druk."',
+    ask:'Leg de uitspraak uit.',
+    model:[
+      { t:'AI → lagere premie goede risico\'s, hogere premie slechte risico\'s.', p:1 },
+      { t:'Toegang tot betaalbare verzekering wordt moeilijker voor slechte risico\'s → zij delen lasten minder met goede risico\'s → minder solidariteit.', p:1 }
+    ]
+  },
+  { id:'2025-29', year:'2025', tv:'tv1', op:'Opgave 5 · AI verzekering', q:29, pts:2, par:'2.2',
+    context:'Vooral buitenlandse verzekeraars gebruiken AI om gericht goede risico\'s aan te trekken.',
+    ask:'Leg de gevolgen uit voor de winstgevendheid van <strong>binnenlandse</strong> verzekeraars.',
+    model:[
+      { t:'Buitenlandse verzekeraars trekken goede risico\'s → binnenlandse blijven met steeds groter aandeel slechte risico\'s.', p:1 },
+      { t:'Meer kosten (hogere uitkeringen) → winstgevendheid neemt af.', p:1 }
+    ]
+  },
+
+  /* =========== OVERIG / INTEGRATIEOPGAVEN (par:null) =========== */
+  /* 2023 tv1 */
+  { id:'2023-2', year:'2023', tv:'tv1', op:'Opgave 1 · Brood op de plank', q:2, pts:1, par:null,
+    context:'Bron 1: percentages zzp\'ers zonder aov per inkomensklasse.',
+    ask:'Toon met een berekening aan dat meer dan 40% van de zzp\'ers geen aov heeft.',
+    model:[{ t:'Ongewogen gemiddelde: (64,8+53,0+45,8+34,8+23,0)/5 = 44,3% > 40%.', p:1 }]
+  },
+  { id:'2023-3', year:'2023', tv:'tv1', op:'Opgave 1 · Brood op de plank', q:3, pts:2, par:null,
+    context:'Zzp\'ers in lage inkomens hebben vaker geen aov.',
+    ask:'Leg uit dat arbeidsongeschiktheid kan leiden tot <strong>denivellering</strong> van secundaire inkomens tussen zzp\'ers.',
+    model:[
+      { t:'Lagere inkomens zzp\'er: geen aov → inkomen daalt sterk bij arbeidsongeschiktheid.', p:1 },
+      { t:'Hogere inkomens zzp\'er: wel aov → inkomen blijft grotendeels behouden → verschillen groter (denivellering).', p:1 }
+    ]
+  },
+  { id:'2023-4', year:'2023', tv:'tv1', op:'Opgave 1 · Brood op de plank', q:4, pts:2, par:null,
+    context:'Zelfde inkomensklasse: werknemer versus zzp\'er, beiden arbeidsongeschikt.',
+    ask:'Leg de stelling van het vakbondslid uit.',
+    model:[
+      { t:'Werknemers verplicht verzekerd → uitkering bij arbeidsongeschiktheid.', p:1 },
+      { t:'Deel zzp\'ers niet verzekerd → groter secundair inkomensverlies → denivellering.', p:1 }
+    ]
+  },
+  { id:'2023-8', year:'2023', tv:'tv1', op:'Opgave 2 · Wokakkoord', q:8, pts:1, par:null,
+    context:'WAV beperkt het aantal koks uit Azië.',
+    ask:'Verklaar het gevolg van de WAV op de loonontwikkeling van specialiteitenkoks.',
+    model:[{ t:'WAV beperkt toename aanbod → tekort blijft → lonen blijven stijgen.', p:1 }]
+  },
+  { id:'2023-9', year:'2023', tv:'tv1', op:'Opgave 2 · Wokakkoord', q:9, pts:1, par:null,
+    context:'Qa0 = 10.500 ; Qv1 = −1,2L + 44.640.',
+    ask:'Bereken het evenwichtsloon.',
+    model:[{ t:'−1,2L + 44.640 = 10.500 → L = <strong>€ 28.450</strong>.', p:1 }]
+  },
+  { id:'2023-10', year:'2023', tv:'tv1', op:'Opgave 2 · Wokakkoord', q:10, pts:2, par:null,
+    context:'Bij loon € 25.000: Qv1 en aanbod vergelijken. Quotum = 900.',
+    ask:'Bereken met hoeveel koks het quotum moet worden verhoogd.',
+    model:[
+      { t:'Qv1 = −1,2·25.000+44.640 = 14.640 gevraagd.', p:1 },
+      { t:'Aanbod+quotum = 10.500+900 = 11.400. Extra = 14.640−11.400 = <strong>3.240 koks</strong>.', p:1 }
+    ]
+  },
+  { id:'2023-11', year:'2023', tv:'tv1', op:'Opgave 2 · Wokakkoord', q:11, pts:2, par:null,
+    context:'Lagere loonkosten → mogelijk hogere totale omzet.',
+    ask:'Leg uit dat daling gemiddelde loonkosten kan leiden tot omzettoename.',
+    model:[
+      { t:'Lagere kosten → lagere prijs mogelijk.', p:1 },
+      { t:'Als afzet procentueel meer stijgt dan prijs daalt (prijselastische vraag) → totale omzet stijgt.', p:1 }
+    ]
+  },
+  { id:'2023-12', year:'2023', tv:'tv1', op:'Opgave 2 · Wokakkoord', q:12, pts:2, par:null,
+    context:'Economische groei in Azië → vraag naar koks daar.',
+    ask:'Redenering (stijgt/daalt · aanbodlijn/vraaglijn · links/rechts · afname/toename).',
+    model:[{ t:'(1) <strong>stijgt</strong> · (2) <strong>aanbodlijn</strong> · (3) <strong>links</strong> · (4) <strong>afname</strong> van totaal surplus.', p:2 }],
+    note:'4 juist = 2p · 3 juist = 1p · <3 juist = 0p.'
+  },
+  { id:'2023-14', year:'2023', tv:'tv1', op:'Opgave 3 · Auto van de zaak', q:14, pts:2, par:null,
+    context:'Uitstoot-afhankelijke bijtelling stimuleert innovatie.',
+    ask:'Leg uit dat de regeling gunstig is voor <strong>innovatie en structurele groei</strong>.',
+    model:[
+      { t:'Werknemers kiezen zuinige auto\'s → fabrikanten moeten schonere technieken ontwikkelen.', p:1 },
+      { t:'Nieuwe technieken → hogere kwaliteit/kwantiteit productiefactoren → structurele groei.', p:1 }
+    ]
+  },
+  { id:'2023-15', year:'2023', tv:'tv1', op:'Opgave 3 · Meryem', q:15, pts:2, par:null,
+    context:'Meryem (€35.000) kiest Hyundai (€14.065, 14% bijtelling, schijf 1 = 37,1%).',
+    ask:'Bereken extra belasting in 2023.',
+    model:[
+      { t:'Bijtelling 14% × €14.065 = €1.969,10.', p:1 },
+      { t:'Belasting 37,1% × €1.969,10 = <strong>€ 730,54</strong>.', p:1 }
+    ]
+  },
+  { id:'2023-16', year:'2023', tv:'tv1', op:'Opgave 4 · ECB-rente', q:16, pts:2, par:null,
+    context:'ECB verlaagt rente om inflatie te stimuleren.',
+    ask:'Leg uit dat renteverlaging kan leiden tot hogere inflatie.',
+    model:[
+      { t:'Lage rente: lenen aantrekkelijker / sparen minder aantrekkelijk.', p:1 },
+      { t:'Bestedingen stijgen → bij gelijkblijvende productiecapaciteit stijgt de inflatie.', p:1 }
+    ]
+  },
+  { id:'2023-17', year:'2023', tv:'tv1', op:'Opgave 4 · ECB-rente', q:17, pts:2, par:null,
+    context:'ECB wil deflatie voorkomen.',
+    ask:'Leg uit dat <em>verwachte deflatie</em> negatieve invloed heeft op economische groei.',
+    model:[
+      { t:'Consumenten verwachten verdere prijsdaling → stellen aankopen uit.', p:1 },
+      { t:'Bestedingen dalen → productie daalt → lagere economische groei.', p:1 }
+    ]
+  },
+  { id:'2023-18', year:'2023', tv:'tv1', op:'Opgave 4 · ECB-rente', q:18, pts:2, par:null,
+    context:'Amerikaanse politicus: ECB-renteverlaging verslechtert concurrentiepositie VS.',
+    ask:'Leg uit.',
+    model:[
+      { t:'Lagere rente in EU → lagere kosten Europese producenten.', p:1 },
+      { t:'Europese prijzen dalen t.o.v. Amerikaanse → concurrentiepositie VS verslechtert. (Of: kapitaalstroom naar VS → dollar appreciëert → Amerikaanse producten duurder.)', p:1 }
+    ]
+  },
+  { id:'2023-19', year:'2023', tv:'tv1', op:'Opgave 4 · ECB-rente', q:19, pts:2, par:null,
+    context:'Vergrijzing: 55-plussers bezitten gemiddeld meer vermogen.',
+    ask:'Leg uit dat vergrijzing ook bijdraagt aan lage rente.',
+    model:[
+      { t:'55-plussers hebben meer vermogen dan 55-minners.', p:1 },
+      { t:'Groter aandeel 55+ → hoger aanbod op vermogensmarkt → rente daalt.', p:1 }
+    ]
+  },
+  { id:'2023-23', year:'2023', tv:'tv1', op:'Opgave 5 · Olieprijs', q:23, pts:2, par:null,
+    context:'Cel rechtsonder matrix: beide verlagen → prijs stijgt → omzet stijgt.',
+    ask:'Verklaar de uitkomst; betrek <strong>prijselasticiteit</strong>.',
+    model:[
+      { t:'Beide verlagen aanbod → prijs stijgt.', p:1 },
+      { t:'Omzet stijgt bij hogere prijs → <strong>prijsinelastische vraag</strong>.', p:1 }
+    ]
+  },
+  { id:'2023-24', year:'2023', tv:'tv1', op:'Opgave 5 · Olieprijs', q:24, pts:2, par:null,
+    context:'VS: GTK ≈ 21,5+9,4+5,5 = $36,4. Oude prijs = 30/0,7 = $42,86.',
+    ask:'Toon aan dat VS bij $30 niet winstgevend is, bij oude prijs wel.',
+    model:[
+      { t:'GTK $36,4 > marktprijs $30 → verlies.', p:1 },
+      { t:'Oude prijs $42,86 > GTK → wél winstgevend.', p:1 }
+    ]
+  },
+  { id:'2023-25', year:'2023', tv:'tv1', op:'Opgave 5 · Olieprijs', q:25, pts:2, par:null,
+    context:'VS korte termijn: blijven of stoppen?',
+    ask:'Stopt VS op korte termijn?',
+    model:[
+      { t:'<strong>Nee</strong>. Prijs > GVK én constante kosten lopen door.', p:1 },
+      { t:'Doorproduceren → verlies minimaliseren (lager dan verlies bij stoppen).', p:1 }
+    ]
+  },
+  { id:'2023-26', year:'2023', tv:'tv1', op:'Opgave 5 · Olieprijs', q:26, pts:2, par:null,
+    context:'Prijs gebruik olietankers stijgt met 1.000% tijdens dalende olieprijs.',
+    ask:'Beredeneer hoe dalende olieprijs kan leiden tot prijsstijging olietanker-gebruik.',
+    model:[
+      { t:'Lage olieprijs → producenten bieden minder aan maar olie is al geproduceerd / kopers slaan op.', p:1 },
+      { t:'Vraag naar opslagcapaciteit stijgt → bij gelijkblijvend aanbod stijgt prijs olietankers.', p:1 }
+    ]
+  },
+  { id:'2023-27', year:'2023', tv:'tv1', op:'Opgave 5 · Olieprijs', q:27, pts:2, par:null,
+    context:'Dalende olieprijs → investeerders duurzame energie lagere winstgevendheid.',
+    ask:'Beredeneer het verband.',
+    model:[
+      { t:'Lage olieprijs maakt olie aantrekkelijker dan duurzame energie (substitutie).', p:1 },
+      { t:'Vraag duurzame energie daalt → prijs daalt → winstgevendheid investeringen daalt.', p:1 }
+    ]
+  },
+  { id:'2023-28', year:'2023', tv:'tv1', op:'Opgave 6 · Treinmonopolie', q:28, pts:1, par:null,
+    context:'Wettelijk monopolie bij hoge … en invloed op ….',
+    ask:'Redenering (constante/variabele kosten · omzet/prijs/winst).',
+    model:[{ t:'(1) <strong>constante kosten</strong> · (2) <strong>prijs</strong>.', p:1 }]
+  },
+  { id:'2023-29', year:'2023', tv:'tv1', op:'Opgave 6 · Treinmonopolie', q:29, pts:1, par:null,
+    context:'Gemiddelde variabele kosten zijn constant.',
+    ask:'Leg uit waarom MK = GVK.',
+    model:[{ t:'GVK zijn proportioneel variabel: elk extra product kost dezelfde extra kosten → MK = GVK.', p:1 }]
+  },
+  { id:'2023-30', year:'2023', tv:'tv1', op:'Opgave 6 · Treinmonopolie', q:30, pts:2, par:null,
+    context:'Minimaal totaalverlies NS.',
+    ask:'Bij welke prijs is het verlies minimaal?',
+    model:[
+      { t:'Minimaal verlies = maximum winst-regel: MO = MK (bij Q = 2.000 miljoen km).', p:1 },
+      { t:'Grafiek: P = GO = <strong>€ 0,40 per km</strong> (< GTK → verlies).', p:1 }
+    ]
+  },
+  { id:'2023-31', year:'2023', tv:'tv1', op:'Opgave 6 · Treinmonopolie', q:31, pts:1, par:null,
+    context:'Vanaf 2008: één concessie per regio.',
+    ask:'Welke marktvorm vanaf 2008?',
+    model:[{ t:'<strong>Monopolie</strong>: per traject/regio één aanbieder.', p:1 }]
+  },
+  /* 2024 overig */
+  { id:'2024-1', year:'2024', tv:'tv2', op:'Opgave 1 · Cashewnoten', q:1, pts:2, par:null,
+    context:'Alle cashewnoten zelfde soort/kwaliteit; veiling; veel boeren.',
+    ask:'Marktvorm + twee kenmerken.',
+    model:[{ t:'<strong>Volledige mededinging</strong>: homogeen product, veel aanbieders, transparantie, vrije toe-/uittreding, prijsnemers. Noem er twee.', p:2 }]
+  },
+  { id:'2024-2', year:'2024', tv:'tv2', op:'Opgave 1 · Cashewnoten', q:2, pts:2, par:null,
+    context:'Aanbodlijn is verticaal bij hoeveelheid C.',
+    ask:'Leid de <strong>prijselasticiteit van het aanbod</strong> af.',
+    model:[
+      { t:'Hele oogst wordt aangeboden ongeacht de prijs.', p:1 },
+      { t:'%-verandering hoeveelheid = 0 → Ea = 0 (volledig prijsinelastisch aanbod).', p:1 }
+    ]
+  },
+  { id:'2024-3', year:'2024', tv:'tv2', op:'Opgave 1 · Cashewnoten', q:3, pts:3, par:null,
+    context:'Minimumprijs Pmin → overheid koopt overschot.',
+    ask:'Welk vlak = opkoopbedrag? Leg uit.',
+    model:[
+      { t:'Vlak <strong>BIJC</strong>.', p:1 },
+      { t:'Minimumprijs leidt tot aanbodoverschot (BC/IJ).', p:1 },
+      { t:'Overschot wordt opgekocht tegen Pmin (H/I/J).', p:1 }
+    ]
+  },
+  { id:'2024-4', year:'2024', tv:'tv2', op:'Opgave 1 · Cashewnoten', q:4, pts:2, par:null,
+    context:'Minimumprijs nadelig voor kopers (consumentensurplus).',
+    ask:'Leg uit.',
+    model:[
+      { t:'Consumentensurplus = betalingsbereidheid − betaalde prijs.', p:1 },
+      { t:'Hogere prijs → kleiner verschil → consumentensurplus daalt (van EKG naar HKI).', p:1 }
+    ]
+  },
+  { id:'2024-5', year:'2024', tv:'tv2', op:'Opgave 1 · Cashewnoten', q:5, pts:1, par:null,
+    context:'Opkoopprogramma kost geld.',
+    ask:'Reden nadeel burgers.',
+    model:[{ t:'Betaald uit belasting: belastingafdracht ↑ OF verdringt andere overheidsbestedingen.', p:1 }]
+  },
+  { id:'2024-6', year:'2024', tv:'tv2', op:'Opgave 1 · Cashewnoten', q:6, pts:1, par:null,
+    context:'Pijl 1 korte termijn.',
+    ask:'Argument: waarom daalt werkgelegenheid op korte termijn?',
+    model:[{ t:'Hogere arbeidsproductiviteit → minder mensen nodig voor dezelfde productie / machines vervangen arbeid.', p:1 }]
+  },
+  { id:'2024-7', year:'2024', tv:'tv2', op:'Opgave 1 · Cashewnoten', q:7, pts:2, par:null,
+    context:'Pijl 2+3 lange termijn.',
+    ask:'Leg uit: investeringen leiden op lange termijn tot méér werkgelegenheid.',
+    model:[
+      { t:'Pijl 2: loonkosten/product dalen → prijs daalt → internationale concurrentiepositie verbetert.', p:1 },
+      { t:'Pijl 3: export groeit → productie groeit → vraag naar arbeid/werkgelegenheid ↑.', p:1 }
+    ]
+  },
+  { id:'2024-8', year:'2024', tv:'tv2', op:'Opgave 2 · Tandartsen', q:8, pts:2, par:null,
+    context:'9.000 tandartsen, zelf tarieven bepalen, kwaliteitsonderscheid.',
+    ask:'Twee kenmerken <strong>monopolistische concurrentie</strong> met toelichting.',
+    model:[{ t:'Prijszetting (elke tandarts bepaalt eigen tarief) + veel aanbieders (9.000) + heterogeen product (verschillende diensten/vertrouwensband). Twee van deze = 2p.', p:2 }]
+  },
+  { id:'2024-9', year:'2024', tv:'tv2', op:'Opgave 2 · Tandartsen', q:9, pts:2, par:null,
+    context:'Marktwerking → lagere prijzen.',
+    ask:'Leg uit.',
+    model:[
+      { t:'Vrijgeven tarieven → concurrentie tussen tandartsen.', p:1 },
+      { t:'Patiënten zoeken goedkopere zorg bij gelijke kwaliteit → prijzen dalen.', p:1 }
+    ]
+  },
+  { id:'2024-10', year:'2024', tv:'tv2', op:'Opgave 2 · Tandartsen', q:10, pts:2, par:null,
+    context:'Veel verzekerde patiënten → marktwerking faalt.',
+    ask:'Leg uit.',
+    model:[
+      { t:'Verzekeraar betaalt → patiënt heeft geen prijsprikkel om te vergelijken.', p:1 },
+      { t:'Tandarts heeft geen prikkel om tarieven te verlagen.', p:1 }
+    ]
+  },
+  { id:'2024-13', year:'2024', tv:'tv2', op:'Opgave 3 · Studiekosten', q:13, pts:2, par:null,
+    context:'Scholingskostenaftrek = overheid stimuleert studeren.',
+    ask:'Leg uit dat de overheid <strong>ruilt over de tijd</strong>.',
+    model:[
+      { t:'Nu minder belastinginkomsten → nu meer lenen / minder aflossen.', p:1 },
+      { t:'Later hogere verdiencapaciteit → hogere belastingopbrengsten → méér aflossen.', p:1 }
+    ]
+  },
+  { id:'2024-15', year:'2024', tv:'tv2', op:'Opgave 3 · Studiekosten', q:15, pts:2, par:null,
+    context:'Progressief belastingstelsel: hogere inkomens profiteren meer van aftrek.',
+    ask:'Twee argumenten voor stelling econoom.',
+    model:[
+      { t:'Lage inkomens hebben minder financiële ruimte om studie te bekostigen.', p:1 },
+      { t:'Aftrekpost levert hoogste inkomens 49,5% op, lagere 19,03% of 36,93% → meer voordeel bovenin.', p:1 }
+    ]
+  },
+  { id:'2024-16', year:'2024', tv:'tv2', op:'Opgave 3 · Denise', q:16, pts:2, par:null,
+    context:'Collegegeld €2.300 + materialen €400. Drempel €300. Inkomen €36.000 → schijf 1 (19,03%).',
+    ask:'Bereken netto-studiekosten.',
+    model:[
+      { t:'Aftrekbaar: €2.700 − €300 = €2.400.', p:1 },
+      { t:'Voordeel 2.400×0,1903 = €456,72 → netto 2.700 − 456,72 = <strong>€ 2.243,28</strong>.', p:1 }
+    ]
+  },
+  { id:'2024-17', year:'2024', tv:'tv2', op:'Opgave 4 · Rente', q:17, pts:2, par:null,
+    context:'Laagconjunctuur + deflatie.',
+    ask:'Leg uit dat deflatie laagconjunctuur versterkt.',
+    model:[
+      { t:'Consumenten verwachten prijsdaling → stellen consumptie uit.', p:1 },
+      { t:'Negatieve spiraal: bestedingen en productie blijven dalen.', p:1 }
+    ]
+  },
+  { id:'2024-18', year:'2024', tv:'tv2', op:'Opgave 4 · Rente', q:18, pts:2, par:null,
+    context:'Renteverlaging in laagconjunctuur; investeringen nauwelijks toe.',
+    ask:'Leg bewering uit.',
+    model:[
+      { t:'Onderbezetting productiecapaciteit → bestedingen kunnen zonder investeringen worden opgevangen.', p:1 },
+      { t:'Bedrijven hebben lage winstverwachting → investeringen niet terug te verdienen.', p:1 }
+    ]
+  },
+  { id:'2024-19', year:'2024', tv:'tv2', op:'Opgave 4 · Huur/koop', q:19, pts:3, par:null,
+    context:'Eigen woning: hypotheek 2%×€240.000 + €250/mnd = €7.800/jr. Huur stijgt 4%/jr, start €7.200.',
+    ask:'Bereken woonlast jaar 3 en 4; toon aan dat koop pas in jaar 4 goedkoper is.',
+    model:[
+      { t:'Eigen woning: 2%×240.000=€4.800 + 12×250=€3.000 = <strong>€ 7.800</strong>.', p:1 },
+      { t:'Huur jaar 3: 7.200×1,04² = €7.787,52. Jaar 4: 7.200×1,04³ = €8.099,02.', p:1 },
+      { t:'Jaar 4 huur (8.099,02) > koop (7.800) → koop goedkoper vanaf jaar 4.', p:1 }
+    ]
+  },
+  { id:'2024-20', year:'2024', tv:'tv2', op:'Opgave 4 · Huur/koop', q:20, pts:1, par:null,
+    context:'Andere afweging dan rente/woonlast.',
+    ask:'Andere reden huurder/koper.',
+    model:[{ t:'Waardestijging woning · inkomensonzekerheid · verandering belastingstelsel · voorkeur voor woningtype.', p:1 }]
+  },
+  { id:'2024-21', year:'2024', tv:'tv2', op:'Opgave 5 · Houdbaarheid', q:21, pts:2, par:null,
+    context:'Grijze druk stijgt.',
+    ask:'Leg uit dat <strong>houdbaarheidssaldo</strong> verslechtert.',
+    model:[
+      { t:'67+ gebruikt meer overheidsuitgaven (AOW, zorg) / betaalt minder belasting.', p:1 },
+      { t:'Overheidsuitgaven ↑ / inkomsten ↓ → saldo verslechtert.', p:1 }
+    ]
+  },
+  { id:'2024-22', year:'2024', tv:'tv2', op:'Opgave 5 · Houdbaarheid', q:22, pts:2, par:null,
+    context:'Arbeidsaanbod 20-66 stijgt.',
+    ask:'Leg uit: hogere inkomsten én lagere uitgaven.',
+    model:[
+      { t:'Minder uitkeringen → uitgaven dalen.', p:1 },
+      { t:'Meer werkenden → belastinginkomsten stijgen.', p:1 }
+    ]
+  },
+  { id:'2024-23', year:'2024', tv:'tv2', op:'Opgave 5 · Houdbaarheid', q:23, pts:2, par:null,
+    context:'Optie 1: belasting +1pp. Optie 2: uitkeringen verlagen.',
+    ask:'Welke optie leidt tot <strong>daling arbeidsaanbod</strong>?',
+    model:[
+      { t:'Optie 1: hogere marginale belasting → lager nettoloon.', p:1 },
+      { t:'Prikkel om (meer) te werken neemt af → arbeidsaanbod daalt.', p:1 }
+    ]
+  },
+  { id:'2024-24', year:'2024', tv:'tv2', op:'Opgave 5 · Houdbaarheid', q:24, pts:2, par:null,
+    context:'Welke leidt tot denivellering?',
+    ask:'Welke beleidsoptie → <strong>denivellering</strong>?',
+    model:[
+      { t:'Optie 2: uitkering omlaag → lage inkomens dalen; werkenden blijven gelijk.', p:1 },
+      { t:'Verschil tussen laag en hoog groter → denivellering.', p:1 }
+    ],
+    note:'Optie 1 is nivellering (progressief verhoogd).'
+  },
+  /* 2025 overig */
+  { id:'2025-1', year:'2025', tv:'tv1', op:'Opgave 1 · Minimumuurloon', q:1, pts:2, par:null,
+    context:'Econoom 1: hoger minimumloon → economische groei.',
+    ask:'Leg uit.',
+    model:[
+      { t:'Hoger inkomen → hogere consumptie.', p:1 },
+      { t:'Productie/bbp stijgt → economische groei.', p:1 }
+    ]
+  },
+  { id:'2025-2', year:'2025', tv:'tv1', op:'Opgave 1 · Minimumuurloon', q:2, pts:2, par:null,
+    context:'Econoom 2: minimumloon → verslechtering concurrentiepositie.',
+    ask:'Leg uit.',
+    model:[
+      { t:'Hogere minimumlonen → hogere loonkosten per product (bij gelijke arbeidsproductiviteit).', p:1 },
+      { t:'Hogere prijzen → Nederland duurder voor buitenland → concurrentiepositie verslechtert.', p:1 }
+    ]
+  },
+  { id:'2025-3', year:'2025', tv:'tv1', op:'Opgave 1 · Minimumuurloon', q:3, pts:2, par:null,
+    context:'Minimumloon > marktloon.',
+    ask:'Effect op werkloosheid.',
+    model:[
+      { t:'Aanbod arbeid stijgt / vraag naar arbeid daalt.', p:1 },
+      { t:'Werkloosheid <strong>stijgt</strong>.', p:1 }
+    ],
+    note:'Omgekeerde redenering (via consumptie-stijging → lagere werkloosheid) ook goed gerekend.'
+  },
+  { id:'2025-4', year:'2025', tv:'tv1', op:'Opgave 1 · Minimumuurloon', q:4, pts:1, par:null,
+    context:'20-jarige €10,62; 16-jarige €4,58.',
+    ask:'Hoeveel % hoger?',
+    model:[{ t:'(10,62 − 4,58)/4,58 × 100 = <strong>131,9%</strong>.', p:1 }]
+  },
+  { id:'2025-5', year:'2025', tv:'tv1', op:'Opgave 1 · Minimumuurloon', q:5, pts:2, par:null,
+    context:'Inflatie apr-jul: 0,16+0,39+0,44+0,77 = 1,76%.',
+    ask:'Nieuw minimumuurloon 16-jarige voor gelijke koopkracht.',
+    model:[
+      { t:'Inflatie ≈ 1,76%.', p:1 },
+      { t:'1,0176 × €4,58 = <strong>€ 4,66</strong>.', p:1 }
+    ]
+  },
+  { id:'2025-6', year:'2025', tv:'tv1', op:'Opgave 1 · Minimumuurloon', q:6, pts:2, par:null,
+    context:'Laagconjunctuur — noem 2 voorbeelden <strong>anticyclisch begrotingsbeleid</strong>.',
+    ask:'Twee voorbeelden.',
+    model:[{ t:'Bijv.: belastingen verlagen, uitkeringen verhogen, overheidsuitgaven (zorg/onderwijs) verhogen, subsidies verhogen, ambtenaren salaris ↑ of aantal ↑.', p:2 }],
+    note:'Monetair beleid is GEEN begrotingsbeleid.'
+  },
+  { id:'2025-7', year:'2025', tv:'tv1', op:'Opgave 1 · Minimumuurloon', q:7, pts:2, par:null,
+    context:'Inflatie < doelstelling → centrale bank.',
+    ask:'Rente omhoog of omlaag?',
+    model:[
+      { t:'Rente <strong>omlaag</strong>: lenen aantrekkelijker / sparen onaantrekkelijker.', p:1 },
+      { t:'Bestedingen ↑ → (bestedings)inflatie stijgt.', p:1 }
+    ]
+  },
+  { id:'2025-9', year:'2025', tv:'tv1', op:'Opgave 2 · Hopi Bon', q:9, pts:2, par:null,
+    context:'MK-lijn horizontaal in grafiek.',
+    ask:'Zijn variabele kosten degressief, proportioneel of progressief?',
+    model:[
+      { t:'MK is constant bij elke q (horizontale lijn).', p:1 },
+      { t:'→ VK is <strong>proportioneel</strong>.', p:1 }
+    ]
+  },
+  { id:'2025-10', year:'2025', tv:'tv1', op:'Opgave 2 · Hopi Bon', q:10, pts:3, par:null,
+    context:'Doel maximale winst.',
+    ask:'Bereken resultaat per dag.',
+    model:[
+      { t:'MO = MK bij q = 25.', p:1 },
+      { t:'Bij q = 25: P = $28, GTK = $16.', p:1 },
+      { t:'TW = (28 − 16) × 25 = <strong>$ 300</strong>/dag.', p:1 }
+    ]
+  },
+  { id:'2025-11', year:'2025', tv:'tv1', op:'Opgave 2 · Hopi Bon', q:11, pts:3, par:null,
+    context:'Lagere prijs dan bij max winst.',
+    ask:'Welvaartseffect (consumentensurplus + 2 effecten producentensurplus).',
+    model:[
+      { t:'Lagere prijs → consumentensurplus ↑ (meer producten + groter verschil betalingsbereidheid-prijs).', p:1 },
+      { t:'Producentensurplus daalt: verschil MK-prijs kleiner per product.', p:1 },
+      { t:'Producentensurplus stijgt: meer producten verkocht.', p:1 }
+    ]
+  },
+  { id:'2025-12', year:'2025', tv:'tv1', op:'Opgave 2 · Hopi Bon', q:12, pts:3, par:null,
+    context:'Prijs $16 → $24. Afzet 40 → 30.',
+    ask:'Stijgt of daalt omzet? Bereken <strong>prijselasticiteit</strong> eerst.',
+    model:[
+      { t:'ΔP = +50%; Δq = −25%.', p:1 },
+      { t:'Ev = −25/50 = <strong>−0,5</strong> → prijsinelastische vraag.', p:1 },
+      { t:'Prijsstijging bij prijsinelastisch → omzet <strong>stijgt</strong>.', p:1 }
+    ]
+  },
+  { id:'2025-13', year:'2025', tv:'tv1', op:'Opgave 2 · Hopi Bon', q:13, pts:2, par:null,
+    context:'Jaarabonnement alleen inwoners; persoonsgebonden. Inwoners lager tarief.',
+    ask:'Voldoet aan de <strong>twee voorwaarden prijsdiscriminatie</strong>?',
+    model:[
+      { t:'Gescheiden deelmarkten: aantonen inwoner vs toerist ✅.', p:1 },
+      { t:'Geen doorverkoop: persoonsgebonden abonnement → kan niet doorverkocht → beide voorwaarden voldaan.', p:1 }
+    ]
+  },
+  { id:'2025-18', year:'2025', tv:'tv1', op:'Opgave 3 · CO₂-rechten', q:18, pts:2, par:null,
+    context:'NL geeft rechten vooral aan exporterende bedrijven.',
+    ask:'Leg uit dat dit een vorm van <strong>protectie</strong> is.',
+    model:[
+      { t:'Kosten blijven lager dan buitenlandse concurrenten (of productie verhuist niet).', p:1 },
+      { t:'Beschermt eigen productie / werkgelegenheid.', p:1 }
+    ]
+  },
+  { id:'2025-21', year:'2025', tv:'tv1', op:'Opgave 4 · AOW', q:21, pts:1, par:null,
+    context:'AOW financiering.',
+    ask:'Kapitaaldekking of omslagstelsel? Motiveer.',
+    model:[{ t:'<strong>Omslagstelsel</strong>: premies nu betalen uitkeringen nu / werkenden betalen voor AOW\'ers nu.', p:1 }]
+  },
+  { id:'2025-22', year:'2025', tv:'tv1', op:'Opgave 4 · AOW', q:22, pts:2, par:null,
+    context:'AOW-leeftijd omhoog.',
+    ask:'Betaalbaarheid via inkomsten + uitgaven overheid.',
+    model:[
+      { t:'Inkomsten ↑: werkenden betalen langer premie.', p:1 },
+      { t:'Uitgaven ↓: minder lang AOW uitgekeerd.', p:1 }
+    ]
+  },
+  { id:'2025-23', year:'2025', tv:'tv1', op:'Opgave 4 · AOW', q:23, pts:2, par:null,
+    context:'Maatregel 1: minder medische handelingen vergoed.',
+    ask:'Leg uit: hogere collectieve zorguitgaven op langere termijn.',
+    model:[
+      { t:'Mensen laten zich minder vaak behandelen.', p:1 },
+      { t:'Ziekte verergert → hogere zorgkosten later.', p:1 }
+    ]
+  },
+  { id:'2025-24', year:'2025', tv:'tv1', op:'Opgave 4 · AOW', q:24, pts:2, par:null,
+    context:'Maatregel 2: AOW-uitkering paar omlaag (1.807,20 → 1.708,08); inflatie 1%.',
+    ask:'Toon aan: minimaal 6% koopkrachtdaling.',
+    model:[
+      { t:'(1.708,08 − 1.807,20)/1.807,20 × 100 = −5,5%.', p:1 },
+      { t:'Koopkracht = −5,5% − 1% inflatie = <strong>−6,5%</strong> (≥ 6%).', p:1 }
+    ]
+  },
+  { id:'2025-25', year:'2025', tv:'tv1', op:'Opgave 4 · AOW', q:25, pts:2, par:null,
+    context:'Alleenstaande AOW €1.330,76/mnd. Tarief naar 36,93% ipv 19,03%.',
+    ask:'Bereken extra belasting box 1.',
+    model:[
+      { t:'Jaarinkomen €15.969,12 × (0,3693 − 0,1903) = <strong>€ 2.858</strong>.', p:2 }
+    ]
+  }
+];
+
+/* ===================================================================
+   RENDER — exam cards per paragraph + overig section
+   =================================================================== */
+function yearClass(y) { return 'exam-year-' + y; }
+function renderModel(model, note) {
+  let h = `<div class="exam-model"><div class="exam-model-title">✅ Antwoordmodel</div>`;
+  model.forEach(s => {
+    h += `<div class="exam-model-step"><span class="exam-model-pts">${s.p}p</span><span>${s.t}</span></div>`;
+  });
+  h += `</div>`;
+  if (note) h += `<div class="exam-note">ℹ️ ${note}</div>`;
+  return h;
+}
+function renderCard(q) {
+  return `
+    <details class="exam-card" data-search-scope>
+      <summary>
+        <span class="${yearClass(q.year)} exam-year">${q.year} ${q.tv}</span>
+        <span class="text-xs font-semibold text-slate-800">${q.op} · vraag ${q.q}</span>
+        <span class="exam-pts">${q.pts}p</span>
+        <span class="ml-auto chevron text-slate-400">▾</span>
+      </summary>
+      <div class="exam-body">
+        ${q.context ? `<div class="exam-context"><strong class="text-slate-700">Context:</strong> ${q.context}</div>` : ''}
+        <div class="exam-ask"><strong class="text-indigo-700">Vraag ${q.q}:</strong> ${q.ask}</div>
+        <button class="exam-reveal-btn" aria-expanded="false">Toon Uitwerking ▸</button>
+        <div class="exam-answer" style="display:none">${renderModel(q.model, q.note)}</div>
+      </div>
+    </details>`;
+}
+
+/* ---- Group by paragraph ---- */
+function groupMapped() {
+  const groups = {};
+  QUESTIONS.forEach(q => {
+    if (q.par) { (groups[q.par] = groups[q.par] || []).push(q); }
+  });
+  return groups;
+}
+
+function groupOverig() {
+  const groups = {};
+  QUESTIONS.filter(q => !q.par).forEach(q => {
+    const key = `Eindexamen ${q.year} · ${q.tv === 'tv1' ? 'tijdvak 1' : 'tijdvak 2'}`;
+    (groups[key] = groups[key] || []).push(q);
+  });
+  return groups;
+}
+
+function renderExams() {
+  const mapped = groupMapped();
+  document.querySelectorAll('.exam-slot').forEach(slot => {
+    const par = slot.getAttribute('data-par');
+    const qs = mapped[par] || [];
+    if (!qs.length) {
+      slot.innerHTML = `<div class="text-xs text-slate-400 italic border border-dashed border-slate-200 rounded-lg p-3">Geen directe examenvragen gevonden voor § ${par}. Zie sectie <a href="#overig" class="text-indigo-600 underline">Overig / Integratieopgaven</a>.</div>`;
+      return;
+    }
+    slot.innerHTML = `
+      <div class="bg-white border border-indigo-100 rounded-xl p-4">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="text-sm font-bold text-indigo-700">📝 Examenvragen · § ${par}</span>
+          <span class="text-[10px] font-semibold bg-indigo-100 text-indigo-700 rounded-full px-2 py-0.5">${qs.length} vragen</span>
+        </div>
+        <div class="space-y-2">${qs.map(renderCard).join('')}</div>
+      </div>`;
+  });
+
+  const overig = groupOverig();
+  const container = document.getElementById('overig-container');
+  if (container) {
+    const sortedKeys = Object.keys(overig).sort();
+    container.innerHTML = sortedKeys.map(group => {
+      const qs = overig[group].slice().sort((a,b) => a.q - b.q);
+      const year = qs[0].year;
+      return `
+        <div class="bg-white border border-amber-200 rounded-xl p-4">
+          <div class="flex items-center gap-2 mb-3">
+            <span class="${yearClass(year)} exam-year">${year}</span>
+            <h3 class="text-sm font-bold text-slate-800">${group}</h3>
+            <span class="text-[10px] font-semibold bg-amber-100 text-amber-700 rounded-full px-2 py-0.5 ml-auto">${qs.length} vragen</span>
+          </div>
+          <div class="space-y-2">${qs.map(renderCard).join('')}</div>
+        </div>`;
+    }).join('');
+  }
+
+  /* ---- Reveal buttons ---- */
+  document.querySelectorAll('.exam-reveal-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const answer = btn.nextElementSibling;
+      const open = answer.style.display !== 'none';
+      answer.style.display = open ? 'none' : 'block';
+      btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+      btn.textContent = open ? 'Toon Uitwerking ▸' : 'Verberg Uitwerking ▾';
+    });
+  });
+}
+
+/* ===================================================================
+   PROGRESS (leerdoelen checklist)
+   =================================================================== */
+const TOTAL_GOALS = 24;
+function updateProgress() {
+  const checked = document.querySelectorAll('.check-item input[type="checkbox"]:checked').length;
+  document.getElementById('prog-label').textContent = `${checked} / ${TOTAL_GOALS}`;
+  document.getElementById('prog-bar').style.width = `${Math.round((checked/TOTAL_GOALS)*100)}%`;
+  try {
+    const ids = [];
+    document.querySelectorAll('.check-item input:checked').forEach(c => ids.push(c.id));
+    localStorage.setItem('havo-dash-checks', JSON.stringify(ids));
+  } catch(e) {}
+}
+try {
+  const saved = JSON.parse(localStorage.getItem('havo-dash-checks') || '[]');
+  saved.forEach(id => { const el = document.getElementById(id); if (el) el.checked = true; });
+} catch(e) {}
+
+/* ===================================================================
+   TERM CARDS
+   =================================================================== */
+function initTermCards() {
+  document.querySelectorAll('.term-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const popup = document.getElementById('def-popup');
+      document.getElementById('def-text').textContent = btn.getAttribute('data-def');
+      popup.classList.remove('hidden');
+      popup.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+  });
+}
+
+/* ===================================================================
+   SEARCH  (theorie + examenvragen)
+   =================================================================== */
+function initSearch() {
+  const inputs = [document.getElementById('search-input'), document.getElementById('search-input-mobile')].filter(Boolean);
+  const status = document.getElementById('search-status');
+  // Sync the two inputs
+  let debounce;
+  const run = (val) => {
+    clearTimeout(debounce);
+    debounce = setTimeout(() => doSearch(val), 180);
+  };
+  inputs.forEach(inp => {
+    inp.addEventListener('input', (e) => {
+      inputs.forEach(o => { if (o !== inp) o.value = e.target.value; });
+      run(e.target.value);
+    });
+  });
+
+  function doSearch(raw) {
+    const q = (raw || '').trim().toLowerCase();
+    // Scopes that can be hidden as a whole:
+    // - Theory paragraph sections (section[id^="p"])
+    // - exam cards (details.exam-card)
+    // - term buttons (.term-btn)
+    const theorySections = document.querySelectorAll('section[id^="p"], #overig');
+    const examCards = document.querySelectorAll('details.exam-card');
+    const termBtns = document.querySelectorAll('.term-btn');
+
+    if (!q) {
+      theorySections.forEach(s => s.classList.remove('search-hidden'));
+      examCards.forEach(c => { c.classList.remove('search-hidden'); c.open = false; });
+      termBtns.forEach(b => b.classList.remove('search-hidden'));
+      status.classList.add('hidden');
+      return;
+    }
+
+    let totalHits = 0;
+
+    // Theory sections: match if section text contains q
+    theorySections.forEach(s => {
+      const t = (s.innerText || '').toLowerCase();
+      const hit = t.includes(q);
+      s.classList.toggle('search-hidden', !hit);
+      if (hit) totalHits++;
+    });
+
+    // Exam cards: match + auto-open
+    let examHits = 0;
+    examCards.forEach(c => {
+      const t = (c.innerText || '').toLowerCase();
+      const hit = t.includes(q);
+      c.classList.toggle('search-hidden', !hit);
+      c.open = hit;
+      if (hit) examHits++;
+    });
+
+    // Term buttons
+    let termHits = 0;
+    termBtns.forEach(b => {
+      const t = ((b.textContent || '') + ' ' + (b.getAttribute('data-def') || '')).toLowerCase();
+      const hit = t.includes(q);
+      b.classList.toggle('search-hidden', !hit);
+      if (hit) termHits++;
+    });
+
+    status.textContent = `Zoekresultaten voor "${raw}": ${examHits} examenvragen · ${termHits} begrippen · ${totalHits} paragrafen`;
+    status.classList.remove('hidden');
+  }
+}
+
+/* ===================================================================
+   NAV highlight on scroll
+   =================================================================== */
+function initNav() {
+  const sections = document.querySelectorAll('section[id], div[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+  function onScroll() {
+    let current = '';
+    sections.forEach(s => { if (s.getBoundingClientRect().top <= 120) current = s.id; });
+    navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + current));
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+}
+
+/* ===================================================================
+   BOOT
+   =================================================================== */
+document.addEventListener('DOMContentLoaded', () => {
+  renderExams();
+  updateProgress();
+  initTermCards();
+  initSearch();
+  initNav();
+
+  // Hook checkboxes to updateProgress
+  document.querySelectorAll('.check-item input[type="checkbox"]').forEach(cb => {
+    cb.addEventListener('change', updateProgress);
+  });
+});
+</script>
+</body>
+</html>
