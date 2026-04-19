@@ -213,6 +213,11 @@
 
   .samenvatting-shell { background:#ffffff; border:1px solid #e2e8f0; border-radius:14px; box-shadow:0 1px 2px rgba(15,23,42,.03); overflow:hidden; }
   .samenvatting-frame { width:100%; min-height:82vh; border:0; background:#ffffff; }
+  .section-fade-in { animation:sectionFadeIn .25s ease-out; }
+  @keyframes sectionFadeIn {
+    from { opacity:0; transform:translateY(6px); }
+    to { opacity:1; transform:translateY(0); }
+  }
 
   @media print {
     .sidebar, .no-print, .help-fab, .tour-backdrop { display:none !important; }
@@ -247,20 +252,20 @@
       </div>
 
       <div class="sb-group-title">Hoofdstuk 1</div>
-      <a href="#par-1.1" class="sb-item" data-par="1.1"><span class="sb-dot"></span>🎲 § 1.1 Speltheorie</a>
-      <a href="#par-1.2" class="sb-item" data-par="1.2"><span class="sb-dot"></span>⚔️ § 1.2 Prijzenoorlog</a>
-      <a href="#par-1.3" class="sb-item" data-par="1.3"><span class="sb-dot"></span>🤝 § 1.3 Onderhandelen</a>
-      <a href="#par-1.4" class="sb-item" data-par="1.4"><span class="sb-dot"></span>🌍 § 1.4 Externe effecten</a>
-      <a href="#par-1.5" class="sb-item" data-par="1.5"><span class="sb-dot"></span>📋 § 1.5 Arbeid &amp; EU</a>
+      <a href="#par-1.1" class="sb-item" data-par="1.1" data-section-target="par-1.1"><span class="sb-dot"></span>🎲 § 1.1 Speltheorie</a>
+      <a href="#par-1.2" class="sb-item" data-par="1.2" data-section-target="par-1.2"><span class="sb-dot"></span>⚔️ § 1.2 Prijzenoorlog</a>
+      <a href="#par-1.3" class="sb-item" data-par="1.3" data-section-target="par-1.3"><span class="sb-dot"></span>🤝 § 1.3 Onderhandelen</a>
+      <a href="#par-1.4" class="sb-item" data-par="1.4" data-section-target="par-1.4"><span class="sb-dot"></span>🌍 § 1.4 Externe effecten</a>
+      <a href="#par-1.5" class="sb-item" data-par="1.5" data-section-target="par-1.5"><span class="sb-dot"></span>📋 § 1.5 Arbeid &amp; EU</a>
 
       <div class="sb-group-title mt-3">Hoofdstuk 2</div>
-      <a href="#par-2.1" class="sb-item" data-par="2.1"><span class="sb-dot"></span>🛡️ § 2.1 Risico</a>
-      <a href="#par-2.2" class="sb-item" data-par="2.2"><span class="sb-dot"></span>🔍 § 2.2 Informatie</a>
-      <a href="#par-2.3" class="sb-item" data-par="2.3"><span class="sb-dot"></span>💸 § 2.3 Beperken</a>
+      <a href="#par-2.1" class="sb-item" data-par="2.1" data-section-target="par-2.1"><span class="sb-dot"></span>🛡️ § 2.1 Risico</a>
+      <a href="#par-2.2" class="sb-item" data-par="2.2" data-section-target="par-2.2"><span class="sb-dot"></span>🔍 § 2.2 Informatie</a>
+      <a href="#par-2.3" class="sb-item" data-par="2.3" data-section-target="par-2.3"><span class="sb-dot"></span>💸 § 2.3 Beperken</a>
 
       <div class="sb-group-title mt-3">Overig</div>
-      <a href="#overig" class="sb-item"><span class="sb-dot"></span>🗂️ Integratieopgaven</a>
-      <a href="#samenvatting-h1-h2" class="sb-item"><span class="sb-dot"></span>🗺️ Visuele Samenvatting H1+H2</a>
+      <a href="#overig" class="sb-item" data-section-target="overig"><span class="sb-dot"></span>🗂️ Integratieopgaven</a>
+      <a href="#samenvatting-h1-h2" class="sb-item" data-section-target="samenvatting-h1-h2"><span class="sb-dot"></span>🗺️ Visuele Samenvatting H1+H2</a>
 
       <div class="divider-soft"></div>
 
@@ -335,7 +340,7 @@
       <p class="text-indigo-100 mt-1 text-sm">Hoofdstuk 1 · Samenwerken is een spel &nbsp;·&nbsp; Hoofdstuk 2 · Risico &amp; Informatie</p>
       <p class="text-indigo-200 text-xs mt-2 max-w-2xl">Zes volledige eindexamens (2023-tv1, 2023-tv2, 2024-tv1, 2024-tv2, 2025-tv1, 2025-tv2) met volledige vraagtekst én bijlagen. Alles in één engine — niks meer switchen tussen PDF's.</p>
       <div class="mt-4 flex flex-wrap gap-2">
-        <a href="#samenvatting-h1-h2" class="inline-flex items-center gap-2 bg-white/95 text-indigo-700 hover:bg-white rounded-xl px-3 py-2 text-xs font-semibold shadow-sm">🗺️ Open visuele samenvatting H1+H2</a>
+        <a href="#samenvatting-h1-h2" data-section-target="samenvatting-h1-h2" class="inline-flex items-center gap-2 bg-white/95 text-indigo-700 hover:bg-white rounded-xl px-3 py-2 text-xs font-semibold shadow-sm">🗺️ Open visuele samenvatting H1+H2</a>
       </div>
     </header>
 
@@ -349,7 +354,7 @@
           <p class="text-slate-500 text-xs mt-0.5">§ 1.1 t/m 1.5 · Speltheorie · Prijzenoorlog · Onderhandelen · Externe effecten · Arbeidsmarkt &amp; EU</p></div>
         </div>
 
-        <div id="par-1.1" class="scroll-mt-20 space-y-4" data-par-block="1.1">
+        <div id="par-1.1" class="scroll-mt-20 space-y-4" data-par-block="1.1" data-section-id="par-1.1">
           <div class="flex items-center gap-2"><span class="chap-pill chap-pill-h1">§ 1.1</span><h3 class="text-xl font-bold text-slate-800">Speltheorie</h3></div>
           <div class="theory-card"><p class="text-xs font-bold text-indigo-700 uppercase tracking-wide mb-2">🎯 Leerdoelen</p>
             <ul class="text-xs space-y-1 text-slate-700">
@@ -363,7 +368,7 @@
           <div class="exam-slot" data-par="1.1"></div>
         </div>
 
-        <div id="par-1.2" class="scroll-mt-20 space-y-4" data-par-block="1.2">
+        <div id="par-1.2" class="scroll-mt-20 space-y-4" data-par-block="1.2" data-section-id="par-1.2">
           <div class="flex items-center gap-2"><span class="chap-pill chap-pill-h1">§ 1.2</span><h3 class="text-xl font-bold text-slate-800">Strategie in een prijzenoorlog</h3></div>
           <div class="theory-card"><p class="text-xs font-bold text-indigo-700 uppercase tracking-wide mb-2">🎯 Leerdoelen</p>
             <ul class="text-xs space-y-1 text-slate-700">
@@ -377,7 +382,7 @@
           <div class="exam-slot" data-par="1.2"></div>
         </div>
 
-        <div id="par-1.3" class="scroll-mt-20 space-y-4" data-par-block="1.3">
+        <div id="par-1.3" class="scroll-mt-20 space-y-4" data-par-block="1.3" data-section-id="par-1.3">
           <div class="flex items-center gap-2"><span class="chap-pill chap-pill-h1">§ 1.3</span><h3 class="text-xl font-bold text-slate-800">Onderhandelen &amp; samenwerken</h3></div>
           <div class="theory-card"><p class="text-xs font-bold text-indigo-700 uppercase tracking-wide mb-2">🎯 Leerdoelen</p>
             <ul class="text-xs space-y-1 text-slate-700">
@@ -391,7 +396,7 @@
           <div class="exam-slot" data-par="1.3"></div>
         </div>
 
-        <div id="par-1.4" class="scroll-mt-20 space-y-4" data-par-block="1.4">
+        <div id="par-1.4" class="scroll-mt-20 space-y-4" data-par-block="1.4" data-section-id="par-1.4">
           <div class="flex items-center gap-2"><span class="chap-pill chap-pill-h1">§ 1.4</span><h3 class="text-xl font-bold text-slate-800">Externe effecten &amp; collectieve goederen</h3></div>
           <div class="theory-card"><p class="text-xs font-bold text-indigo-700 uppercase tracking-wide mb-2">🎯 Leerdoelen</p>
             <ul class="text-xs space-y-1 text-slate-700">
@@ -405,7 +410,7 @@
           <div class="exam-slot" data-par="1.4"></div>
         </div>
 
-        <div id="par-1.5" class="scroll-mt-20 space-y-4" data-par-block="1.5">
+        <div id="par-1.5" class="scroll-mt-20 space-y-4" data-par-block="1.5" data-section-id="par-1.5">
           <div class="flex items-center gap-2"><span class="chap-pill chap-pill-h1">§ 1.5</span><h3 class="text-xl font-bold text-slate-800">Arbeidsmarkt, CAO, EMU &amp; Europese Unie</h3></div>
           <div class="theory-card"><p class="text-xs font-bold text-indigo-700 uppercase tracking-wide mb-2">🎯 Leerdoelen</p>
             <ul class="text-xs space-y-1 text-slate-700">
@@ -429,7 +434,7 @@
           <p class="text-slate-500 text-xs mt-0.5">§ 2.1 Risico · § 2.2 Asymmetrische informatie · § 2.3 Instrumenten</p></div>
         </div>
 
-        <div id="par-2.1" class="scroll-mt-20 space-y-4" data-par-block="2.1">
+        <div id="par-2.1" class="scroll-mt-20 space-y-4" data-par-block="2.1" data-section-id="par-2.1">
           <div class="flex items-center gap-2"><span class="chap-pill chap-pill-h2">§ 2.1</span><h3 class="text-xl font-bold text-slate-800">Risico nemen of vermijden</h3></div>
           <div class="theory-card"><p class="text-xs font-bold text-rose-700 uppercase tracking-wide mb-2">🎯 Leerdoelen</p>
             <ul class="text-xs space-y-1 text-slate-700">
@@ -443,7 +448,7 @@
           <div class="exam-slot" data-par="2.1"></div>
         </div>
 
-        <div id="par-2.2" class="scroll-mt-20 space-y-4" data-par-block="2.2">
+        <div id="par-2.2" class="scroll-mt-20 space-y-4" data-par-block="2.2" data-section-id="par-2.2">
           <div class="flex items-center gap-2"><span class="chap-pill chap-pill-h2">§ 2.2</span><h3 class="text-xl font-bold text-slate-800">Asymmetrische informatie</h3></div>
           <div class="theory-card"><p class="text-xs font-bold text-rose-700 uppercase tracking-wide mb-2">🎯 Leerdoelen</p>
             <ul class="text-xs space-y-1 text-slate-700">
@@ -456,7 +461,7 @@
           <div class="exam-slot" data-par="2.2"></div>
         </div>
 
-        <div id="par-2.3" class="scroll-mt-20 space-y-4" data-par-block="2.3">
+        <div id="par-2.3" class="scroll-mt-20 space-y-4" data-par-block="2.3" data-section-id="par-2.3">
           <div class="flex items-center gap-2"><span class="chap-pill chap-pill-h2">§ 2.3</span><h3 class="text-xl font-bold text-slate-800">Financiële risico's beperken</h3></div>
           <div class="theory-card"><p class="text-xs font-bold text-rose-700 uppercase tracking-wide mb-2">🎯 Leerdoelen</p>
             <ul class="text-xs space-y-1 text-slate-700">
@@ -472,7 +477,7 @@
 
       <!-- OVERIG -->
 
-      <section id="samenvatting-h1-h2" class="scroll-mt-20 space-y-4 pt-8 border-t border-slate-200">
+      <div id="samenvatting-h1-h2" class="scroll-mt-20 space-y-4 pt-8 border-t border-slate-200" data-section-id="samenvatting-h1-h2">
         <div class="flex items-center gap-3">
           <div class="w-10 h-10 rounded-xl bg-violet-600 flex items-center justify-center text-white text-lg">🗺️</div>
           <div><h2 class="text-2xl font-extrabold text-slate-900">Volledige Visuele Samenvatting H1 + H2</h2>
@@ -489,16 +494,16 @@
         <div class="samenvatting-shell">
           <iframe id="samenvatting-h1-h2-frame" class="samenvatting-frame" title="Volledige Samenvatting H1 H2" loading="lazy" referrerpolicy="no-referrer" sandbox="allow-scripts"></iframe>
         </div>
-      </section>
+      </div>
 
-      <section id="overig" class="scroll-mt-20 space-y-4 pt-8 border-t border-slate-200">
+      <div id="overig" class="scroll-mt-20 space-y-4 pt-8 border-t border-slate-200" data-section-id="overig">
         <div class="flex items-center gap-3">
           <div class="w-10 h-10 rounded-xl bg-amber-600 flex items-center justify-center text-white text-lg">🗂️</div>
           <div><h2 class="text-2xl font-extrabold text-slate-900">Overig / Integratieopgaven</h2>
           <p class="text-slate-500 text-xs mt-0.5">Vragen die niet 1-op-1 bij H1/H2 horen — gegroepeerd per examen.</p></div>
         </div>
         <div id="overig-container" class="space-y-6"></div>
-      </section>
+      </div>
     </div>
 
     <!-- FLASHCARD MODE -->
@@ -1979,20 +1984,65 @@ function initFilters() {
   });
 }
 
-/* ---- NAV highlight ---- */
-function initNav() {
-  const items = document.querySelectorAll('.sb-item[data-par], .sb-item[href="#overig"], .sb-item[href="#samenvatting-h1-h2"]');
-  const sections = document.querySelectorAll('[id^="par-"], #overig, #samenvatting-h1-h2');
-  function onScroll() {
-    let current = '';
-    sections.forEach(s => { if (s.getBoundingClientRect().top <= 140) current = s.id; });
-    items.forEach(i => i.classList.toggle('active', i.getAttribute('href') === '#' + current));
+/* ---- SECTION-NAV (geen lange scroll) ---- */
+const SECTION_IDS = ['par-1.1','par-1.2','par-1.3','par-1.4','par-1.5','par-2.1','par-2.2','par-2.3','overig','samenvatting-h1-h2'];
+function normalizeSectionId(sectionId) {
+  const id = (sectionId || '').replace(/^#/, '');
+  return SECTION_IDS.includes(id) ? id : 'par-1.1';
+}
+function setActiveSidebarItem(sectionId) {
+  document.querySelectorAll('.sb-item[data-section-target]').forEach(item => {
+    item.classList.toggle('active', item.dataset.sectionTarget === sectionId);
+  });
+}
+function hideAllSections() {
+  document.getElementById('h1')?.classList.add('hidden');
+  document.getElementById('h2')?.classList.add('hidden');
+  document.querySelectorAll('[data-par-block]').forEach(block => block.classList.add('hidden'));
+  document.getElementById('overig')?.classList.add('hidden');
+  document.getElementById('samenvatting-h1-h2')?.classList.add('hidden');
+}
+function revealWithFade(el) {
+  if (!el) return;
+  el.classList.remove('hidden');
+  el.classList.remove('section-fade-in');
+  void el.offsetWidth;
+  el.classList.add('section-fade-in');
+}
+function showSection(sectionId, syncHash = true) {
+  const target = normalizeSectionId(sectionId);
+  hideAllSections();
+  if (target.startsWith('par-1.')) {
+    revealWithFade(document.getElementById('h1'));
+    revealWithFade(document.getElementById(target));
+  } else if (target.startsWith('par-2.')) {
+    revealWithFade(document.getElementById('h2'));
+    revealWithFade(document.getElementById(target));
+  } else {
+    revealWithFade(document.getElementById(target));
   }
-  window.addEventListener('scroll', onScroll, { passive:true });
-  onScroll();
+  setActiveSidebarItem(target);
+  if (syncHash && location.hash !== '#' + target) {
+    location.hash = target;
+  }
+  return target;
+}
+window.showSection = showSection;
+function initNav() {
+  document.querySelectorAll('[data-section-target]').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = link.dataset.sectionTarget;
+      showSection(target, true);
+      const sb = document.getElementById('sidebar');
+      if (sb?.classList.contains('open')) sb.classList.remove('open');
+    });
+  });
   const sb = document.getElementById('sidebar');
   const tgl = document.getElementById('sidebar-toggle');
   if (tgl) tgl.addEventListener('click', () => sb.classList.toggle('open'));
+  window.addEventListener('hashchange', () => showSection(location.hash, false));
+  showSection(location.hash || 'par-1.1', false);
 }
 
 /* ---- CONFETTI ---- */
