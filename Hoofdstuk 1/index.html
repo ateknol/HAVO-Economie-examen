@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>🎯 Examen-Engine LogicMaster · HAVO Economie H1 + H2</title>
 <script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <style>
   body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; }
   :target { scroll-margin-top: 80px; }
@@ -219,7 +220,51 @@
     to { opacity:1; transform:translateY(0); }
   }
 
-  @media print {
+
+  /* ===== APPLE/SaaS COMPONENT LIBRARY ===== */
+  .c-card { background:#fff; border:1px solid #e2e8f0; border-radius:16px; padding:1.25rem 1.5rem; box-shadow:0 2px 12px rgba(15,23,42,.06); }
+  .c-card-title { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:#475569; display:flex; align-items:center; gap:.375rem; margin-bottom:.75rem; }
+  .c-check { width:18px; height:18px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:9px; flex-shrink:0; margin-top:2px; }
+  .c-check-h1 { background:#eef2ff; color:#4338ca; }
+  .c-check-h2 { background:#fff1f2; color:#be123c; }
+
+  .cbox { border-radius:14px; padding:1rem 1.25rem; border-left:4px solid; }
+  .cbox-head { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; display:flex; align-items:center; gap:.5rem; margin-bottom:.5rem; }
+  .cbox-body { font-size:13px; line-height:1.7; color:#334155; }
+  .cbox-kern { background:#ecfdf5; border-left-color:#059669; }
+  .cbox-kern .cbox-head { color:#065f46; }
+  .cbox-valkuil { background:#fff1f2; border-left-color:#f43f5e; }
+  .cbox-valkuil .cbox-head { color:#9f1239; }
+  .cbox-inzicht { background:#eff6ff; border-left-color:#2563eb; }
+  .cbox-inzicht .cbox-head { color:#1e40af; }
+  .cbox-tip { background:#fefce8; border-left-color:#ca8a04; }
+  .cbox-tip .cbox-head { color:#713f12; }
+  .cbox-formule { background:#f5f3ff; border-left-color:#7c3aed; }
+  .cbox-formule .cbox-head { color:#4c1d95; }
+
+  .inv-card { border-radius:14px; padding:1rem 1.125rem; border:1px solid; }
+  .inv-card-c { background:linear-gradient(135deg,#eff6ff 0%,#dbeafe 100%); border-color:#bfdbfe; }
+  .inv-card-p { background:linear-gradient(135deg,#f0fdf4 0%,#dcfce7 100%); border-color:#bbf7d0; }
+  .inv-card-m { background:linear-gradient(135deg,#faf5ff 0%,#ede9fe 100%); border-color:#ddd6fe; }
+  .inv-label { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; margin-bottom:.5rem; display:flex; align-items:center; gap:.25rem; }
+  .inv-label-c { color:#1d4ed8; }
+  .inv-label-p { color:#15803d; }
+  .inv-label-m { color:#6d28d9; }
+  .inv-body { font-size:12.5px; color:#374151; line-height:1.65; }
+
+  .diagram-wrap { background:#fafafa; border:1px solid #e2e8f0; border-radius:12px; padding:1.25rem; overflow-x:auto; text-align:center; }
+  .diagram-label { font-size:11px; color:#64748b; font-weight:600; text-transform:uppercase; letter-spacing:.06em; margin-bottom:.75rem; }
+
+  .instr-tile { background:#fff; border:1px solid #e2e8f0; border-radius:14px; padding:1rem 1.125rem; box-shadow:0 1px 4px rgba(15,23,42,.05); }
+  .instr-num { width:30px; height:30px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:15px; font-weight:900; flex-shrink:0; }
+  .instr-num-1 { background:#dbeafe; color:#1d4ed8; }
+  .instr-num-2 { background:#dcfce7; color:#15803d; }
+  .instr-num-3 { background:#f3e8ff; color:#6d28d9; }
+
+  .sec-header { display:flex; align-items:center; gap:.625rem; margin-bottom:.5rem; }
+  .sec-icon { width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+
+    @media print {
     .sidebar, .no-print, .help-fab, .tour-backdrop { display:none !important; }
     .app-grid { grid-template-columns:1fr; }
     .qcard { break-inside:avoid; }
@@ -355,73 +400,340 @@
         </div>
 
         <div id="par-1.1" class="scroll-mt-20 space-y-4" data-par-block="1.1" data-section-id="par-1.1">
-          <div class="flex items-center gap-2"><span class="chap-pill chap-pill-h1">§ 1.1</span><h3 class="text-xl font-bold text-slate-800">Speltheorie</h3></div>
-          <div class="theory-card"><p class="text-xs font-bold text-indigo-700 uppercase tracking-wide mb-2">🎯 Leerdoelen</p>
-            <ul class="text-xs space-y-1 text-slate-700">
-              <li>✔︎ Ik kan <strong>dominante strategie</strong> en <strong>Nash-evenwicht</strong> afleiden uit een pay-offmatrix.</li>
-              <li>✔︎ Ik check de voorwaarden van een gevangenendilemma.</li>
-              <li>✔︎ Ik onderscheid individueel vs. collectief belang.</li></ul></div>
-          <div class="grid md:grid-cols-3 gap-3">
-            <div class="theory-card theory-card-c"><span class="persp persp-c">👤 Consument</span><p class="text-xs mt-2 text-slate-700">Profiteert bij collectief optimum — wat in een gevangenendilemma juist NIET gebeurt.</p></div>
-            <div class="theory-card theory-card-p"><span class="persp persp-p">🏭 Producent</span><p class="text-xs mt-2 text-slate-700">Komt vaak in PD: prijs verlagen lijkt dominant, maar collectief is samenwerken beter.</p></div>
-            <div class="theory-card theory-card-m"><span class="persp persp-m">🏛️ Markt / Overheid</span><p class="text-xs mt-2 text-slate-700">ACM verbiedt kartels. Soms (OPEC) wordt kartel internationaal juist toegestaan.</p></div></div>
+
+          <div class="sec-header">
+            <div class="sec-icon bg-indigo-100">&#127922;</div>
+            <div>
+              <span class="chap-pill chap-pill-h1">&#167; 1.1</span>
+              <h3 class="text-xl font-bold text-slate-800 inline ml-2">Speltheorie</h3>
+            </div>
+          </div>
+
+          <div class="c-card">
+            <p class="c-card-title">&#127919; Wat moet je na deze paragraaf kunnen?</p>
+            <ul class="space-y-2">
+              <li class="flex items-start gap-2"><span class="c-check c-check-h1">&#10003;</span><span class="text-sm text-slate-700">Ik kan uit een <strong>opbrengstenmatrix</strong> stap voor stap de <strong>dominante strategie</strong> en het <strong>Nash-evenwicht</strong> herleiden.</span></li>
+              <li class="flex items-start gap-2"><span class="c-check c-check-h1">&#10003;</span><span class="text-sm text-slate-700">Ik controleer of een situatie aan <strong>alle zeven voorwaarden</strong> van een gevangenendilemma voldoet, v&#243;&#243;rdat ik die term gebruik.</span></li>
+              <li class="flex items-start gap-2"><span class="c-check c-check-h1">&#10003;</span><span class="text-sm text-slate-700">Ik leg het verschil uit tussen wat een <em>individu</em> wil en wat <em>alle spelers samen</em> zouden willen (individueel belang vs. collectief belang).</span></li>
+            </ul>
+          </div>
+
+          <div class="cbox cbox-kern">
+            <div class="cbox-head"><span>&#129504;</span> Kern van de theorie</div>
+            <p class="cbox-body">Bij een gewone markt zijn er z&#243; veel kopers en verkopers dat niemand de prijs kan be&#239;nvloeden. Maar bij speltheorie zijn er <strong>weinig spelers</strong> &#8212; en dan hangt jouw resultaat direct af van wat de ander doet. Je moet dus vooruit denken: <em>&#8220;Wat doet hij waarschijnlijk? Wat is mijn beste reactie? En weet hij dat ik dat ga doen?&#8221;</em><br><br>De <strong>opbrengstenmatrix</strong> schrijft alle mogelijke combinaties van keuzes op zodat je niets over het hoofd ziet. Daarna zoek je per speler de beste reactie op elke keuze van de ander &#8212; die overlapping is het <strong>Nash-evenwicht</strong>: niemand wil meer afwijken, want dat maakt het slechter voor zichzelf.</p>
+          </div>
+
+          <div class="diagram-wrap">
+            <p class="diagram-label">Hoe vind je een Nash-evenwicht? &#8212; 3 stappen</p>
+            <div class="mermaid">
+flowchart LR
+    A["Stap 1: Schrijf alle
+uitkomsten op in
+de matrix"] ==> B["Stap 2: Omcirkel per rij
+de beste uitkomst
+voor speler A"]
+    B ==> C["Stap 3: Omcirkel per kolom
+de beste uitkomst
+voor speler B"]
+    C ==> D["Cel met twee
+omcirkelingen =
+Nash-evenwicht"]
+    classDef blauw fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e3a8a
+    classDef groen fill:#dcfce7,stroke:#22c55e,stroke-width:2px,color:#14532d
+    class A,B,C blauw
+    class D groen
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-3 gap-4">
+            <div class="inv-card inv-card-c">
+              <p class="inv-label inv-label-c">&#128100; De Consument</p>
+              <p class="inv-body">Haalt het meeste voordeel als bedrijven <em>samenwerken</em> (collectief optimum). Bij een gevangenendilemma gebeurt dat echter niet &#8212; bedrijven kiezen voor eigen belang en de consument betaalt uiteindelijk de prijs.</p>
+            </div>
+            <div class="inv-card inv-card-p">
+              <p class="inv-label inv-label-p">&#127981; De Producent</p>
+              <p class="inv-body">De prijs verlagen lijkt slim: je lokt klanten weg bij de concurrent. Maar als de concurrent hetzelfde doet, verdienen <em>beiden</em> minder. Dit is het gevangenendilemma in de praktijk.</p>
+            </div>
+            <div class="inv-card inv-card-m">
+              <p class="inv-label inv-label-m">&#127963; De Overheid</p>
+              <p class="inv-body">De Autoriteit Consument &amp; Markt (ACM) verbiedt kartels &#8212; geheime prijsafspraken. Soms wordt internationale samenwerking (zoals bij OPEC) oogluikend toegestaan, maar dat is geen eerlijke concurrentie meer.</p>
+            </div>
+          </div>
+
+          <div class="cbox cbox-valkuil mt-1">
+            <div class="cbox-head"><span>&#9888;</span> Pas op voor deze valkuil</div>
+            <p class="cbox-body">Speltheorie gaat uit van <em>puur rationele</em> spelers &#8212; ze kiezen altijd voor eigen voordeel. Maar in het echt laten mensen zich ook leiden door rechtvaardigheidsgevoel, vertrouwen en sociale normen. Als een examenvraag vraagt wat er <em>&#8220;in de praktijk&#8221;</em> of <em>&#8220;in het echt&#8221;</em> gebeurt, moet je deze menselijke factoren w&#233;l noemen.</p>
+          </div>
+
+          
           <div class="exam-slot" data-par="1.1"></div>
         </div>
 
         <div id="par-1.2" class="scroll-mt-20 space-y-4" data-par-block="1.2" data-section-id="par-1.2">
-          <div class="flex items-center gap-2"><span class="chap-pill chap-pill-h1">§ 1.2</span><h3 class="text-xl font-bold text-slate-800">Strategie in een prijzenoorlog</h3></div>
-          <div class="theory-card"><p class="text-xs font-bold text-indigo-700 uppercase tracking-wide mb-2">🎯 Leerdoelen</p>
-            <ul class="text-xs space-y-1 text-slate-700">
-              <li>✔︎ Ik herken <strong>oligopolie</strong> en <strong>monopolistische concurrentie</strong>.</li>
-              <li>✔︎ Ik leg een <strong>prijzenoorlog</strong> uit als niet-coöperatief PD.</li>
-              <li>✔︎ Ik onderscheid nul-som van niet-nul-som spellen.</li></ul></div>
-          <div class="grid md:grid-cols-3 gap-3">
-            <div class="theory-card theory-card-c"><span class="persp persp-c">👤 Consument</span><p class="text-xs mt-2 text-slate-700">Prijzenoorlog = korte-termijn voordeel (lage prijs); lange termijn: minder aanbieders, hogere prijs.</p></div>
-            <div class="theory-card theory-card-p"><span class="persp persp-p">🏭 Producent</span><p class="text-xs mt-2 text-slate-700">Valt in PD: iedereen verlaagt prijs, resultaat = lagere winst voor allen.</p></div>
-            <div class="theory-card theory-card-m"><span class="persp persp-m">🏛️ Markt / Overheid</span><p class="text-xs mt-2 text-slate-700">ACM ziet toe op kartelverbod. Prijsafspraken = strafbaar.</p></div></div>
+
+          <div class="sec-header">
+            <div class="sec-icon bg-orange-100">&#9876;</div>
+            <div>
+              <span class="chap-pill chap-pill-h1">&#167; 1.2</span>
+              <h3 class="text-xl font-bold text-slate-800 inline ml-2">Strategie in een prijzenoorlog</h3>
+            </div>
+          </div>
+
+          <div class="c-card">
+            <p class="c-card-title">&#127919; Wat moet je na deze paragraaf kunnen?</p>
+            <ul class="space-y-2">
+              <li class="flex items-start gap-2"><span class="c-check c-check-h1">&#10003;</span><span class="text-sm text-slate-700">Ik herken een <strong>oligopolie</strong> aan zijn kenmerken en leg uit waarom prijzenoorlogen hier zo vaak voorkomen.</span></li>
+              <li class="flex items-start gap-2"><span class="c-check c-check-h1">&#10003;</span><span class="text-sm text-slate-700">Ik analyseer een prijzenoorlog als een <strong>niet-co&#246;peratief gevangenendilemma</strong>: iedereen verlaagt de prijs, maar iedereen verliest uiteindelijk winst.</span></li>
+              <li class="flex items-start gap-2"><span class="c-check c-check-h1">&#10003;</span><span class="text-sm text-slate-700">Ik onderscheid een <strong>nul-som-spel</strong> (wat de &#233;&#233;n wint, verliest de ander) van een <strong>niet-nul-som-spel</strong> (beide kunnen winnen of allebei verliezen).</span></li>
+            </ul>
+          </div>
+
+          <div class="cbox cbox-kern">
+            <div class="cbox-head"><span>&#129504;</span> Kern van de theorie</div>
+            <p class="cbox-body">Een <strong>oligopolie</strong> is een markt met een klein aantal grote aanbieders (zoals twee supermarktketens of drie telecomproviders). Zij letten goed op elkaars prijzen. Zodra &#233;&#233;n aanbieder de prijs verlaagt, reageren de anderen &#8212; en zo begint een neerwaartse spiraal. Uiteindelijk verdienen <em>alle</em> aanbieders minder, terwijl ze allemaal dachten slim te zijn. Dit is een klassiek <strong>gevangenendilemma</strong>.</p>
+          </div>
+
+          <div class="diagram-wrap">
+            <p class="diagram-label">Hoe begint een prijzenoorlog? &#8212; Oorzaak &#8594; Mechanisme &#8594; Gevolg</p>
+            <div class="mermaid">
+flowchart LR
+    A["Oligopolie:
+Klein aantal
+aanbieders"] ==> B["Aanbieder A
+verlaagt prijs
+om marktaandeel"]
+    B ==> C["Aanbieder B
+reageert met
+zelfde verlaging"]
+    C ==> D["Neerwaartse
+prijsspiraal"]
+    D ==> E["Lagere winst
+voor alle
+aanbieders"]
+    classDef grijs fill:#f1f5f9,stroke:#94a3b8,stroke-width:1px
+    classDef oranje fill:#ffedd5,stroke:#f97316,stroke-width:2px,color:#7c2d12
+    classDef rood fill:#fee2e2,stroke:#ef4444,stroke-width:2px,color:#7f1d1d
+    class A grijs
+    class B,C oranje
+    class D,E rood
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-3 gap-4">
+            <div class="inv-card inv-card-c">
+              <p class="inv-label inv-label-c">&#128100; De Consument</p>
+              <p class="inv-body"><strong>Korte termijn:</strong> profiteert van lage prijzen. <strong>Lange termijn:</strong> de zwakste aanbieder valt om, er blijven minder aanbieders over en de prijzen gaan juist omhoog.</p>
+            </div>
+            <div class="inv-card inv-card-p">
+              <p class="inv-label inv-label-p">&#127981; De Producent</p>
+              <p class="inv-body">Valt in een gevangenendilemma: de prijs verlagen lijkt de dominante strategie, maar als iedereen dat doet, verliest iedereen winst. Collectief bezien is het beter om de prijzen te handhaven &#8212; maar dat gebeurt niet zonder afspraken.</p>
+            </div>
+            <div class="inv-card inv-card-m">
+              <p class="inv-label inv-label-m">&#127963; De Overheid</p>
+              <p class="inv-body">De Autoriteit Consument &amp; Markt (ACM) houdt toezicht. <strong>Prijsafspraken</strong> (een kartel) zijn verboden en strafbaar. Een <strong>prijzenoorlog</strong> (zelfstandig de prijs verlagen) is w&#233;l toegestaan.</p>
+            </div>
+          </div>
+
+          <div class="cbox cbox-inzicht mt-1">
+            <div class="cbox-head"><span>&#128161;</span> Belangrijk examen-inzicht</div>
+            <p class="cbox-body">Let goed op het verschil: een <strong>prijzenoorlog</strong> is legaal &#8212; bedrijven verlagen zelfstandig hun prijs. Maar <strong>prijsafspraken</strong> (samen afspreken welke prijs iedereen rekent) is een kartel en wettelijk verboden. In een examenvraag over de ACM gaat het bijna altijd over verboden <em>prijsafspraken</em>, niet over een legale prijzenoorlog.</p>
+          </div>
+
+          
           <div class="exam-slot" data-par="1.2"></div>
         </div>
 
         <div id="par-1.3" class="scroll-mt-20 space-y-4" data-par-block="1.3" data-section-id="par-1.3">
-          <div class="flex items-center gap-2"><span class="chap-pill chap-pill-h1">§ 1.3</span><h3 class="text-xl font-bold text-slate-800">Onderhandelen &amp; samenwerken</h3></div>
-          <div class="theory-card"><p class="text-xs font-bold text-indigo-700 uppercase tracking-wide mb-2">🎯 Leerdoelen</p>
-            <ul class="text-xs space-y-1 text-slate-700">
-              <li>✔︎ Ik los een <strong>ultimatumspel</strong> op met backwards induction.</li>
-              <li>✔︎ Ik noem instrumenten: <strong>contract · sociale norm · zelfbinding · reputatie</strong>.</li>
-              <li>✔︎ Ik herken <strong>verzonken kosten</strong>.</li></ul></div>
-          <div class="grid md:grid-cols-3 gap-3">
-            <div class="theory-card theory-card-c"><span class="persp persp-c">👤 Consument</span><p class="text-xs mt-2 text-slate-700">Sociale norm "eerlijk delen" zorgt voor afwijking van pure winst-maximalisatie.</p></div>
-            <div class="theory-card theory-card-p"><span class="persp persp-p">🏭 Producent</span><p class="text-xs mt-2 text-slate-700">Contract &amp; zelfbinding verlagen risico. Verzonken kosten: negeren in vervolgkeuzes.</p></div>
-            <div class="theory-card theory-card-m"><span class="persp persp-m">🏛️ Markt / Overheid</span><p class="text-xs mt-2 text-slate-700">Herhaalde spellen + reputatie houden samenwerking overeind.</p></div></div>
+
+          <div class="sec-header">
+            <div class="sec-icon bg-green-100">&#129309;</div>
+            <div>
+              <span class="chap-pill chap-pill-h1">&#167; 1.3</span>
+              <h3 class="text-xl font-bold text-slate-800 inline ml-2">Onderhandelen &amp; samenwerken</h3>
+            </div>
+          </div>
+
+          <div class="c-card">
+            <p class="c-card-title">&#127919; Wat moet je na deze paragraaf kunnen?</p>
+            <ul class="space-y-2">
+              <li class="flex items-start gap-2"><span class="c-check c-check-h1">&#10003;</span><span class="text-sm text-slate-700">Ik los een sequentieel spel op via <strong>achterwaarts redeneren (backwards induction)</strong>: begin bij de laatste keuze en werk terug naar de eerste.</span></li>
+              <li class="flex items-start gap-2"><span class="c-check c-check-h1">&#10003;</span><span class="text-sm text-slate-700">Ik noem de vier manieren om samenwerking te bestendigen: <strong>contract &#183; sociale norm &#183; zelfbinding &#183; reputatie</strong>.</span></li>
+              <li class="flex items-start gap-2"><span class="c-check c-check-h1">&#10003;</span><span class="text-sm text-slate-700">Ik herken <strong>verzonken kosten</strong>: geld dat al is uitgegeven en bij toekomstige beslissingen genegeerd moet worden.</span></li>
+            </ul>
+          </div>
+
+          <div class="cbox cbox-kern">
+            <div class="cbox-head"><span>&#129504;</span> Kern van de theorie</div>
+            <p class="cbox-body">Bij een <strong>sequentieel spel</strong> kiezen spelers niet tegelijk, maar na elkaar. Wie als eerste aan de beurt is, heeft een voordeel: hij weet dat speler 2 zijn beste reactie zal kiezen, en kan zijn eigen zet daar op afstemmen. Dit heet het <strong>first-mover-voordeel</strong>.<br><br>Met <strong>achterwaarts redeneren</strong> werk je van de <em>laatste</em> keuze terug naar de <em>eerste</em> &#8212; zo vind je altijd de rationele uitkomst. <strong>Zelfbinding</strong> helpt om beloftes geloofwaardig te maken: je maakt je eigen keuze onomkeerbaar via een contract of openbare aankondiging.</p>
+          </div>
+
+          <div class="diagram-wrap">
+            <p class="diagram-label">Achterwaarts redeneren &#8212; begin altijd bij de laatste keuze</p>
+            <div class="mermaid">
+flowchart LR
+    A["Speler 1
+kiest eerst
+nog onbekend"] --> B["Speler 2 ziet
+wat A koos
+en reageert"]
+    B --> C["Speler 2 kiest
+zijn beste
+reactie"]
+    C --> D["Speler 1 wist
+deze reactie
+van tevoren"]
+    D --> E["Speler 1 kiest
+op basis van die
+voorziene reactie"]
+    classDef blauw fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e3a8a
+    classDef groen fill:#dcfce7,stroke:#22c55e,stroke-width:2px,color:#14532d
+    class A,B,C blauw
+    class D,E groen
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-3 gap-4">
+            <div class="inv-card inv-card-c">
+              <p class="inv-label inv-label-c">&#128100; De Consument</p>
+              <p class="inv-body">De sociale norm &#8220;eerlijk delen&#8221; zorgt ervoor dat mensen in de praktijk een oneerlijk aanbod <em>afwijzen</em>, ook al zouden ze rationeel gezien elk aanbod boven nul moeten accepteren. Gevoel en rechtvaardigheid tellen mee.</p>
+            </div>
+            <div class="inv-card inv-card-p">
+              <p class="inv-label inv-label-p">&#127981; De Producent</p>
+              <p class="inv-body">Een contract of zelfbinding verlaagt het risico dat een partij afspraken verbreekt. <strong>Verzonken kosten</strong> (geld dat al is uitgegeven en nooit meer terugkomt) mogen bij toekomstige beslissingen genegeerd worden.</p>
+            </div>
+            <div class="inv-card inv-card-m">
+              <p class="inv-label inv-label-m">&#127963; De Overheid</p>
+              <p class="inv-body">Bij herhaalde spellen (meerdere rondes) bouwen spelers <em>reputatie</em> op. Wie zijn afspraken nakomt, wordt vaker uitgenodigd om mee te spelen. Zo kunnen samenwerkingsafspraken langdurig standhouden, zelfs zonder contract.</p>
+            </div>
+          </div>
+
+          <div class="cbox cbox-valkuil mt-1">
+            <div class="cbox-head"><span>&#9888;</span> Pas op voor deze valkuil</div>
+            <p class="cbox-body">Studenten redeneren bij een spelboom vaak <em>voorwaarts</em> (van begin naar eind), terwijl de examenmethode <em>achterwaarts</em> is. Begin altijd bij de <strong>laatste beslissing</strong>: wat kiest die speler? Werk daarna terug. Pas als je weet wat de laatste speler doet, kun je bepalen wat de eerste speler rationeel kiest.</p>
+          </div>
+
+          
           <div class="exam-slot" data-par="1.3"></div>
         </div>
 
         <div id="par-1.4" class="scroll-mt-20 space-y-4" data-par-block="1.4" data-section-id="par-1.4">
-          <div class="flex items-center gap-2"><span class="chap-pill chap-pill-h1">§ 1.4</span><h3 class="text-xl font-bold text-slate-800">Externe effecten &amp; collectieve goederen</h3></div>
-          <div class="theory-card"><p class="text-xs font-bold text-indigo-700 uppercase tracking-wide mb-2">🎯 Leerdoelen</p>
-            <ul class="text-xs space-y-1 text-slate-700">
-              <li>✔︎ Ik onderscheid <strong>positieve</strong> en <strong>negatieve externe effecten</strong>.</li>
-              <li>✔︎ Ik leg uit waarom markt faalt bij externe effecten (prijs ≠ maatschappelijke kosten).</li>
-              <li>✔︎ Collectieve goederen: niet-rivaliserend + niet-exclusief → free-rider.</li></ul></div>
-          <div class="grid md:grid-cols-3 gap-3">
-            <div class="theory-card theory-card-c"><span class="persp persp-c">👤 Consument</span><p class="text-xs mt-2 text-slate-700">Betaalt niet direct voor schade → free-rider op collectieve goederen.</p></div>
-            <div class="theory-card theory-card-p"><span class="persp persp-p">🏭 Producent</span><p class="text-xs mt-2 text-slate-700">Ziet externe effecten niet in kostprijs → heffing/subsidie internaliseert.</p></div>
-            <div class="theory-card theory-card-m"><span class="persp persp-m">🏛️ Markt / Overheid</span><p class="text-xs mt-2 text-slate-700">Pigouviaanse heffing · subsidie · emissierechten · wetgeving.</p></div></div>
+
+          <div class="sec-header">
+            <div class="sec-icon bg-emerald-100">&#127758;</div>
+            <div>
+              <span class="chap-pill chap-pill-h1">&#167; 1.4</span>
+              <h3 class="text-xl font-bold text-slate-800 inline ml-2">Externe effecten &amp; collectieve goederen</h3>
+            </div>
+          </div>
+
+          <div class="c-card">
+            <p class="c-card-title">&#127919; Wat moet je na deze paragraaf kunnen?</p>
+            <ul class="space-y-2">
+              <li class="flex items-start gap-2"><span class="c-check c-check-h1">&#10003;</span><span class="text-sm text-slate-700">Ik onderscheid <strong>positieve</strong> (voordeel voor derden) en <strong>negatieve</strong> (schade voor derden) externe effecten en leg uit waarom de markt faalt.</span></li>
+              <li class="flex items-start gap-2"><span class="c-check c-check-h1">&#10003;</span><span class="text-sm text-slate-700">Ik leg uit wat <strong>internaliseren</strong> betekent: het externe effect in de prijs opnemen via een belasting of subsidie.</span></li>
+              <li class="flex items-start gap-2"><span class="c-check c-check-h1">&#10003;</span><span class="text-sm text-slate-700">Ik herken een <strong>collectief goed</strong> aan twee kenmerken: <em>niet-rivaliserend</em> &#233;n <em>niet-exclusief</em>, en leg het <strong>meeliftersprobleem</strong> uit.</span></li>
+            </ul>
+          </div>
+
+          <div class="cbox cbox-kern">
+            <div class="cbox-head"><span>&#129504;</span> Kern van de theorie</div>
+            <p class="cbox-body">Een <strong>extern effect</strong> is een gevolg van productie of consumptie dat <em>niet</em> in de marktprijs zit. Negatief voorbeeld: een fabriek stoot CO&#8322; uit &#8212; de klimaatschade zit niet in de productiekosten. Positief voorbeeld: een imker profiteert van een nabijgelegen boomgaard &#8212; de boomgaardeigenaar krijgt daar niets voor.<br><br>De overheid kan het marktfalen herstellen door het externe effect te <strong>internaliseren</strong>: via een belasting (bij negatief) of subsidie (bij positief) wordt het effect alsnog in de prijs verwerkt.</p>
+          </div>
+
+          <div class="diagram-wrap">
+            <p class="diagram-label">Marktfalen door extern effect &#8212; en hoe de overheid het herstelt</p>
+            <div class="mermaid">
+flowchart LR
+    A["Private prijs:
+geen rekening
+met extern effect"] ==> B["Marktfalen:
+te veel geproduceerd
+bij negatief effect"]
+    B ==> C["Overheid grijpt in
+via belasting of
+subsidie"]
+    C ==> D["Maatschappelijk
+optimum bereikt"]
+    classDef grijs fill:#f1f5f9,stroke:#94a3b8,stroke-width:1px
+    classDef rood fill:#fee2e2,stroke:#ef4444,stroke-width:2px,color:#7f1d1d
+    classDef paars fill:#f3e8ff,stroke:#7c3aed,stroke-width:2px,color:#4c1d95
+    classDef groen fill:#dcfce7,stroke:#22c55e,stroke-width:2px,color:#14532d
+    class A grijs
+    class B rood
+    class C paars
+    class D groen
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-3 gap-4">
+            <div class="inv-card inv-card-c">
+              <p class="inv-label inv-label-c">&#128100; De Consument</p>
+              <p class="inv-body">Bij een <strong>collectief goed</strong> (zoals een dijk of straatverlichting) kan niemand worden uitgesloten van gebruik, en het gebruik door de &#233;&#233;n vermindert het voor een ander niet. Daardoor hebben consumenten een prikkel om <em>mee te liften</em>: gebruik maken zonder te betalen.</p>
+            </div>
+            <div class="inv-card inv-card-p">
+              <p class="inv-label inv-label-p">&#127981; De Producent</p>
+              <p class="inv-body">De producent houdt alleen rekening met zijn eigen kosten. De schade voor anderen (externe kosten) zit niet in zijn prijs &#8212; daardoor produceert hij bij een negatief extern effect <em>te veel</em>. Een belasting corrigeert dit door de externe schade in de kostprijs op te nemen.</p>
+            </div>
+            <div class="inv-card inv-card-m">
+              <p class="inv-label inv-label-m">&#127963; De Overheid</p>
+              <p class="inv-body">Instrumenten: een <strong>Pigouviaanse heffing</strong> (belasting gelijk aan de externe schade), een <strong>subsidie</strong> op positieve effecten, <strong>verhandelbare emissierechten</strong>, of directe <strong>wetgeving</strong> (normen, verboden).</p>
+            </div>
+          </div>
+
+          <div class="cbox cbox-valkuil mt-1">
+            <div class="cbox-head"><span>&#9888;</span> Pas op voor deze valkuil</div>
+            <p class="cbox-body"><strong>Collectief goed</strong> herken je aan <em>twee</em> kenmerken <em>tegelijk</em>: (1) <strong>niet-rivaliserend</strong> &#8212; gebruik door &#233;&#233;n persoon vermindert het voor een ander niet, &#233;n (2) <strong>niet-exclusief</strong> &#8212; niemand kan worden uitgesloten. Mist &#233;&#233;n van de twee kenmerken, dan is het g&#233;&#233;n collectief goed.</p>
+          </div>
+
+          
           <div class="exam-slot" data-par="1.4"></div>
         </div>
 
         <div id="par-1.5" class="scroll-mt-20 space-y-4" data-par-block="1.5" data-section-id="par-1.5">
-          <div class="flex items-center gap-2"><span class="chap-pill chap-pill-h1">§ 1.5</span><h3 class="text-xl font-bold text-slate-800">Arbeidsmarkt, CAO, EMU &amp; Europese Unie</h3></div>
-          <div class="theory-card"><p class="text-xs font-bold text-indigo-700 uppercase tracking-wide mb-2">🎯 Leerdoelen</p>
-            <ul class="text-xs space-y-1 text-slate-700">
-              <li>✔︎ <strong>CAO</strong>-onderhandelingen lossen het gevangenendilemma tussen werknemers op.</li>
-              <li>✔︎ Ik ken <strong>EU/EMU</strong>-spelregels: vrij verkeer, 3%-norm, ECB, interne markt.</li>
-              <li>✔︎ Ik leg <strong>anticyclisch begrotingsbeleid</strong>, loon/prijs-effecten en concurrentiepositie uit.</li>
-              <li>✔︎ Ik begrijp nivellering · denivellering · heffingskortingen · arbeidsaanbod-prikkels.</li></ul></div>
-          <div class="grid md:grid-cols-3 gap-3">
-            <div class="theory-card theory-card-c"><span class="persp persp-c">👤 Consument / werknemer</span><p class="text-xs mt-2 text-slate-700">EU = lagere prijzen + meer keuze. Netto-loon ↑ door arbeidskorting → meer arbeidsaanbod.</p></div>
-            <div class="theory-card theory-card-p"><span class="persp persp-p">🏭 Producent / werkgever</span><p class="text-xs mt-2 text-slate-700">CAO = contract tegen loon-prijzenoorlog. EU = grotere afzetmarkt maar ook meer concurrentie.</p></div>
-            <div class="theory-card theory-card-m"><span class="persp persp-m">🏛️ Overheid / EMU</span><p class="text-xs mt-2 text-slate-700">3%-begrotingsregel beperkt anticyclisch beleid. ECB = gemeenschappelijk monetair beleid.</p></div></div>
+
+          <div class="sec-header">
+            <div class="sec-icon bg-purple-100">&#128196;</div>
+            <div>
+              <span class="chap-pill chap-pill-h1">&#167; 1.5</span>
+              <h3 class="text-xl font-bold text-slate-800 inline ml-2">Arbeidsmarkt, CAO &amp; Europese Unie</h3>
+            </div>
+          </div>
+
+          <div class="c-card">
+            <p class="c-card-title">&#127919; Wat moet je na deze paragraaf kunnen?</p>
+            <ul class="space-y-2">
+              <li class="flex items-start gap-2"><span class="c-check c-check-h1">&#10003;</span><span class="text-sm text-slate-700">Ik leg uit hoe een <strong>collectieve arbeidsovereenkomst (CAO)</strong> het gevangenendilemma op de arbeidsmarkt doorbreekt, en waarom <em>algemeen verbindend verklaren</em> voor de hele bedrijfstak geldt.</span></li>
+              <li class="flex items-start gap-2"><span class="c-check c-check-h1">&#10003;</span><span class="text-sm text-slate-700">Ik ken de spelregels van de <strong>Europese Unie</strong> en de <strong>Europese Monetaire Unie</strong>: vrij verkeer, de 3%-begrotingsnorm, de Europese Centrale Bank en de interne markt.</span></li>
+              <li class="flex items-start gap-2"><span class="c-check c-check-h1">&#10003;</span><span class="text-sm text-slate-700">Ik leg <strong>anticyclisch begrotingsbeleid</strong>, de gevolgen van loon- en prijsniveau voor de concurrentiepositie, en de begrippen <strong>nivellering</strong> en <strong>denivellering</strong> uit.</span></li>
+            </ul>
+          </div>
+
+          <div class="cbox cbox-kern">
+            <div class="cbox-head"><span>&#129504;</span> Kern van de theorie</div>
+            <p class="cbox-body">Een <strong>collectieve arbeidsovereenkomst (CAO)</strong> is een afspraak over arbeidsvoorwaarden, gesloten door vakbonden en werkgeversorganisaties voor een hele bedrijfstak. Zonder een dergelijke afspraak zouden werkgevers elkaar kunnen onderbieden op lonen en arbeidsomstandigheden &#8212; een race naar de bodem. De CAO werkt dus als een <em>contract dat het gevangenendilemma op de arbeidsmarkt doorbreekt</em>.<br><br>De <strong>Europese Unie</strong> is hetzelfde principe op grotere schaal: 27 landen die via verdragen afspreken om niet in een gevangenendilemma te belanden (handelsoorlogen, valutamanipulatie, oneerlijke staatssteun).</p>
+          </div>
+
+          <div class="grid md:grid-cols-3 gap-4">
+            <div class="inv-card inv-card-c">
+              <p class="inv-label inv-label-c">&#128100; De Werknemer / Consument</p>
+              <p class="inv-body">De Europese interne markt leidt tot lagere prijzen en meer keuze. Een hogere <strong>arbeidskorting</strong> (belastingkorting op arbeid) verhoogt het nettoloon en moedigt meer mensen aan om te gaan werken.</p>
+            </div>
+            <div class="inv-card inv-card-p">
+              <p class="inv-label inv-label-p">&#127981; De Werkgever / Producent</p>
+              <p class="inv-body">De collectieve arbeidsovereenkomst voorkomt een loonprijzenoorlog. De Europese interne markt geeft toegang tot een grotere afzetmarkt, maar brengt ook meer concurrentie mee van Europese bedrijven.</p>
+            </div>
+            <div class="inv-card inv-card-m">
+              <p class="inv-label inv-label-m">&#127963; De Overheid / EMU</p>
+              <p class="inv-body">De 3%-begrotingsregel beperkt hoeveel een overheid mag lenen &#8212; dit beperkt anticyclisch beleid in een crisis. De <strong>Europese Centrale Bank (ECB)</strong> voert het gemeenschappelijke monetaire beleid voor alle eurolanden.</p>
+            </div>
+          </div>
+
+          <div class="cbox cbox-inzicht mt-1">
+            <div class="cbox-head"><span>&#128161;</span> Belangrijk examen-inzicht</div>
+            <p class="cbox-body">De Europese Unie is in economische zin een <strong>co&#246;peratief spel</strong> tussen 27 landen: via verdragen spreken ze af zich niet schuldig te maken aan handelsoorlogen of valutamanipulatie. Dit is precies hoe een gevangenendilemma doorbroken wordt &#8212; door bindende afspraken met een sanctiemechanisme (het Hof van Justitie van de EU).</p>
+          </div>
+
+          
           <div class="exam-slot" data-par="1.5"></div>
         </div>
       </section>
@@ -435,42 +747,219 @@
         </div>
 
         <div id="par-2.1" class="scroll-mt-20 space-y-4" data-par-block="2.1" data-section-id="par-2.1">
-          <div class="flex items-center gap-2"><span class="chap-pill chap-pill-h2">§ 2.1</span><h3 class="text-xl font-bold text-slate-800">Risico nemen of vermijden</h3></div>
-          <div class="theory-card"><p class="text-xs font-bold text-rose-700 uppercase tracking-wide mb-2">🎯 Leerdoelen</p>
-            <ul class="text-xs space-y-1 text-slate-700">
-              <li>✔︎ <strong>Risico = kans × gemiddelde schade</strong>.</li>
-              <li>✔︎ Ik onderscheid <strong>vrijwillig/onvrijwillig</strong> risico; <strong>risicoavers/neutraal/minnend</strong>.</li>
-              <li>✔︎ Ik leg <strong>solidariteit</strong>, <strong>acceptatieplicht</strong>, <strong>omslag- vs kapitaaldekkingsstelsel</strong> uit.</li></ul></div>
-          <div class="grid md:grid-cols-3 gap-3">
-            <div class="theory-card theory-card-c"><span class="persp persp-c">👤 Consument</span><p class="text-xs mt-2 text-slate-700">Risicoavers: betaalt premie > verwachte schade voor zekerheid.</p></div>
-            <div class="theory-card theory-card-p"><span class="persp persp-p">🏭 Verzekeraar</span><p class="text-xs mt-2 text-slate-700">Premie = gem. schade + kosten + winst. Wet van grote getallen.</p></div>
-            <div class="theory-card theory-card-m"><span class="persp persp-m">🏛️ Overheid</span><p class="text-xs mt-2 text-slate-700">Verplichte sociale verzekeringen (AOW, WW, Zvw). Acceptatieplicht basis.</p></div></div>
+
+          <div class="sec-header">
+            <div class="sec-icon bg-red-100">&#128737;</div>
+            <div>
+              <span class="chap-pill chap-pill-h2">&#167; 2.1</span>
+              <h3 class="text-xl font-bold text-slate-800 inline ml-2">Risico nemen of vermijden</h3>
+            </div>
+          </div>
+
+          <div class="c-card">
+            <p class="c-card-title">&#127919; Wat moet je na deze paragraaf kunnen?</p>
+            <ul class="space-y-2">
+              <li class="flex items-start gap-2"><span class="c-check c-check-h2">&#10003;</span><span class="text-sm text-slate-700">Ik reken het <strong>verwachte financi&#235;le risico</strong> uit: kans op een voorval &#215; gemiddeld schadebedrag.</span></li>
+              <li class="flex items-start gap-2"><span class="c-check c-check-h2">&#10003;</span><span class="text-sm text-slate-700">Ik onderscheid <strong>vrijwillige</strong> (zelf gekozen) van <strong>onvrijwillige</strong> risico&#8217;s, en leg <strong>risicoavers gedrag</strong> uit.</span></li>
+              <li class="flex items-start gap-2"><span class="c-check c-check-h2">&#10003;</span><span class="text-sm text-slate-700">Ik leg <strong>verplichte solidariteit</strong>, <strong>acceptatieplicht</strong> en het verschil tussen het <strong>omslagstelsel</strong> en <strong>kapitaaldekkingsstelsel</strong> uit.</span></li>
+            </ul>
+          </div>
+
+          <div class="cbox cbox-formule">
+            <div class="cbox-head" style="color:#4c1d95"><span>&#129518;</span> De kernformule</div>
+            <p style="font-size:14px;font-weight:700;color:#4c1d95;margin-bottom:.5rem;">Verwacht risico = kans op voorval &#215; gemiddeld schadebedrag</p>
+            <p style="font-size:12px;color:#374151;line-height:1.6;">Voorbeeld: kans op fietsdiefstal = 1 op 5 per jaar; fiets kost &#8364;700.<br>Verwacht risico = 1/5 &#215; &#8364;700 = <strong>&#8364;140 per jaar</strong>.<br>Als de jaarpremie lager is dan &#8364;140, is verzekeren wiskundig voordeliger.</p>
+          </div>
+
+          <div class="cbox cbox-kern">
+            <div class="cbox-head"><span>&#129504;</span> Kern van de theorie</div>
+            <p class="cbox-body">Mensen zijn van nature <strong>risicoavers</strong>: ze betalen liever een zekere premie dan een (kleinere kans op een) grote schade riskeren. Een verzekeraar kan dit aanbieden door risico&#8217;s samen te bundelen: de premies van velen betalen de schade van enkelen.<br><br>Wanneer de overheid bepaalde verzekeringen <strong>verplicht</strong> stelt (zoals de zorgverzekering), zorgt dat voor <em>verplichte solidariteit</em>: ook mensen met een laag risico doen mee. Hierdoor daalt de gemiddelde premie voor iedereen.</p>
+          </div>
+
+          <div class="grid md:grid-cols-3 gap-4">
+            <div class="inv-card inv-card-c">
+              <p class="inv-label inv-label-c">&#128100; De Consument</p>
+              <p class="inv-body">Iemand die <strong>risicoavers</strong> is betaalt bewust een premie die hoger is dan het verwachte risico &#8212; voor de zekerheid en gemoedsrust. Iemand die <strong>risicominnend</strong> is gaat liever de gok aan, ook als dat statistisch nadelig is.</p>
+            </div>
+            <div class="inv-card inv-card-p">
+              <p class="inv-label inv-label-p">&#127981; De Verzekeraar</p>
+              <p class="inv-body">Berekent de premie op basis van het gemiddelde schadebedrag, plus kosten en winstmarge. Bij een grote groep verzekerden wordt het totale risico voorspelbaar &#8212; dit heet de <strong>wet van de grote getallen</strong>.</p>
+            </div>
+            <div class="inv-card inv-card-m">
+              <p class="inv-label inv-label-m">&#127963; De Overheid</p>
+              <p class="inv-body">De overheid stelt sociale verzekeringen verplicht (Algemene Ouderdomswet, werkloosheidswet, zorgverzekering). De <strong>acceptatieplicht</strong> bij de basisverzekering zorgt dat niemand geweigerd wordt op basis van zijn gezondheidsrisico.</p>
+            </div>
+          </div>
+
+          <div class="cbox cbox-valkuil mt-1">
+            <div class="cbox-head"><span>&#9888;</span> Pas op voor deze valkuil</div>
+            <p class="cbox-body">Een premie die <em>hoger</em> is dan het verwachte risico betekent niet dat de consument &#8220;dom&#8221; is om toch te verzekeren. Iemand die risicoavers is betaalt bewust voor <strong>zekerheid en gemoedsrust</strong>. Dat is ook een rationele keuze &#8212; alleen vanuit een ander perspectief dan puur rekenkundig voordeel.</p>
+          </div>
+
+          
           <div class="exam-slot" data-par="2.1"></div>
         </div>
 
         <div id="par-2.2" class="scroll-mt-20 space-y-4" data-par-block="2.2" data-section-id="par-2.2">
-          <div class="flex items-center gap-2"><span class="chap-pill chap-pill-h2">§ 2.2</span><h3 class="text-xl font-bold text-slate-800">Asymmetrische informatie</h3></div>
-          <div class="theory-card"><p class="text-xs font-bold text-rose-700 uppercase tracking-wide mb-2">🎯 Leerdoelen</p>
-            <ul class="text-xs space-y-1 text-slate-700">
-              <li>✔︎ <strong>Averechtse selectie</strong> = vóór afsluiten. <strong>Moral hazard</strong> = ná afsluiten.</li>
-              <li>✔︎ Ik herken de <em>spiraal</em>: premie ↑ → goede risico's weg → premie ↑↑.</li></ul></div>
-          <div class="grid md:grid-cols-3 gap-3">
-            <div class="theory-card theory-card-c"><span class="persp persp-c">👤 Consument</span><p class="text-xs mt-2 text-slate-700">Weet eigen risico beter dan verzekeraar — hoge risico's zoeken verzekering.</p></div>
-            <div class="theory-card theory-card-p"><span class="persp persp-p">🏭 Verzekeraar</span><p class="text-xs mt-2 text-slate-700">Moet premie baseren op gem. → goede risico's stoppen → spiraal.</p></div>
-            <div class="theory-card theory-card-m"><span class="persp persp-m">🏛️ Overheid</span><p class="text-xs mt-2 text-slate-700">Verplicht verzekeren · acceptatieplicht · eigen risico tegen moral hazard.</p></div></div>
+
+          <div class="sec-header">
+            <div class="sec-icon bg-orange-100">&#128269;</div>
+            <div>
+              <span class="chap-pill chap-pill-h2">&#167; 2.2</span>
+              <h3 class="text-xl font-bold text-slate-800 inline ml-2">Asymmetrische informatie</h3>
+            </div>
+          </div>
+
+          <div class="c-card">
+            <p class="c-card-title">&#127919; Wat moet je na deze paragraaf kunnen?</p>
+            <ul class="space-y-2">
+              <li class="flex items-start gap-2"><span class="c-check c-check-h2">&#10003;</span><span class="text-sm text-slate-700"><strong>Averechtse selectie</strong> speelt zich af <em>v&#243;&#243;r</em> het afsluiten van een contract: alleen mensen met een hoog risico melden zich aan.</span></li>
+              <li class="flex items-start gap-2"><span class="c-check c-check-h2">&#10003;</span><span class="text-sm text-slate-700"><strong>Moral hazard (moreel wangedrag)</strong> speelt zich af <em>n&#225;</em> het afsluiten: de verzekerde past zijn gedrag aan omdat hij weet dat de kosten bij de verzekeraar liggen.</span></li>
+              <li class="flex items-start gap-2"><span class="c-check c-check-h2">&#10003;</span><span class="text-sm text-slate-700">Ik beschrijf de neerwaartse <strong>premiespirale</strong> die ontstaat door averechtse selectie, stap voor stap.</span></li>
+            </ul>
+          </div>
+
+          <div class="cbox cbox-kern">
+            <div class="cbox-head"><span>&#129504;</span> Kern van de theorie</div>
+            <p class="cbox-body"><strong>Asymmetrische informatie</strong> betekent: de verzekeraar en de verzekerde hebben niet dezelfde informatie. De verzekerde weet precies hoe groot zijn eigen risico is &#8212; de verzekeraar niet.<br><br>Dit leidt tot twee problemen:<br><strong>1. Averechtse selectie (v&#243;&#243;r het contract):</strong> mensen met een hoog risico vinden de gemiddelde premie &#8220;koopje&#8221; en sluiten af. Mensen met een laag risico vinden de premie &#8220;te duur&#8221; en sluiten <em>niet</em> af. De pool wordt steeds risicovoller &#8594; premie omhoog &#8594; nog meer mensen met laag risico haken af &#8594; spiraal.<br><br><strong>2. Moral hazard (n&#225; het contract):</strong> na het afsluiten verdwijnt een deel van de prikkel om voorzichtig te zijn. De kosten bij schade liggen immers bij de verzekeraar.</p>
+          </div>
+
+          <div class="diagram-wrap">
+            <p class="diagram-label">De premiespirale door averechtse selectie</p>
+            <div class="mermaid">
+flowchart TD
+    A["Verzekeraar stelt
+gemiddelde premie
+voor iedereen in"] ==> B["Hoge risicos vinden
+premie goedkoop
+en sluiten af"]
+    A ==> C["Lage risicos vinden
+premie te duur
+en haken af"]
+    B ==> D["Pool bestaat nu
+voor meer uit
+hoge risicos"]
+    C ==> D
+    D ==> E["Gemiddeld schadebedrag
+in de pool stijgt"]
+    E ==> F["Premie moet
+omhoog"]
+    F -.->|"Nog meer lage
+risicos haken af"| C
+    classDef grijs fill:#f1f5f9,stroke:#94a3b8,stroke-width:1px
+    classDef oranje fill:#ffedd5,stroke:#f97316,stroke-width:2px,color:#7c2d12
+    classDef rood fill:#fee2e2,stroke:#ef4444,stroke-width:2px,color:#7f1d1d
+    class A grijs
+    class C oranje
+    class B,D,E,F rood
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-3 gap-4">
+            <div class="inv-card inv-card-c">
+              <p class="inv-label inv-label-c">&#128100; De Consument</p>
+              <p class="inv-body">Weet zijn eigen risico beter dan de verzekeraar. Iemand die weet dat hij veel zorg nodig heeft, sluit bewust een verzekering af. Iemand die gezond is vindt de premie te duur en haakt af &#8212; waardoor de premie nog verder stijgt.</p>
+            </div>
+            <div class="inv-card inv-card-p">
+              <p class="inv-label inv-label-p">&#127981; De Verzekeraar</p>
+              <p class="inv-body">Moet de premie baseren op het gemiddelde risico in de pool. Als die pool steeds risicovoller wordt door averechtse selectie, moet de premie omhoog &#8212; wat nog meer mensen met laag risico wegjaagt. Dit kan uiteindelijk leiden tot het instorten van de markt.</p>
+            </div>
+            <div class="inv-card inv-card-m">
+              <p class="inv-label inv-label-m">&#127963; De Overheid</p>
+              <p class="inv-body">Lost de spiraal op via <strong>verplichte verzekering</strong> (ook mensen met laag risico moeten meedoen), <strong>acceptatieplicht</strong> en <strong>eigen risico</strong> als rem op moreel wangedrag na het afsluiten.</p>
+            </div>
+          </div>
+
+          <div class="cbox cbox-inzicht mt-1">
+            <div class="cbox-head"><span>&#128161;</span> Examen-klassieker: v&#243;&#243;r of n&#225;?</div>
+            <p class="cbox-body"><strong>Averechtse selectie</strong> = speelt <strong>v&#243;&#243;r</strong> het afsluiten (wie sluit af?). <strong>Moral hazard</strong> = speelt <strong>n&#225;</strong> het afsluiten (hoe gedraagt de verzekerde zich?). Dit onderscheid staat bijna elk jaar in het eindexamen.</p>
+          </div>
+
+          
           <div class="exam-slot" data-par="2.2"></div>
         </div>
 
         <div id="par-2.3" class="scroll-mt-20 space-y-4" data-par-block="2.3" data-section-id="par-2.3">
-          <div class="flex items-center gap-2"><span class="chap-pill chap-pill-h2">§ 2.3</span><h3 class="text-xl font-bold text-slate-800">Financiële risico's beperken</h3></div>
-          <div class="theory-card"><p class="text-xs font-bold text-rose-700 uppercase tracking-wide mb-2">🎯 Leerdoelen</p>
-            <ul class="text-xs space-y-1 text-slate-700">
-              <li>✔︎ Drie instrumenten: <strong>eigen risico · premiedifferentiatie · informatie inwinnen</strong>.</li>
-              <li>✔︎ Ik ken effect op premie, solidariteit en gedrag.</li></ul></div>
-          <div class="grid md:grid-cols-3 gap-3">
-            <div class="theory-card theory-card-c"><span class="persp persp-c">👤 Consument</span><p class="text-xs mt-2 text-slate-700">Eigen risico → voorzichtiger gedrag; lagere premie.</p></div>
-            <div class="theory-card theory-card-p"><span class="persp persp-p">🏭 Verzekeraar</span><p class="text-xs mt-2 text-slate-700">Differentieert premie op risicoprofiel; keuring; vragenlijsten.</p></div>
-            <div class="theory-card theory-card-m"><span class="persp persp-m">🏛️ Overheid</span><p class="text-xs mt-2 text-slate-700">Regelt max eigen risico · vereveningsfonds · acceptatieplicht.</p></div></div>
+
+          <div class="sec-header">
+            <div class="sec-icon bg-violet-100">&#128184;</div>
+            <div>
+              <span class="chap-pill chap-pill-h2">&#167; 2.3</span>
+              <h3 class="text-xl font-bold text-slate-800 inline ml-2">Financi&#235;le risico&#8217;s beperken</h3>
+            </div>
+          </div>
+
+          <div class="c-card">
+            <p class="c-card-title">&#127919; Wat moet je na deze paragraaf kunnen?</p>
+            <ul class="space-y-2">
+              <li class="flex items-start gap-2"><span class="c-check c-check-h2">&#10003;</span><span class="text-sm text-slate-700">Ik noem de drie instrumenten die verzekeraars gebruiken en leg per instrument uit welk probleem het aanpakt: averechtse selectie, moreel wangedrag of allebei.</span></li>
+              <li class="flex items-start gap-2"><span class="c-check c-check-h2">&#10003;</span><span class="text-sm text-slate-700">Ik leg uit hoe <strong>eigen risico</strong> moreel wangedrag remt &#233;n averechtse selectie indirect tegengaat via het signaaleffect.</span></li>
+              <li class="flex items-start gap-2"><span class="c-check c-check-h2">&#10003;</span><span class="text-sm text-slate-700">Ik onderscheid wanneer <strong>acceptatieplicht</strong> w&#233;l en wanneer die niet geldt.</span></li>
+            </ul>
+          </div>
+
+          <div class="grid md:grid-cols-3 gap-4">
+            <div class="instr-tile">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="instr-num instr-num-1">1</span>
+                <h4 class="font-bold text-slate-800 text-sm">Eigen risico</h4>
+              </div>
+              <p class="text-xs text-slate-600 leading-relaxed mb-2">De verzekerde betaalt zelf een deel van de schade (bij de basisverzekering verplicht &#8364;385 per jaar). Daardoor heeft hij een prikkel om voorzichtig te zijn.</p>
+              <div class="flex flex-wrap gap-1 mt-2">
+                <span class="text-[10px] font-semibold bg-orange-100 text-orange-700 rounded-full px-2 py-0.5">Rem op moreel wangedrag</span>
+                <span class="text-[10px] font-semibold bg-blue-100 text-blue-700 rounded-full px-2 py-0.5">Signaaleffect averechtse selectie</span>
+              </div>
+            </div>
+            <div class="instr-tile">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="instr-num instr-num-2">2</span>
+                <h4 class="font-bold text-slate-800 text-sm">Premiedifferentiatie &amp; bonus-malus</h4>
+              </div>
+              <p class="text-xs text-slate-600 leading-relaxed mb-2">Mensen met een hoger risico betalen een hogere premie. Bij de <em>bonus-malus-regeling</em> gaat de premie omlaag bij geen schade en omhoog bij schade &#8212; een prikkel voor voorzichtig gedrag.</p>
+              <div class="flex flex-wrap gap-1 mt-2">
+                <span class="text-[10px] font-semibold bg-green-100 text-green-700 rounded-full px-2 py-0.5">Rem op averechtse selectie</span>
+                <span class="text-[10px] font-semibold bg-orange-100 text-orange-700 rounded-full px-2 py-0.5">Rem op moreel wangedrag</span>
+              </div>
+            </div>
+            <div class="instr-tile">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="instr-num instr-num-3">3</span>
+                <h4 class="font-bold text-slate-800 text-sm">Informatie inwinnen</h4>
+              </div>
+              <p class="text-xs text-slate-600 leading-relaxed mb-2">De verzekeraar vraagt informatie op via vragenlijsten, het schadeverleden (schadevrije jaren) en het Centraal Informatiesysteem. Zo verkleint hij zijn informatieachterstand.</p>
+              <div class="flex flex-wrap gap-1 mt-2">
+                <span class="text-[10px] font-semibold bg-green-100 text-green-700 rounded-full px-2 py-0.5">Rem op averechtse selectie</span>
+                <span class="text-[10px] font-semibold bg-red-100 text-red-700 rounded-full px-2 py-0.5">Fraudedetectie</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="cbox cbox-kern">
+            <div class="cbox-head"><span>&#129504;</span> Kern van de theorie</div>
+            <p class="cbox-body">Alle drie de instrumenten proberen de <strong>informatieachterstand</strong> van de verzekeraar te verkleinen of de <strong>prikkel</strong> van de verzekerde om voorzichtig te zijn te herstellen. Ze zijn geen perfecte oplossing: premiedifferentiatie staat op gespannen voet met <em>solidariteit</em> &#8212; als je differentieert op risico, betalen mensen met chronische ziekten meer, wat maatschappelijk onwenselijk is.</p>
+          </div>
+
+          <div class="grid md:grid-cols-3 gap-4">
+            <div class="inv-card inv-card-c">
+              <p class="inv-label inv-label-c">&#128100; De Consument</p>
+              <p class="inv-body">Eigen risico zorgt voor <em>voorzichtiger gedrag</em>: je denkt twee keer na v&#243;&#243;r je een kleine schade claimt. Bij de bonus-malus-regeling voor de autoverzekering rijden goede bestuurders goedkoper.</p>
+            </div>
+            <div class="inv-card inv-card-p">
+              <p class="inv-label inv-label-p">&#127981; De Verzekeraar</p>
+              <p class="inv-body">Differentieert de premie op basis van waarneembare kenmerken (leeftijd, postcode, schadeverleden). Dit trekt mensen met laag risico aan en houdt de pool gezond &#8212; maar mag niet op basis van genetische gegevens bij de zorgverzekering.</p>
+            </div>
+            <div class="inv-card inv-card-m">
+              <p class="inv-label inv-label-m">&#127963; De Overheid</p>
+              <p class="inv-body"><strong>Acceptatieplicht</strong> geldt alleen bij de <em>basisverzekering</em>: de verzekeraar moet iedereen accepteren, ongeacht gezondheidsrisico. Bij aanvullende verzekeringen en autoverzekeringen mag de verzekeraar w&#233;l selecteren en weigeren.</p>
+            </div>
+          </div>
+
+          <div class="cbox cbox-valkuil mt-1">
+            <div class="cbox-head"><span>&#9888;</span> Pas op voor deze valkuil</div>
+            <p class="cbox-body"><strong>Acceptatieplicht</strong> geldt uitsluitend bij de <em>basisverzekering</em> voor zorg &#8212; niet bij aanvullende zorgverzekeringen, autoverzekeringen, reisverzekeringen enzovoort. Bij die laatste categorie&#235;n mag een verzekeraar w&#233;l iemand weigeren of een hogere premie vragen op basis van risico.</p>
+          </div>
+
+          
           <div class="exam-slot" data-par="2.3"></div>
         </div>
       </section>
@@ -1685,10 +2174,10 @@ function renderLogic(logic) {
   if (!logic) return '';
   let body = '';
   logic.steps.forEach((s,i) => {
-    body += `<div class="logic-step"><div class="n">${i+1}</div><div>${s}</div></div>`;
+    body += `<div class="logic-step"><div class="n">${i+1}</div><div>${expandAbbr(s)}</div></div>`;
     if (i < logic.steps.length-1) body += `<div class="logic-arrow">↓</div>`;
   });
-  if (logic.kicker) body += `<div class="logic-kicker">💡 ${logic.kicker}</div>`;
+  if (logic.kicker) body += `<div class="logic-kicker">💡 ${expandAbbr(logic.kicker)}</div>`;
   if (logic.graph) body += `<div class="mt-3">${svgFor(logic.graph)}</div>`;
   return `<div class="logic-box"><div class="logic-title">🧠 Begrijp de Logica</div>${body}</div>`;
 }
@@ -2022,6 +2511,7 @@ function showSection(sectionId, syncHash = true) {
     revealWithFade(document.getElementById(target));
   }
   setActiveSidebarItem(target);
+  if (typeof mermaid !== 'undefined') { setTimeout(renderMermaid, 80); }
   if (syncHash && location.hash !== '#' + target) {
     location.hash = target;
   }
@@ -2122,6 +2612,55 @@ function initSamenvattingEmbed() {
   frame.src = SAMENVATTING_H1_H2_DATA_URL;
 }
 
+
+/* ===== ABBREVIATION EXPANDER ===== */
+const ABBR_MAP = [
+  [/\bPD\b/g,   'Gevangenendilemma'],
+  [/\bGD\b/g,   'Gevangenendilemma'],
+  [/\bAS\b/g,   'Averechtse selectie'],
+  [/\bMH\b/g,   'Moral hazard'],
+  [/\bi\.t\.t\.\s*/g, 'in tegenstelling tot '],
+  [/\bmld\b/g,  'miljard'],
+  [/\bmnd\b/g,  'maanden'],
+  [/\bgem\.\s*/g, 'gemiddeld '],
+  [/\bbijv\.\s*/g, 'bijvoorbeeld '],
+  [/\bbv\.\s*/g,  'bijvoorbeeld '],
+  [/\btvw\b/g,  'tijdvak'],
+];
+function expandAbbr(text) {
+  if (!text || typeof text !== 'string') return text;
+  let out = text;
+  ABBR_MAP.forEach(([pat, repl]) => { out = out.replace(pat, repl); });
+  return out;
+}
+
+/* ===== MERMAID INIT ===== */
+function renderMermaid() {
+  if (typeof mermaid === 'undefined') return;
+  const els = document.querySelectorAll('.mermaid:not([data-processed])');
+  if (els.length === 0) return;
+  try {
+    mermaid.run({ nodes: Array.from(els) }).catch(() => {
+      els.forEach(el => { el.style.background = 'transparent'; });
+    });
+  } catch(e) { /* ignore */ }
+}
+if (typeof mermaid !== 'undefined') {
+  mermaid.initialize({
+    startOnLoad: false,
+    securityLevel: 'loose',
+    theme: 'base',
+    themeVariables: {
+      primaryColor: '#dbeafe',
+      primaryTextColor: '#1e3a8a',
+      primaryBorderColor: '#3b82f6',
+      lineColor: '#475569',
+      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif',
+      fontSize: '12px'
+    }
+  });
+}
+
 /* ---- BOOT ---- */
 document.addEventListener('DOMContentLoaded', () => {
   renderAll();
@@ -2129,6 +2668,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initNav();
   initTour();
   initSamenvattingEmbed();
+  setTimeout(renderMermaid, 300);
   document.querySelectorAll('.mode-tab').forEach(t => t.addEventListener('click', () => switchMode(t.dataset.mode)));
   document.getElementById('flash-flip').addEventListener('click', () => document.getElementById('flash-card').classList.toggle('flipped'));
   document.getElementById('flash-next').addEventListener('click', nextFlash);
