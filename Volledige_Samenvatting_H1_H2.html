@@ -1,0 +1,2666 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Volledige_Samenvatting_H1_H2.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="volledige-samenvatting--havo-economie">Volledige Samenvatting · HAVO Economie</h1>
+<h2 id="hoofdstuk-1--samenwerken-is-een-spel--hoofdstuk-2--risico--informatie">Hoofdstuk 1 — <em>Samenwerken is een spel</em>  ·  Hoofdstuk 2 — <em>Risico &amp; Informatie</em></h2>
+<blockquote>
+<p>[!NOTE]
+Deze samenvatting dekt alle paragrafen (1.1 t/m 1.5 en 2.1 t/m 2.3), plus de begrippenlijsten, formules en EU/MVO-theorie uit de overige bronnen. Print-klaar, B1-niveau, met invalshoeken, professionele Mermaid-diagrammen en LaTeX-formules.</p>
+</blockquote>
+<hr>
+<h2 id="%F0%9F%93%96-leeswijzer--hoe-gebruik-je-dit-document">📖 Leeswijzer — hoe gebruik je dit document?</h2>
+<p>Dit document werkt op <strong>drie lagen</strong> per onderwerp. Lees ze altijd in deze volgorde, dan beklijft de stof veel sneller:</p>
+<table>
+<thead>
+<tr>
+<th>Laag</th>
+<th>Markering</th>
+<th>Wat staat er?</th>
+<th>Waarom?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1. Definitie &amp; feiten</strong></td>
+<td>gewone tekst, tabel</td>
+<td>Begrip + voorbeeld + formule</td>
+<td>Examen vraagt vaak letterlijke definitie</td>
+</tr>
+<tr>
+<td><strong>2. Causale keten</strong></td>
+<td><code>&gt; [!IMPORTANT]</code></td>
+<td>Stap-voor-stap <em>waarom</em> het werkt zoals het werkt</td>
+<td>Het examen test of je het mechanisme begrijpt</td>
+</tr>
+<tr>
+<td><strong>3. Examenvalkuil</strong></td>
+<td><code>&gt; [!CAUTION]</code></td>
+<td>Veelgemaakte fout / nuance</td>
+<td>1-2 punten extra die anderen verliezen</td>
+</tr>
+<tr>
+<td><strong>4. Examen-truc</strong></td>
+<td><code>&gt; [!TIP]</code></td>
+<td>Slimme aanpak / herkennings-trick</td>
+<td>Tijd winnen op de toets</td>
+</tr>
+</tbody>
+</table>
+<h3 id="iconen--invalshoeken-in-dit-document">Iconen &amp; invalshoeken in dit document</h3>
+<table>
+<thead>
+<tr>
+<th>Icoon</th>
+<th>Betekenis</th>
+<th>Mermaid-kleur</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>👤</td>
+<td>Invalshoek <strong>Consument</strong></td>
+<td>🟦 Blauw</td>
+</tr>
+<tr>
+<td>🏭</td>
+<td>Invalshoek <strong>Producent</strong></td>
+<td>🟩 Groen</td>
+</tr>
+<tr>
+<td>🏛️</td>
+<td>Invalshoek <strong>Markt / Overheid</strong></td>
+<td>🟪 Paars</td>
+</tr>
+<tr>
+<td>🧠</td>
+<td>&quot;Begrijp de Logica&quot; — causale keten</td>
+<td>—</td>
+</tr>
+<tr>
+<td>⚠️</td>
+<td>Examenvalkuil</td>
+<td>—</td>
+</tr>
+<tr>
+<td>🧮</td>
+<td>Rekenformule of -voorbeeld</td>
+<td>—</td>
+</tr>
+<tr>
+<td>🔁</td>
+<td>Verband met ander begrip elders in de samenvatting</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-mermaid"><div class="mermaid">flowchart LR
+    subgraph Methode["📖 Leerproces — 4 Lagen"]
+        direction LR
+        D1{{"1️⃣ Definitie"}} ==> D2(["2️⃣ Logica 🧠"]) ==> D3[/"3️⃣ Valkuil ⚠️"/] ==> D4[["4️⃣ Examen 🎯"]]
+    end
+    classDef stap1 fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e3a8a
+    classDef stap2 fill:#dcfce7,stroke:#22c55e,stroke-width:2px,color:#14532d
+    classDef stap3 fill:#fee2e2,stroke:#ef4444,stroke-width:2px,color:#7f1d1d
+    classDef stap4 fill:#fef9c3,stroke:#eab308,stroke-width:2px,color:#713f12
+    class D1 stap1
+    class D2 stap2
+    class D3 stap3
+    class D4 stap4
+</div></code></pre>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>Examen-Focus — Leeswijzer:</strong> De dikke pijl <code>==&gt;</code> toont de <strong>vaste leesvolgorde</strong>. Sla stap 2 (Logica) nooit over — examenvragen testen de keten, niet de definitie.</p>
+</blockquote>
+<hr>
+<h1 id="hoofdstuk-1--samenwerken-is-een-spel">HOOFDSTUK 1 · SAMENWERKEN IS EEN SPEL</h1>
+<hr>
+<h2 id="11-speltheorie">1.1 Speltheorie</h2>
+<h3 id="wat-is-speltheorie">Wat is speltheorie?</h3>
+<p><strong>[Invalshoek: 🏛️ De Markt / Overheid]</strong></p>
+<ul>
+<li><strong>Speltheorie</strong> = theorie over de manier waarop mensen beslissingen nemen, waarbij ze rekening houden met de mogelijke uitkomst van keuzes van anderen.</li>
+<li>Uitgangspunt: spelers (consumenten, bedrijven, overheid) beslissen <strong>rationeel</strong> (met verstand, zonder emotie).</li>
+<li>In de praktijk is menselijk gedrag vaak onvoorspelbaarder dan de theorie.</li>
+</ul>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>Begrijp de Logica — Waarom überhaupt &quot;speltheorie&quot;?</strong></p>
+<p>Bij een gewone vraag/aanbod-markt heb je <strong>veel</strong> anonieme spelers — niemand kan in z'n eentje de prijs beïnvloeden. Maar zodra er <strong>weinig</strong> spelers zijn (oligopolie, twee landen, twee aannemers), wordt jouw winst direct beïnvloed door de keuze van die ander. Dan moet je vooruit-denken:</p>
+<ol>
+<li><em>&quot;Wat doet hij waarschijnlijk?&quot;</em></li>
+<li><em>&quot;Wat is mijn beste antwoord daarop?&quot;</em></li>
+<li><em>&quot;Wist hij dát ik dat zou denken?&quot;</em></li>
+</ol>
+<p>Speltheorie geeft een <strong>systematische methode</strong> (matrix → best response → Nash) om dit redeneerproces te ordenen, zodat je niet vastloopt in een &quot;ja maar wat als…&quot;-spiraal.</p>
+</blockquote>
+<blockquote>
+<p>[!CAUTION]
+<strong>Examenvalkuil:</strong> Speltheorie is <strong>rationeel</strong>, maar examenvragen testen vaak het <strong>gat met de praktijk</strong> (rechtvaardigheidsgevoel, vertrouwen, sociale norm). Zie je in de casus woorden als <em>&quot;in de praktijk&quot;</em>, <em>&quot;echte mensen&quot;</em>, <em>&quot;sociale norm&quot;</em> — wijk dan af van de pure rationele uitkomst.</p>
+</blockquote>
+<hr>
+<h3 id="de-3-dimensies-van-een-spel">De 3 dimensies van een spel</h3>
+<table>
+<thead>
+<tr>
+<th>Dimensie</th>
+<th>Type A</th>
+<th>Type B</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Tijd</strong></td>
+<td><strong>Simultaan</strong> — spelers beslissen tegelijk</td>
+<td><strong>Sequentieel</strong> — speler 1 kiest eerst, speler 2 reageert</td>
+</tr>
+<tr>
+<td><strong>Herhaling</strong></td>
+<td><strong>Eenmalig</strong> — één ronde</td>
+<td><strong>Herhaald</strong> — acties in vorige rondes beïnvloeden strategie</td>
+</tr>
+<tr>
+<td><strong>Samenwerking</strong></td>
+<td><strong>Coöperatief</strong> — spelers stemmen strategieën af</td>
+<td><strong>Niet-coöperatief</strong> — iedereen kiest voor eigen belang</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Ezelsbruggetje:</strong> <em>&quot;Tegelijk of om de beurt?&quot;</em> · <em>&quot;Eén keer of vaker?&quot;</em> · <em>&quot;Samen of solo?&quot;</em></p>
+</blockquote>
+<pre><code class="language-mermaid"><div class="mermaid">flowchart TD
+    subgraph Dim1["⏱️ Dimensie 1 — Tijd"]
+        direction LR
+        T{{"Wanneer?"}} -->|"tegelijk"| Sim(["Simultaan"]) ==> Mat["📊 Matrix + Nash"]
+        T -->|"om beurt"| Seq(["Sequentieel"]) ==> Boom["🌳 Spelboom + BI"]
+    end
+    subgraph Dim2["🔁 Dimensie 2 — Herhaling"]
+        direction LR
+        H{{"Hoe vaak?"}} -->|"1×"| Een(["Eenmalig"]) ==> GDC["💼 GD klassiek"]
+        H -->|"vaker"| Rep(["Herhaald"]) ==> Soc["🤝 Reputatie"]
+    end
+    subgraph Dim3["🤝 Dimensie 3 — Overleg"]
+        direction LR
+        S{{"Overleg?"}} -->|"ja"| Coop(["Coöperatief"]) ==> Con["📜 Contract"]
+        S -->|"nee"| Niet(["Niet-coöp."]) ==> Kar["⚖️ Ieder voor zich"]
+    end
+    classDef besluit fill:#fef9c3,stroke:#eab308,stroke-width:2px,color:#713f12
+    classDef markt fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e3a8a
+    classDef succes fill:#dcfce7,stroke:#22c55e,stroke-width:2px,color:#14532d
+    classDef grijs fill:#f1f5f9,stroke:#64748b,stroke-width:1px,color:#334155
+    class T,H,S besluit
+    class Sim,Een,Coop markt
+    class Seq,Rep,Niet succes
+    class Mat,Boom,GDC,Soc,Con,Kar grijs
+</div></code></pre>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>Examen-Focus — 3 Dimensies:</strong> Elke subgraph is één dimensie. De <strong>gele hexagons</strong> zijn de sleutelvragen — op het examen stel je deze 3 vragen bij iedere casus. De <strong>blauwe stadium-nodes</strong> zijn type A, de <strong>groene</strong> type B. De grijze rechthoeken tonen het bijbehorende analysemodel.</p>
+</blockquote>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>Begrijp de Logica — Waarom maakt elke dimensie uit?</strong></p>
+<p>Elke dimensie bepaalt <strong>welk model je mag gebruiken</strong> en <strong>welke uitkomst rationeel is</strong>.</p>
+<p><strong>Voorbeeldketens uit recente examens:</strong></p>
+<ul>
+<li><em>Twee aannemers met aanbesteding</em> (24-2-25) → <strong>sequentieel + eenmalig</strong> → ultimatumspel.</li>
+<li><em>Twee energiebedrijven over CO₂-rechten</em> (25-1-16) → <strong>simultaan + eenmalig</strong> → matrix + Nash.</li>
+<li><em>Twee aannemers vaker samen</em> (24-2-26) → <strong>herhaald</strong> → reputatie telt → bod gaat omhoog.</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>[!CAUTION]
+<strong>Examenvalkuil:</strong> Bij <strong>herhaald</strong> spel is &quot;altijd verraden&quot; niet meer dominant — je verliest reputatie en wordt in toekomstige rondes gestraft. Lees dus altijd of het spel &quot;nog vaker&quot; plaatsvindt.</p>
+</blockquote>
+<hr>
+<h3 id="opbrengstenmatrix-pay-off-matrix">Opbrengstenmatrix (pay-off matrix)</h3>
+<p><strong>[Invalshoek: 🏭 De Producent]</strong></p>
+<ul>
+<li><strong>Opbrengstenmatrix</strong> = tabel met de uitkomsten van een spel per combinatie van strategieën.</li>
+<li><strong>Rijspeler</strong> links (getal vóór de komma), <strong>kolomspeler</strong> boven (getal ná de komma).</li>
+<li>Notatie: $(\text{uitkomst speler 1},;, \text{uitkomst speler 2})$.</li>
+</ul>
+<p><strong>Voorbeeld — Bibi (rij) vs. Stefan (kolom) — wel/geen trouwfoto's</strong> (€):</p>
+<p>$$
+\begin{array}{c|cc}
+&amp; \textbf{Stefan: Wel} &amp; \textbf{Stefan: Geen} \
+\hline
+\textbf{Bibi: Wel}  &amp; (-1.000,;, 0)     &amp; (2.000,;, -500) \
+\textbf{Bibi: Geen} &amp; (\phantom{-}1.000,;, 3.000) &amp; (\phantom{-}0,;, 0) \
+\end{array}
+$$</p>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>Begrijp de Logica — De matrix is gewoon &quot;alle mogelijke werelden&quot;</strong></p>
+<p>Elk vakje is één scenario &quot;als ík X kies en hij Y, dan…&quot;. De matrix dwingt je om <strong>eerst álle scenario's uit te schrijven</strong>, zodat je niet één optie vergeet. Pas daarna ga je kiezen.</p>
+<p><strong>Lees-truc voor de notatie $(a,;,b)$:</strong></p>
+<ul>
+<li>$a$ = winst voor de <strong>rij</strong>speler (links) — vinger op het rij-label, kijk in dezelfde rij.</li>
+<li>$b$ = winst voor de <strong>kolom</strong>speler (boven) — vinger op het kolom-label, kijk in dezelfde kolom.</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>[!CAUTION]
+<strong>Examenvalkuil:</strong> Studenten halen vóór en ná de komma door elkaar. Schrijf bovenaan je examenblad: <em>&quot;vóór = rij, ná = kolom&quot;</em>.</p>
+</blockquote>
+<hr>
+<h3 id="best-response-methode-%E2%86%92-nash-evenwicht">Best response-methode → Nash-evenwicht</h3>
+<p><strong>Stappenplan (examenmethode):</strong></p>
+<ol>
+<li><strong>Rijspeler</strong> bekijkt per kolom wat zijn beste uitkomst is → arceer dat getal vóór de komma.</li>
+<li><strong>Kolomspeler</strong> bekijkt per rij zijn beste uitkomst → arceer dat getal na de komma.</li>
+<li>Vakje met <strong>beide</strong> getallen gearceerd = <strong>Nash-evenwicht</strong>.</li>
+</ol>
+<blockquote>
+<p><strong>Nash-evenwicht</strong> = een combinatie van strategieën waarbij geen enkele speler een reden heeft om van strategie te veranderen, gegeven de strategie van de ander.</p>
+</blockquote>
+<p>Toegepast op het Bibi/Stefan-voorbeeld → Nash = $(\text{Bibi: Geen},;, \text{Stefan: Wel}) = (1.000,;, 3.000)$.</p>
+<pre><code class="language-mermaid"><div class="mermaid">flowchart TD
+    subgraph Nash_Check["🔍 Nash-Evenwicht Check"]
+        direction TB
+        N_Start(["Kies strategieën"]) ==> N_Vraag{{"Eenzijdig<br/>verbeteren?"}}
+        N_Vraag ==>|"✅ Nee"| N_Uitk[["🏆 Nash-evenwicht"]]
+        N_Vraag -->|"❌ Ja"| N_Wissel[/"Andere strategie"/]
+        N_Wissel -.->|"iteratie"| N_Start
+    end
+    classDef besluit fill:#fef9c3,stroke:#eab308,stroke-width:2px,color:#713f12
+    classDef succes fill:#dcfce7,stroke:#22c55e,stroke-width:2px,color:#14532d
+    classDef falen fill:#fee2e2,stroke:#ef4444,stroke-width:2px,color:#7f1d1d
+    classDef markt fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e3a8a
+    class N_Vraag besluit
+    class N_Uitk succes
+    class N_Wissel falen
+    class N_Start markt
+</div></code></pre>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>Examen-Focus — Nash-check:</strong> De <strong>gestippelde terugpijl</strong> (<code>-.-&gt;</code>) is de feedbackloop — de iteratie stopt pas bij het <strong>groene [[Nash-evenwicht]]</strong>. De rode parallelogram toont dat een niet-Nash uitkomst onstabiel is: iemand wil altijd wisselen.</p>
+</blockquote>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>Begrijp de Logica — Waarom is Nash een &quot;evenwicht&quot;?</strong></p>
+<p>Een evenwicht in de natuurkunde = een bal die in een dal ligt. Tikt iemand er tegen → hij rolt terug. Een Nash-evenwicht is hetzelfde, maar dan met strategieën:</p>
+<ol>
+<li>Stel: jij weet wat de ander doet.</li>
+<li>Kun jij door <strong>eenzijdig</strong> te wisselen méér winst halen? → <strong>NEE</strong> = Nash.</li>
+<li>Kun jij wél méér halen door te wisselen? → <strong>GEEN</strong> Nash, je rolt door naar een betere strategie.</li>
+</ol>
+<p><strong>Belangrijk:</strong> Nash zegt NIETS over of de uitkomst goed is voor de groep. Het kan een <strong>slecht</strong> evenwicht zijn (zie gevangenendilemma) — toch blijft niemand spontaan wisselen, want je verslechtert je eigen positie.</p>
+</blockquote>
+<blockquote>
+<p>[!CAUTION]
+<strong>Examenvalkuil:</strong></p>
+<ul>
+<li>Een matrix kan <strong>0, 1 of meerdere</strong> Nash-evenwichten hebben — niet automatisch één.</li>
+<li>Nash ≠ &quot;beste&quot; uitkomst. Het is de <strong>stabiele</strong> uitkomst.</li>
+<li>Heb je géén dominante strategie? Doe dan stug de best-response-methode — die werkt altijd.</li>
+</ul>
+</blockquote>
+<hr>
+<h3 id="gevangenendilemma-prisoners-dilemma">Gevangenendilemma (prisoners' dilemma)</h3>
+<p><strong>[Invalshoek: 🏛️ De Markt / Overheid]</strong></p>
+<p>Een <strong>gevangenendilemma</strong> is een spel waarbij het evenwicht voor <strong>beide spelers niet optimaal</strong> is.</p>
+<p><strong>De 7 voorwaarden (uit je hoofd kennen):</strong></p>
+<ol>
+<li>Beslissen tegelijkertijd.</li>
+<li>Beslissingen zijn onafhankelijk, maar uitkomst hangt af van elkaar.</li>
+<li>Eenmalige beslissing.</li>
+<li>Beide spelers hebben dezelfde informatie.</li>
+<li>Iedereen kiest voor eigen belang.</li>
+<li>Slechts twee alternatieven per speler.</li>
+<li>Geen overleg mogelijk.</li>
+</ol>
+<p><strong>Standaardmatrix — Jesse vs. Finn (jaren cel):</strong></p>
+<p>$$
+\begin{array}{c|cc}
+&amp; \textbf{Finn: Bekennen} &amp; \textbf{Finn: Niet bekennen} \
+\hline
+\textbf{Jesse: Bekennen}      &amp; (3,;, 3)        &amp; (0,;, 5) \
+\textbf{Jesse: Niet bekennen} &amp; (5,;, 0)        &amp; (1,;, 1) \
+\end{array}
+$$</p>
+<p><em>Toelichting:</em> &quot;0&quot; = vrijuit (geen cel), uitkomsten in <strong>jaren cel</strong> dus <strong>lager is beter</strong>.</p>
+<pre><code class="language-mermaid"><div class="mermaid">flowchart TD
+    GD_Kern{{"🔒 Gevangenen-<br/>dilemma"}}
+    subgraph GD_Ind["👤 Individueel belang"]
+        direction LR
+        GD_Dom(["Bekennen = dominant"]) ==> GD_Slecht[/"😢 Nash: 3+3 jaar"/]
+    end
+    subgraph GD_Col["🤝 Collectief belang"]
+        direction LR
+        GD_Opt(["Niet bekennen = optimaal"]) ==> GD_Goed[["😊 1+1 jaar"]]
+    end
+    GD_Kern ==> GD_Dom
+    GD_Kern ==> GD_Opt
+    GD_Slecht -.->|"❌ paradox"| GD_Goed
+    classDef risico fill:#ffedd5,stroke:#f97316,stroke-width:3px,color:#7c2d12
+    classDef falen fill:#fee2e2,stroke:#ef4444,stroke-width:2px,color:#7f1d1d
+    classDef succes fill:#dcfce7,stroke:#22c55e,stroke-width:2px,color:#14532d
+    class GD_Kern risico
+    class GD_Dom,GD_Slecht falen
+    class GD_Opt,GD_Goed succes
+</div></code></pre>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>Examen-Focus — GD:</strong> Twee subgraphs staan naast elkaar: <strong>rood</strong> = wat rationeel gebeurt, <strong>groen</strong> = wat collectief beter is. De gestippelde pijl <code>-.-&gt;</code> markeert de paradox — de uitkomst wijst van de slechte Nash-uitkomst naar het collectieve optimum dat <em>niet</em> bereikt wordt. Op het examen: leg altijd uit waarom de rode uitkomst ondanks de groene optie het Nash-evenwicht is.</p>
+</blockquote>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>Begrijp de Logica — Waarom is dit een &quot;dilemma&quot;?</strong></p>
+<p>Het is een dilemma omdat <strong>rationeel goed voor jou</strong> = <strong>slecht voor jullie samen</strong>. Loop het denkproces van Jesse stap-voor-stap mee:</p>
+<ol>
+<li><em>&quot;Stel Finn bekent.&quot;</em> → Bekennen (3 jaar) is beter dan niet bekennen (5 jaar). Dus: <strong>bekennen</strong>.</li>
+<li><em>&quot;Stel Finn bekent niet.&quot;</em> → Bekennen (vrij) is beter dan niet bekennen (1 jaar). Dus: <strong>bekennen</strong>.</li>
+<li><strong>Conclusie:</strong> Wat Finn ook doet, Jesse zit beter af met bekennen → <strong>dominante strategie</strong>.</li>
+<li>Finn doet exact dezelfde redenering → ook bekennen.</li>
+<li>Resultaat: $(3,;,3)$, terwijl ze samen $(1,;,1)$ hadden kunnen halen → <strong>2 jaar verspild per persoon</strong>.</li>
+</ol>
+<p><strong>Het mechanisme:</strong> wantrouwen + onafhankelijke keuze + eigen belang = Pareto-slecht evenwicht. Daarom heeft de samenleving instituten <strong>uitgevonden</strong> om eruit te breken.</p>
+</blockquote>
+<h4 id="hoe-doorbreek-je-een-gevangenendilemma-%F0%9F%8E%AF">Hoe doorbreek je een gevangenendilemma? 🎯</h4>
+<table>
+<thead>
+<tr>
+<th>Mechanisme</th>
+<th>Welke voorwaarde wordt opgeheven?</th>
+<th>Voorbeeld</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Contract / kartel</strong></td>
+<td>Voorwaarde 7 (geen overleg) → wel overleg + boete</td>
+<td>OPEC-quota, prijsafspraken (in NL verboden)</td>
+</tr>
+<tr>
+<td><strong>Herhaling</strong></td>
+<td>Voorwaarde 3 (eenmalig) → reputatie ontstaat</td>
+<td>Vaste leveranciers, langetermijn-CAO</td>
+</tr>
+<tr>
+<td><strong>Wetgeving / overheid</strong></td>
+<td>Voorwaarde 5 (eigen belang) → wettelijk verplicht het collectieve</td>
+<td>Milieuwet, kartelverbod, belasting</td>
+</tr>
+<tr>
+<td><strong>Sociale norm</strong></td>
+<td>Voorwaarde 5 → schaamte/eer als straf</td>
+<td>&quot;Goede buur&quot; zijn, eerlijk delen</td>
+</tr>
+<tr>
+<td><strong>Zelfbinding</strong></td>
+<td>Voorwaarde 2 → keuze onomkeerbaar maken</td>
+<td>Groen-certificaat, openbaar beloven</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>[!CAUTION]
+<strong>Examenvalkuil:</strong> Studenten roepen te snel &quot;gevangenendilemma!&quot;. Check <strong>alle 7</strong> voorwaarden. Mist er één (bv. herhaald spel, of overleg toegestaan) → géén GD, maar gewone Nash-analyse.</p>
+</blockquote>
+<hr>
+<h3 id="dominante-strategie-vs-individueelcollectief-belang">Dominante strategie vs. individueel/collectief belang</h3>
+<table>
+<thead>
+<tr>
+<th>Begrip</th>
+<th>Definitie</th>
+<th>Voorbeeld</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Dominante strategie</strong></td>
+<td>Speler kiest altijd dezelfde strategie, ongeacht de ander</td>
+<td>&quot;Bekennen&quot; in gevangenendilemma</td>
+</tr>
+<tr>
+<td><strong>Individueel belang</strong></td>
+<td>Uitkomst die voor hém het gunstigst is</td>
+<td>Supermarkt: prijs verlagen</td>
+</tr>
+<tr>
+<td><strong>Collectief belang</strong></td>
+<td>Hoogste gezamenlijke opbrengst</td>
+<td>Beide: prijzen gelijk houden</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>Begrijp de Logica — Dominante strategie ≠ Nash-evenwicht!</strong></p>
+<ul>
+<li><strong>Dominante strategie</strong> = persoonlijk; één speler heeft één keuze die altijd het beste is.</li>
+<li><strong>Nash-evenwicht</strong> = de hele matrix; combinatie van keuzes waarbij niemand wil wisselen.</li>
+</ul>
+<p><strong>Verband:</strong></p>
+<ul>
+<li>Hebben <strong>beide</strong> spelers een dominante strategie → de combinatie is automatisch een Nash-evenwicht.</li>
+<li>Heeft <strong>niemand</strong> een dominante strategie → er kan nog steeds Nash zijn, maar je moet best response gebruiken.</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>[!TIP]
+🔁 <strong>Verbinding:</strong> bij prijzenoorlog (§1.2) zie je vaak dat <em>&quot;meedoen aan prijsoorlog&quot;</em> voor beide bedrijven dominant is → klassiek GD.</p>
+</blockquote>
+<hr>
+<h2 id="12-strategie-in-een-prijzenoorlog">1.2 Strategie in een prijzenoorlog</h2>
+<h3 id="nul-som-vs-niet-nul-som">Nul-som vs. niet-nul-som</h3>
+<table>
+<thead>
+<tr>
+<th>Type spel</th>
+<th>Kenmerk</th>
+<th>Voorbeeld</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Nul-som-spel</strong></td>
+<td>Uitkomst heeft constante waarde; wat de één wint, verliest de ander</td>
+<td>Schaken, poker</td>
+</tr>
+<tr>
+<td><strong>Niet-nul-som-spel</strong></td>
+<td>Beide kunnen winnen óf beide verliezen</td>
+<td>Gevangenendilemma, prijzenoorlog</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>Begrijp de Logica — Waarom is dit onderscheid zó belangrijk?</strong></p>
+<p>Bij een <strong>nul-som-spel</strong> is de taart vast: jouw plus = mijn min. Samenwerken heeft geen zin. → Pure concurrentie is logisch.</p>
+<p>Bij een <strong>niet-nul-som-spel</strong> kan de taart <strong>groter of kleiner</strong> worden afhankelijk van wat we samen doen. Daarom loont het om te onderhandelen, contracten te sluiten of normen te volgen — anders blijven we allebei in de &quot;kleine taart&quot;-uitkomst hangen.</p>
+</blockquote>
+<blockquote>
+<p>[!TIP]
+<strong>Examen-trick:</strong> Als de som van de uitkomsten in elk vakje <strong>anders</strong> is, is het géén nul-som. Het meeste in economie (oligopolie, milieu, EU) = niet-nul-som.</p>
+</blockquote>
+<hr>
+<h3 id="prijzenoorlog">Prijzenoorlog</h3>
+<p><strong>[Invalshoek: 🏭 De Producent]</strong></p>
+<p><strong>Prijzenoorlog</strong> = situatie waarin concurrenten elkaar bestrijden met prijsverlagingen om marktaandeel te vergroten of concurrenten uit de markt te drukken.</p>
+<ul>
+<li><strong>Redenen:</strong> omzet vergroten, marktaandeel pakken, concurrent uitschakelen.</li>
+<li><strong>Risico's voor producenten:</strong> lagere winstmarge, lange verliesperiode, kwaliteitsverlies.</li>
+<li><strong>Risico's voor consumenten:</strong> op korte termijn goedkoop, op lange termijn prijsverhoging + kwaliteitsverlies.</li>
+<li><strong>Plaats:</strong> vooral in <strong>oligopolies</strong> (telecom, supermarkten, tankstations, zorgverzekeraars).</li>
+</ul>
+<pre><code class="language-mermaid"><div class="mermaid">flowchart TD
+    subgraph PO_Trig["⚡ Trigger"]
+        direction LR
+        PO_Ol{{"🏪 Oligopolie"}} ==> PO_A(["Bedrijf A ↓ prijs"])
+    end
+    subgraph PO_Spiral["🔄 Neerwaartse Spiraal"]
+        direction TB
+        PO_B(["Marktaandeel A ↑"]) ==> PO_C(["Bedrijf B reageert ↓"])
+        PO_C ==> PO_D[/"📉 Prijsspiraal"/]
+    end
+    subgraph PO_Uit["📊 Uitkomst"]
+        direction LR
+        PO_Q{{"Wie overleeft?"}}
+        PO_Q -->|"zwakste weg"| PO_Win[["🏆 Winnaar"]]
+        PO_Q -->|"beide overleven"| PO_GD[/"💸 GD-verlies"/]
+    end
+    PO_A ==> PO_B
+    PO_D ==> PO_Q
+    classDef risico fill:#ffedd5,stroke:#f97316,stroke-width:2px,color:#7c2d12
+    classDef markt fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e3a8a
+    classDef falen fill:#fee2e2,stroke:#ef4444,stroke-width:2px,color:#7f1d1d
+    classDef succes fill:#dcfce7,stroke:#22c55e,stroke-width:2px,color:#14532d
+    classDef besluit fill:#fef9c3,stroke:#eab308,stroke-width:2px,color:#713f12
+    class PO_Ol risico
+    class PO_A,PO_B,PO_C markt
+    class PO_D,PO_GD falen
+    class PO_Win succes
+    class PO_Q besluit
+</div></code></pre>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>Examen-Focus — Prijzenoorlog cascade:</strong> Drie subgraphs tonen de drie fases: oranje = <strong>startconditie</strong> (oligopolie), blauw = <strong>actie</strong> (de spiraal), geel = <strong>beslissingsmoment</strong> (wie overleeft?). De dikke pijl <code>==&gt;</code> doorloopt de hoofdlijn; voor het examen: herken in welke fase de casustekst zich bevindt.</p>
+</blockquote>
+<p><strong>Voorbeeld — Restaurants T en S</strong> (€ winst):</p>
+<p>$$
+\begin{array}{c|cc}
+&amp; \textbf{S: Meedoen} &amp; \textbf{S: Niet meedoen} \
+\hline
+\textbf{T: Meedoen}      &amp; (1.425,;, 1.920) &amp; (1.995,;, 1.200) \
+\textbf{T: Niet meedoen} &amp; (\phantom{1.}996,;, 2.400) &amp; (1.660,;, 2.100) \
+\end{array}
+$$</p>
+<p>→ Dominante strategie voor beide = meedoen. Collectief optimum = beide niet meedoen → <strong>gevangenendilemma in de praktijk</strong>.</p>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>Begrijp de Logica — Waarom ontstaan prijzenoorlogen vooral in oligopolies?</strong></p>
+<p>Een oligopolie heeft <strong>weinig</strong> spelers met <strong>homogene</strong> producten (benzine, telecom, supermarkten). Drie effecten versterken elkaar:</p>
+<ol>
+<li><strong>Zichtbaarheid:</strong> je ziet de prijs van je concurrent dagelijks (bordje pomp, folder Albert Heijn).</li>
+<li><strong>Snelle substitutie:</strong> consumenten wisselen makkelijk → kleine prijsverschillen = grote verschuiving in marktaandeel.</li>
+<li><strong>Wederkerigheid:</strong> verlaag jij, dan verliest de buur klanten → die móét reageren → spiraal.</li>
+</ol>
+<p>Bij <strong>heterogene producten</strong> (kleding, restaurants, auto's) is dit veel minder, omdat klanten ook om kwaliteit/merk geven → prijsoorlog werkt slechter.</p>
+</blockquote>
+<pre><code class="language-mermaid"><div class="mermaid">flowchart TD
+    subgraph OL_Cond["🏭 Vereiste Condities"]
+        direction LR
+        OL_K{{"Oligopolie<br/>+ homogeen"}} --> OL_Z(["👁️ Zichtbare prijzen"])
+        OL_K --> OL_S(["🔄 Snelle substitutie"])
+    end
+    subgraph OL_Eff["📉 Gevolg"]
+        direction LR
+        OL_Sp[/"Iedereen verlaagt"/] ==> OL_V[["💸 Nash = GD-uitkomst"]]
+    end
+    OL_Z ==> OL_Sp
+    OL_S ==> OL_Sp
+    classDef risico fill:#ffedd5,stroke:#f97316,stroke-width:2px,color:#7c2d12
+    classDef markt fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e3a8a
+    classDef falen fill:#fee2e2,stroke:#ef4444,stroke-width:2px,color:#7f1d1d
+    class OL_K risico
+    class OL_Z,OL_S markt
+    class OL_Sp,OL_V falen
+</div></code></pre>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>Examen-Focus — Oligopolie mechanisme:</strong> De twee blauwe stadium-nodes zijn de <strong>condities</strong> die tegelijk aanwezig moeten zijn. Beide pijlen <code>==&gt;</code> stromen samen naar de rode parallelogram (spiraal). Ontbreekt één conditie (bv. product is heterogeen) → geen prijzenoorlog.</p>
+</blockquote>
+<blockquote>
+<p>[!CAUTION]
+<strong>Examenvalkuil:</strong> Prijzenoorlog (= concurreren via prijsverlaging) <strong>mag</strong> in Nederland; <strong>prijsafspraken</strong> (kartelvorming) zijn juist <strong>verboden</strong> door de Mededingingswet (ACM controleert). Verwar deze twee nooit.</p>
+</blockquote>
+<blockquote>
+<p>[!TIP]
+🔁 <strong>Verbinding:</strong> dit is een levensecht voorbeeld van de gevangenendilemma-logica uit §1.1 — daarom werkt de overheid via wetgeving in plaats van te hopen op vrijwillige samenwerking.</p>
+</blockquote>
+<hr>
+<h2 id="13-onderhandelen-en-samenwerken">1.3 Onderhandelen en samenwerken</h2>
+<h3 id="sequentieel-spel-%E2%86%92-andere-uitkomst">Sequentieel spel → andere uitkomst</h3>
+<p><strong>[Invalshoek: 👤 De Consument &amp; 🏭 Producent]</strong></p>
+<p>Bij een <strong>sequentieel spel</strong> volgen beslissingen elkaar op. De latere speler heeft meer informatie; de &quot;beste&quot; keuze kan daardoor veranderen.</p>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>Begrijp de Logica — Wie als eerste mag, kan het spel &quot;sturen&quot;</strong></p>
+<p>Bij simultaan beslissen weet je niet wat de ander doet → je kiest voorzichtig. Bij sequentieel weet <strong>speler 2</strong> wel wat speler 1 deed → speler 2 kiest perfect. Maar: speler 1 weet dat speler 2 dat gaat doen, en speelt dus de zet die speler 2 dwingt tot de uitkomst die ík (speler 1) wil.</p>
+<p>Dit heet <strong>first-mover-voordeel</strong>: door als eerste een onomkeerbare zet te doen, beperk je de keuzes van de tegenstander.</p>
+</blockquote>
+<hr>
+<h3 id="ultimatumspel">Ultimatumspel</h3>
+<ul>
+<li><strong>Ultimatumspel</strong> = sequentieel spel met één beslisser (speler 1) die een voorstel doet, speler 2 accepteert of wijst af.</li>
+<li>Bij afwijzing: <strong>beiden</strong> krijgen niets.</li>
+<li>Puur rationeel: speler 2 accepteert elk voorstel $&gt; 0$.</li>
+<li>In de praktijk: rechtvaardigheidsgevoel telt; bevredigende verdeling ligt rond <strong>€ 30 / € 70</strong>.</li>
+</ul>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>Begrijp de Logica — Theorie vs. praktijk in één spel</strong></p>
+<table>
+<thead>
+<tr>
+<th>Visie</th>
+<th>Wat doet speler 2 bij voorstel &quot;€ 1 voor jou, € 99 voor mij&quot;?</th>
+<th>Waarom?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Pure rationaliteit</strong></td>
+<td>Accepteren</td>
+<td>€ 1 &gt; € 0</td>
+</tr>
+<tr>
+<td><strong>Echte mensen</strong></td>
+<td>Weigeren (vaak)</td>
+<td>&quot;Liever niets dan een onrechtvaardig voorstel&quot;</td>
+</tr>
+</tbody>
+</table>
+<p>Speler 1 weet dit en biedt daarom in de praktijk <strong>€ 30–€ 50</strong>, niet € 1. De <em>anticipatie op woede</em> dwingt een eerlijker verdeling af.</p>
+</blockquote>
+<blockquote>
+<p>[!CAUTION]
+<strong>Examenvalkuil:</strong> Veel studenten geven alleen de &quot;puur rationele&quot; uitkomst. Lees of de vraag vraagt om de <em>theoretische</em> uitkomst óf wat in <em>de praktijk</em> gebeurt — dat scheelt 1-2 punten.</p>
+</blockquote>
+<hr>
+<h3 id="spelboom--backwards-induction">Spelboom &amp; Backwards induction</h3>
+<ul>
+<li><strong>Spelboom</strong> = visualisatie van een sequentieel spel, uitkomst $(\text{speler 1},;,\text{speler 2})$.</li>
+<li><strong>Backwards induction</strong>: werk terug vanaf de laatste beslissing en kies per knoop de beste optie voor de betreffende speler.</li>
+</ul>
+<p><strong>Voorbeeld — Unilever (eerst) vs. Nestlé (daarna) — wel/niet biologisch</strong> (€ mld winst):</p>
+<pre><code class="language-mermaid"><div class="mermaid">flowchart LR
+    subgraph Sp_U["🏢 Unilever — 1e zet"]
+        U(((U)))
+    end
+    subgraph Sp_N["🏢 Nestlé — reageert"]
+        N1(((N₁)))
+        N2(((N₂)))
+    end
+    subgraph Sp_R["📊 Uitkomsten (Unilever ; Nestlé)"]
+        R1["4,5 ; 4,5"]
+        R2[["⭐ 6 ; 5,5"]]
+        R3[["⭐ 5,5 ; 6"]]
+        R4["5 ; 5"]
+    end
+    U -->|"ja"| N1
+    U -->|"nee"| N2
+    N1 -->|"ja"| R1
+    N1 ==>|"nee ✓"| R2
+    N2 ==>|"ja ✓"| R3
+    N2 -->|"nee"| R4
+    classDef s1 fill:#dbeafe,stroke:#3b82f6,stroke-width:3px,color:#1e3a8a
+    classDef s2 fill:#dcfce7,stroke:#22c55e,stroke-width:2px,color:#14532d
+    classDef gekozen fill:#fef9c3,stroke:#eab308,stroke-width:3px,color:#713f12
+    classDef niet fill:#f1f5f9,stroke:#64748b,stroke-width:1px,color:#334155
+    class U s1
+    class N1,N2 s2
+    class R2,R3 gekozen
+    class R1,R4 niet
+</div></code></pre>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>Examen-Focus — Spelboom:</strong> De <strong>dikke pijlen</strong> <code>==&gt;</code> tonen het backwards-induction-pad (de gekozen takken). De gele [[dubbele rechthoeken]] zijn de ⭐-uitkomsten. Op het examen: werk altijd van rechts naar links — begin bij de gele vakjes, trek de dikke pijlen terug naar de blauwe cirkel.</p>
+</blockquote>
+<p><strong>Stappen:</strong></p>
+<ul>
+<li>Als Unilever &quot;ja&quot; → Nestlé kiest &quot;nee&quot; → $(6,;,5{,}5)$.</li>
+<li>Als Unilever &quot;nee&quot; → Nestlé kiest &quot;ja&quot; → $(5{,}5,;,6)$.</li>
+<li>Unilever kiest wat hém het meeste oplevert: $6 &gt; 5{,}5$ → <strong>&quot;ja&quot;</strong> → evenwicht = $(6,;,5{,}5)$.</li>
+</ul>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>Begrijp de Logica — Backwards induction in 3 stappen</strong></p>
+<p>Werk <strong>van rechts naar links</strong> door de boom:</p>
+<ol>
+<li><strong>Begin bij de eindknopen</strong> (de laatste speler die kiest). Markeer per knoop welke tak híj zou kiezen → noteer het uitkomst-paar.</li>
+<li><strong>Knip de niet-gekozen takken weg</strong> (denkbeeldig). Nu is er per pad één voorspelbare uitkomst.</li>
+<li><strong>Ga één stap terug</strong> naar de vorige beslisser en kies daar de tak met de hoogste eigen uitkomst.</li>
+<li>Herhaal tot je bij de eerste speler bent → dat pad = <strong>deelspel-perfect Nash-evenwicht</strong>.</li>
+</ol>
+</blockquote>
+<blockquote>
+<p>[!TIP]
+<strong>Examen-trick:</strong> maak op je examen <strong>altijd</strong> eerst de boom en zet ⭐ bij de takken die de speler kiest. Heel visueel scoort beter dan tekstueel beredeneren.</p>
+</blockquote>
+<blockquote>
+<p>[!CAUTION]
+<strong>Examenvalkuil:</strong> Studenten redeneren vaak &quot;voorwaarts&quot;. De examenmethode is <strong>achterwaarts</strong>. Pas als je weet wat de <strong>laatste</strong> speler doet, kan de <strong>eerste</strong> speler rationeel kiezen.</p>
+</blockquote>
+<hr>
+<h3 id="onderhandelen-contracten-zelfbinding">Onderhandelen, contracten, zelfbinding</h3>
+<p><strong>[Invalshoek: 🏛️ De Markt / Overheid]</strong></p>
+<table>
+<thead>
+<tr>
+<th>Instrument</th>
+<th>Definitie</th>
+<th>Functie</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Onderhandelen</strong></td>
+<td>Overleg tot een acceptabele afspraak</td>
+<td>Collectief &gt; eigen belang</td>
+</tr>
+<tr>
+<td><strong>Contract</strong></td>
+<td>Document met schriftelijke afspraken + handtekening</td>
+<td>Doorbreekt gevangenendilemma; boete bij verbreken</td>
+</tr>
+<tr>
+<td><strong>Sociale normen</strong></td>
+<td>Ongeschreven regels; werkt via reputatie</td>
+<td>Alternatief voor contract (vooral bij herhaald spel)</td>
+</tr>
+<tr>
+<td><strong>Zelfbinding</strong></td>
+<td>Eenzijdig een keuze <strong>geloofwaardig onomkeerbaar</strong> maken</td>
+<td>Bewijs van betrouwbaarheid</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Zelfbinding — voorbeelden:</strong> milieucertificaat, groen energiecontract, publieke CO₂-belofte.</p>
+<pre><code class="language-mermaid"><div class="mermaid">flowchart LR
+    subgraph ZB_Zon["❌ Zonder zelfbinding"]
+        direction LR
+        ZB_Bel(["Belofte"]) --x ZB_NGB[/"Niet geloofwaardig"/]
+    end
+    subgraph ZB_Met["✅ Met zelfbinding"]
+        direction LR
+        ZB_Cert(["Belofte +<br/>🔒 Onomkeerbaar"]) ==> ZB_Gel(["Geloofwaardig"]) ==> ZB_Win[["🤝 Win-win"]]
+    end
+    ZB_Bel -.->|"+ certificaat<br/>+ boete"| ZB_Cert
+    classDef falen fill:#fee2e2,stroke:#ef4444,stroke-width:2px,color:#7f1d1d
+    classDef succes fill:#dcfce7,stroke:#22c55e,stroke-width:2px,color:#14532d
+    classDef markt fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e3a8a
+    classDef oploss fill:#f3e8ff,stroke:#a855f7,stroke-width:2px,color:#581c87
+    class ZB_Bel markt
+    class ZB_NGB falen
+    class ZB_Cert oploss
+    class ZB_Gel,ZB_Win succes
+</div></code></pre>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>Examen-Focus — Zelfbinding:</strong> Let op de <code>--x</code> (kruis-pijl) in het rode blok — dit symboliseert een <strong>blokkade</strong>: de belofte zonder bewijs komt niet aan. De gestippelde pijl <code>-.-&gt;</code> verbindt de twee werelden: met de juiste toevoeging (certificaat/boete) wordt de belofte wél geloofwaardig. Paarse node = oplossingsmechanisme.</p>
+</blockquote>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>Begrijp de Logica — Waarom werkt zelfbinding?</strong></p>
+<p>Klinkt paradoxaal: je beperkt <strong>vrijwillig</strong> je eigen vrijheid. Toch is dit slim, omdat het je <strong>geloofwaardig</strong> maakt voor de tegenpartij.</p>
+<p><em>Voorbeeld:</em> een bedrijf belooft &quot;wij gaan groen produceren&quot;. Niemand gelooft het, want er is geen straf bij liegen. Maar als het bedrijf publiekelijk een <strong>certificaat</strong> koopt + boete-clausule tekent + investeert in zonnepanelen → die zet is onomkeerbaar. Nu is de belofte geloofwaardig.</p>
+</blockquote>
+<blockquote>
+<p>[!TIP]
+🔁 <strong>Verbinding:</strong> zelfbinding doorbreekt de &quot;geen overleg&quot;-voorwaarde van het GD (§1.1) — je geeft eenzijdig signaal i.p.v. te onderhandelen.</p>
+</blockquote>
+<hr>
+<h3 id="verzonken-kosten-sunk-costs">Verzonken kosten (sunk costs)</h3>
+<ul>
+<li><strong>Verzonken kosten</strong> = kosten die al gemaakt zijn voor een samenwerking en niet terugkeren wanneer de samenwerking niet doorgaat (bv. marktonderzoek, ontwikkelingskosten).</li>
+<li><strong>Economisch rationeel</strong> = kijk vooruit, niet achteruit. Verzonken kosten horen <strong>géén rol</strong> te spelen in toekomstige beslissingen (sunk cost fallacy).</li>
+</ul>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>Begrijp de Logica — De &quot;kapotte bioscoopkaartje&quot;-test</strong></p>
+<p>Stel: je hebt € 12 betaald voor een filmkaartje. Halverwege merk je: de film is verschrikkelijk. Wat is rationeel?</p>
+<ul>
+<li><strong>Fout:</strong> <em>&quot;Ik blijf zitten, anders is mijn € 12 weggegooid.&quot;</em> → Sunk cost fallacy. De € 12 ben je <strong>sowieso</strong> kwijt.</li>
+<li><strong>Goed:</strong> <em>&quot;Vergeet de € 12. Levert nog 1 uur kijken meer plezier op dan iets anders gaan doen?&quot;</em> → meestal: nee → <strong>wegwezen</strong>.</li>
+</ul>
+<p><strong>Toegepast op bedrijven:</strong> een bedrijf heeft € 5 mln R&amp;D in product gestopt. Markt blijkt te klein. → Beslissing baseren op <strong>toekomstige</strong> kosten en opbrengsten, NIET op die € 5 mln.</p>
+</blockquote>
+<blockquote>
+<p>[!CAUTION]
+<strong>Examenvalkuil:</strong> <em>&quot;Maar ze hebben er al zoveel ingestoken!&quot;</em> is een gevoels-argument, geen economisch argument. Markeer in casussen elke euro die al uitgegeven is als 🚫 → niet meenemen in toekomstige analyse.</p>
+</blockquote>
+<hr>
+<h2 id="14-externe-effecten--collectieve-goederen">1.4 Externe effecten &amp; collectieve goederen</h2>
+<h3 id="extern-effect">Extern effect</h3>
+<p><strong>[Invalshoek: 🏛️ De Markt / Overheid]</strong></p>
+<ul>
+<li><strong>Extern effect</strong> = effect dat <strong>niet in de (kost)prijs</strong> van een product zit. Een bijkomstig gevolg van productie of consumptie dat niet door de veroorzaker wordt betaald of aan de veroorzaker wordt vergoed.</li>
+<li><strong>Negatief extern effect</strong>: schade voor derden (luchtvervuiling, geluidsoverlast, files).</li>
+<li><strong>Positief extern effect</strong>: voordeel voor derden (imkers bij boomgaarden, onderwijs, vaccinatie).</li>
+</ul>
+<pre><code class="language-mermaid"><div class="mermaid">flowchart TD
+    subgraph EX_Markt["🏪 Markt (privaat)"]
+        direction LR
+        EX_PR(["💰 Private prijs"]) ==> EX_Bes(["Beslissing"])
+    end
+    EX_Ext{{"🌍 Extern effect"}} --x|"genegeerd"| EX_Bes
+    EX_Falen[/"⚠️ Suboptimaal<br/>te veel / te weinig"/]
+    subgraph EX_Cor["🏛️ Overheid corrigeert"]
+        direction LR
+        EX_OV{{"Beleid"}} -->|"belasting"| EX_Bel(["Internaliseren −"])
+        EX_OV -->|"subsidie"| EX_Sub2(["Internaliseren +"])
+    end
+    EX_Opt[["✅ Maatschappelijk optimum"]]
+    EX_Bes ==> EX_Falen
+    EX_Falen ==> EX_OV
+    EX_Bel ==> EX_Opt
+    EX_Sub2 ==> EX_Opt
+    classDef markt fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e3a8a
+    classDef risico fill:#ffedd5,stroke:#f97316,stroke-width:2px,color:#7c2d12
+    classDef falen fill:#fee2e2,stroke:#ef4444,stroke-width:2px,color:#7f1d1d
+    classDef oploss fill:#f3e8ff,stroke:#a855f7,stroke-width:2px,color:#581c87
+    classDef succes fill:#dcfce7,stroke:#22c55e,stroke-width:2px,color:#14532d
+    class EX_PR,EX_Bes markt
+    class EX_Ext risico
+    class EX_Falen falen
+    class EX_OV,EX_Bel,EX_Sub2 oploss
+    class EX_Opt succes
+</div></code></pre>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>Examen-Focus — Extern effect:</strong> De <code>--x</code> kruis-pijl toont dat het oranje hexagon (extern effect) door de markt <strong>geblokkeerd/genegeerd</strong> wordt. Volg dan de rode parallelogram (suboptimaal) → paarse subgraph (overheidsbeleid) → groen resultaat. Dit is de standaard examenketen: <strong>marktfalen → overheid ingrijpen → optimum</strong>.</p>
+</blockquote>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>Begrijp de Logica — Waarom faalt de markt hier?</strong></p>
+<p>De marktprijs is gebaseerd op <strong>private kosten en opbrengsten</strong>. Maar als productie ook <strong>derden</strong> raakt zonder dat die compensatie krijgt of betaalt, dan zit dat <strong>niet</strong> in de prijs.</p>
+<ul>
+<li><strong>Negatief extern effect</strong> → product is &quot;te goedkoop&quot; → <strong>te veel</strong> geproduceerd/geconsumeerd (bv. te veel diesel verkocht).</li>
+<li><strong>Positief extern effect</strong> → product is &quot;te duur&quot; → <strong>te weinig</strong> geproduceerd (bv. te weinig vaccinaties).</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>[!CAUTION]
+<strong>Examenvalkuil:</strong> <strong>Internaliseren</strong> = het externe effect <strong>in de prijs trekken</strong> via belasting (negatief) of subsidie (positief). Veel vragen vragen letterlijk dit woord.</p>
+</blockquote>
+<hr>
+<h3 id="maatschappelijke-kosten--opbrengsten">Maatschappelijke kosten &amp; opbrengsten</h3>
+<ul>
+<li><strong>Maatschappelijke kosten</strong> = private kosten + negatieve externe effecten.</li>
+<li><strong>Maatschappelijke opbrengsten</strong> = private opbrengsten + positieve externe effecten.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Begrip</th>
+<th>Betekenis</th>
+<th>Actie overheid</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Negatief extern effect</strong></td>
+<td>Schade niet doorberekend</td>
+<td>Belasting, boete, verbod, <strong>collectieve dwang</strong></td>
+</tr>
+<tr>
+<td><strong>Positief extern effect</strong></td>
+<td>Voordeel niet beloond</td>
+<td>Subsidie, voorlichting</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="soorten-goederen">Soorten goederen</h3>
+<table>
+<thead>
+<tr>
+<th>Goed</th>
+<th>Rivaliserend?</th>
+<th>Exclusief? (individueel afrekenbaar)</th>
+<th>Voorbeeld</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Individueel goed</strong></td>
+<td>Ja</td>
+<td>Ja</td>
+<td>Brood, kleding</td>
+</tr>
+<tr>
+<td><strong>Collectief goed</strong></td>
+<td>Nee</td>
+<td>Nee</td>
+<td>Dijken, defensie, openbare verlichting</td>
+</tr>
+<tr>
+<td><strong>Quasi-collectief goed</strong></td>
+<td>Gedeeltelijk</td>
+<td>Gedeeltelijk (grotendeels overheid)</td>
+<td>Onderwijs, zorg, openbaar vervoer</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Collectieve goederen</strong> = goederen die de overheid voortbrengt omdat ze niet individueel afrekenbaar zijn en geen prijs bij de gebruiker in rekening kan worden gebracht.</li>
+<li><strong>Quasi-collectieve goederen</strong> = lasten worden grotendeels door de overheid betaald, maar afname is wél individueel.</li>
+</ul>
+<hr>
+<h3 id="free-rider--meeliftgedrag">Free-rider / meeliftgedrag</h3>
+<ul>
+<li><strong>Meeliftgedrag (free-rider)</strong> = mensen maken wél gebruik van iets, maar betalen er niet voor.</li>
+<li>Typerend voor collectieve goederen → daarom belasting als <strong>collectieve dwang</strong>.</li>
+</ul>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>Begrijp de Logica — Free-rider = gevangenendilemma met N spelers</strong></p>
+<p>Stel: een dorp wil een dijk bouwen. Iedereen heeft baat bij de dijk (niet-rivaliserend, niet-exclusief). Wat denkt elke inwoner?</p>
+<ol>
+<li><em>&quot;Als ík niet meebetaal en de anderen wel, krijg ik de dijk gratis.&quot;</em> → Niet betalen.</li>
+<li><em>&quot;Als ík wel meebetaal en de anderen niet, krijg ik niks en ben ik mijn geld kwijt.&quot;</em> → Niet betalen.</li>
+<li><strong>Conclusie:</strong> Voor elke inwoner is &quot;niet betalen&quot; dominant → <strong>niemand</strong> betaalt → <strong>geen</strong> dijk.</li>
+</ol>
+<p>Dit is de groepsversie van het gevangenendilemma. <strong>Oplossing:</strong> belasting = verplichte bijdrage = collectieve dwang.</p>
+</blockquote>
+<blockquote>
+<p>[!TIP]
+🔁 <strong>Verbinding:</strong> dit is exact dezelfde logica als waarom <strong>zorgverzekeringen verplicht zijn</strong> (§2.1) — anders ontstaat averechtse selectie en valt het systeem om.</p>
+</blockquote>
+<blockquote>
+<p>[!CAUTION]
+<strong>Examenvalkuil:</strong> Een collectief goed herken je aan <strong>twee</strong> kenmerken samen: (1) niet-rivaliserend én (2) niet-exclusief. Mist één → géén collectief goed.</p>
+</blockquote>
+<hr>
+<h2 id="15-samenwerking-op-de-arbeidsmarkt--in-de-eu">1.5 Samenwerking op de arbeidsmarkt &amp; in de EU</h2>
+<h3 id="arbeidsovereenkomst">Arbeidsovereenkomst</h3>
+<p><strong>[Invalshoek: 🏭 De Producent / Werknemer]</strong></p>
+<ul>
+<li><strong>(Individuele) arbeidsovereenkomst</strong> = overeenkomst tussen werkgever en werknemer waarin de arbeidsvoorwaarden worden vastgelegd.</li>
+<li><strong>Arbeidsvoorwaarden</strong> = afspraken over de voorwaarden waaronder arbeid verricht wordt.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Soort voorwaarden</th>
+<th>Inhoud</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Primaire arbeidsvoorwaarden</strong></td>
+<td>Loonhoogte &amp; werktijden</td>
+</tr>
+<tr>
+<td><strong>Secundaire arbeidsvoorwaarden</strong></td>
+<td>Vakantiedagen, vakantietoeslag, pensioen, uitkering bij ziekte, opleiding</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="cao--sociale-partners">CAO &amp; sociale partners</h3>
+<ul>
+<li><strong>Vakbond</strong> = vereniging die belangen van werknemers behartigt.</li>
+<li><strong>Werkgeversorganisatie</strong> = vereniging die belangen van werkgevers behartigt.</li>
+<li><strong>CAO (collectieve arbeidsovereenkomst)</strong> = afspraken over de arbeidsvoorwaarden in een bedrijfstak, gemaakt door vakbonden en werkgeversorganisaties.</li>
+<li><strong>Algemeen verbindend verklaren (AVV)</strong> = cao-afspraken gelden voor alle werknemers in die bedrijfstak als de cao algemeen verbindend is verklaard door de minister van SZW.</li>
+<li><strong>Centraal Akkoord</strong> = afspraken op landelijk niveau tussen vakcentrales, werkgeverscentrales en de regering.</li>
+</ul>
+<pre><code class="language-mermaid"><div class="mermaid">flowchart TD
+    subgraph CAO_Part["🤝 Sociale Partners"]
+        direction LR
+        CAO_V{{"👥 Vakbond"}} <-->|"onderhandelen"| CAO_WG{{"🏭 Werkgevers"}}
+    end
+    subgraph CAO_Proc["📜 CAO Proces"]
+        direction LR
+        CAO_C(["CAO bedrijfstak"]) ==> CAO_AVV[/"🏛️ AVV Minister SZW"/]
+    end
+    CAO_V ==> CAO_C
+    CAO_WG ==> CAO_C
+    CAO_Res[["✅ Geldt voor ALLE werknemers<br/>bedrijfstak"]]
+    CAO_AVV ==> CAO_Res
+    classDef markt fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e3a8a
+    classDef succes fill:#dcfce7,stroke:#22c55e,stroke-width:2px,color:#14532d
+    classDef proces fill:#e0e7ff,stroke:#4338ca,stroke-width:2px,color:#1e1b4b
+    classDef oploss fill:#f3e8ff,stroke:#a855f7,stroke-width:2px,color:#581c87
+    class CAO_V markt
+    class CAO_WG succes
+    class CAO_C proces
+    class CAO_AVV oploss
+    class CAO_Res succes
+</div></code></pre>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>Examen-Focus — CAO:</strong> De dubbele pijl <code>&lt;--&gt;</code> toont de <em>onderhandeling</em> tussen blauw (werknemers) en groen (werkgevers). Beide stromen via <code>==&gt;</code> naar de blauwe stadium-node (CAO). De paarse parallelogram (AVV) is de <strong>overheids-stempel</strong> die de CAO voor de hele bedrijfstak geldig maakt. Eindresultaat: het groene [[uitkomst-blok]].</p>
+</blockquote>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>Begrijp de Logica — Waarom een CAO en niet 1000 individuele contracten?</strong></p>
+<ol>
+<li><strong>Onderhandelingsmacht (machtsbalans):</strong> één werknemer tegenover een groot bedrijf staat zwak. Maar <strong>alle</strong> werknemers samen via een vakbond → bedrijf kan niet doordraaien zonder hun arbeid → onderhandeling is gelijker → betere voorwaarden.</li>
+<li><strong>Transactiekosten:</strong> 1000 keer dezelfde onderhandeling voeren is verspilling. Eén CAO voor de hele bedrijfstak = efficiënter.</li>
+</ol>
+<p><strong>Algemeen verbindend verklaren</strong> breidt deze logica uit naar <strong>alle</strong> werknemers in de bedrijfstak. Dit voorkomt <strong>prijzenoorlog op arbeidsvoorwaarden</strong> (&quot;ik betaal mijn personeel minder dan de buurman → ik kan goedkoper produceren&quot;) → race to the bottom.</p>
+</blockquote>
+<blockquote>
+<p>[!TIP]
+🔁 <strong>Verbinding:</strong> dit is opnieuw een <strong>GD-doorbreker</strong> — zonder CAO zouden bedrijven elkaar onderbieden op loon.</p>
+</blockquote>
+<hr>
+<h3 id="de-europese-unie-eu">De Europese Unie (EU)</h3>
+<ul>
+<li><strong>Europese Unie (EU)</strong> = samenwerkingsverband van 27 landen in Europa (2021).</li>
+<li>Doel: vrede, stabiliteit, economische groei door samenwerking en vrij verkeer van goederen, diensten, personen en kapitaal.</li>
+</ul>
+<p><strong>Kerngeschiedenis (tijdlijn):</strong></p>
+<pre><code class="language-mermaid"><div class="mermaid">timeline
+    title 🇪🇺 Oprichting & groei Europese samenwerking
+    1951 : EGKS — Europese Gemeenschap voor Kolen en Staal
+    1957 : Verdrag van Rome — EEG (gemeenschappelijke markt)
+    1992 : Verdrag van Maastricht — EU & start EMU
+    2002 : Invoering euro (€) als contant geld
+    2007 : Verdrag van Lissabon — meer democratie, sterker EP
+    2020 : Brexit — VK verlaat de EU
+</div></code></pre>
+<ul>
+<li><strong>EGKS</strong> = Europese Gemeenschap voor Kolen en Staal (1951): begin van de Europese samenwerking; landen controleren elkaars kolen- en staalindustrie om oorlog te voorkomen.</li>
+<li><strong>EMU (Economische en Monetaire Unie)</strong> = samenwerking tussen EU-landen op economisch en monetair gebied; gezamenlijk gebruik van de euro en één monetair beleid (ECB).</li>
+<li><strong>Verdrag van Lissabon (2007)</strong> = verdrag dat de werking van de EU hervormt.</li>
+<li><strong>Criteria van Kopenhagen</strong> = voorwaarden waaraan een land moet voldoen om lid te mogen worden van de EU.</li>
+<li><strong>Brexit</strong> = uittreden van het Verenigd Koninkrijk uit de EU (2020).</li>
+</ul>
+<pre><code class="language-mermaid"><div class="mermaid">flowchart TD
+    subgraph EU_Zon["❌ Zonder EU — GD scenario"]
+        direction LR
+        EU_27{{"27 landen<br/>eigen belang"}} ==> EU_GD[/"Handelsoorlogen<br/>Valuta-race<br/>Subsidie-wedloop"/]
+    end
+    subgraph EU_Met["✅ Met EU — Coöperatief spel"]
+        direction LR
+        EU_Verd(["Verdragen + Regels"]) ==> EU_Inst(["🏛️ ECB · Hof · EMU"])
+        EU_Inst ==> EU_Win[["💶 Lagere kosten<br/>grotere markt · vrede"]]
+    end
+    EU_27 -.->|"verdragen sluiten"| EU_Verd
+    classDef risico fill:#ffedd5,stroke:#f97316,stroke-width:2px,color:#7c2d12
+    classDef falen fill:#fee2e2,stroke:#ef4444,stroke-width:2px,color:#7f1d1d
+    classDef oploss fill:#f3e8ff,stroke:#a855f7,stroke-width:2px,color:#581c87
+    classDef succes fill:#dcfce7,stroke:#22c55e,stroke-width:2px,color:#14532d
+    class EU_27 risico
+    class EU_GD falen
+    class EU_Verd,EU_Inst oploss
+    class EU_Win succes
+</div></code></pre>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>Examen-Focus — EU als coöperatief spel:</strong> Twee subgraphs: rood = het GD-scenario <strong>zonder</strong> EU, groen = de oplossing <strong>met</strong> EU. De gestippelde pijl <code>-.-&gt;</code> toont de transitie: de 27 landen kiezen ervoor verdragen te sluiten. Paarse nodes = de EU-instituten die het GD doorbreken. Dit diagram is de EU-samenvatting in één oogopslag.</p>
+</blockquote>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>Begrijp de Logica — De EU als gigantisch coöperatief spel</strong></p>
+<p>Stel je 27 landen voor die elk <strong>eigen</strong> beleid willen voeren (eigen valuta, eigen importheffingen, eigen subsidies). Wat gebeurt er rationeel?</p>
+<ol>
+<li>Land A verlaagt belasting voor bedrijven → bedrijven verhuizen daarheen → land B voelt zich gedwongen óók te verlagen → <strong>race to the bottom</strong> (klassieke GD).</li>
+<li>Land C zet importtarieven op buurland D → D doet hetzelfde terug → <strong>handelsoorlog</strong>.</li>
+</ol>
+<p>De EU is een <strong>bundel verdragen</strong> die deze prijsoorlogen verbieden:</p>
+<ul>
+<li><strong>Vrij verkeer</strong> → geen importheffingen tussen lidstaten.</li>
+<li><strong>EMU + euro</strong> → geen valuta-oorlogen meer.</li>
+<li><strong>Mededingingsregels + staatssteunregels</strong> → geen oneerlijke subsidiewedloop.</li>
+<li><strong>Hof van Justitie</strong> → onafhankelijke rechter handhaaft de regels.</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>[!TIP]
+🔁 <strong>Verbinding:</strong> precies dezelfde logica als CAO en kartelverbod — instituten zorgen dat het collectieve belang wint van het eigen belang.</p>
+</blockquote>
+<blockquote>
+<p>[!CAUTION]
+<strong>Examenvalkuil:</strong> &quot;Brexit&quot; wordt vaak gevraagd in context van de <strong>kosten</strong> van uittreden (verlies van vrije markt, douane-controles, hogere prijzen, juridische onzekerheid). Niet alleen &quot;VK is uit EU&quot;.</p>
+</blockquote>
+<hr>
+<h2 id="h1-overig--duurzaamheid--mvo">H1-OVERIG · Duurzaamheid &amp; MVO</h2>
+<h3 id="maatschappelijk-verantwoord-ondernemen-mvo">Maatschappelijk Verantwoord Ondernemen (MVO)</h3>
+<ul>
+<li><strong>MVO</strong> = bedrijven streven ernaar naast winst (profit) ook rekening te houden met het effect van hun activiteiten op het gebied van milieu (planet) en menselijke aspecten (people) bij de besluitvorming.</li>
+</ul>
+<h3 id="de-3-ps">De 3 P's</h3>
+<table>
+<thead>
+<tr>
+<th>Pijler</th>
+<th>Focus</th>
+<th>Voorbeeld</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>People</strong></td>
+<td>Mens, arbeidsomstandigheden, mensenrechten</td>
+<td>Eerlijke lonen, geen kinderarbeid</td>
+</tr>
+<tr>
+<td><strong>Planet</strong></td>
+<td>Milieu, klimaat</td>
+<td>CO₂-reductie, biodiversiteit</td>
+</tr>
+<tr>
+<td><strong>Profit</strong></td>
+<td>Winst, continuïteit onderneming</td>
+<td>Gezonde financiën</td>
+</tr>
+</tbody>
+</table>
+<h3 id="lineaire-vs-circulaire-economie">Lineaire vs. circulaire economie</h3>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Kenmerk</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Lineair</strong></td>
+<td>Grondstof → product → afval (&quot;take-make-waste&quot;)</td>
+</tr>
+<tr>
+<td><strong>Circulair</strong></td>
+<td>Producten en materialen worden hergebruikt; grondstoffen behouden zoveel mogelijk hun waarde</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>Begrijp de Logica:</strong> Een circulaire economie probeert negatieve externe effecten (uitputting, afval, CO₂) te internaliseren → betere uitkomst voor alle 3 P's samen.</p>
+</blockquote>
+<hr>
+<h1 id="hoofdstuk-2--risico--informatie">HOOFDSTUK 2 · RISICO &amp; INFORMATIE</h1>
+<hr>
+<h2 id="21-risico-nemen-of-vermijden">2.1 Risico nemen of vermijden</h2>
+<h3 id="risico--verzekeren">Risico &amp; verzekeren</h3>
+<p><strong>[Invalshoek: 👤 De Consument]</strong></p>
+<table>
+<thead>
+<tr>
+<th>Begrip</th>
+<th>Betekenis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Vrijwillige risico's</strong></td>
+<td>Risico's die je zelf kiest te nemen (bv. skiën, ondernemen)</td>
+</tr>
+<tr>
+<td><strong>Onvrijwillige risico's</strong></td>
+<td>Risico's waarvoor je niet zelf kiest (bv. brand, overstroming)</td>
+</tr>
+<tr>
+<td><strong>Verzekeren</strong></td>
+<td>Het tegen betaling van een premie overnemen van het financiële risico op schade van een verzekerde door een verzekeraar</td>
+</tr>
+<tr>
+<td><strong>Premie</strong></td>
+<td>Betaling van de verzekerde voor het verkrijgen van een verzekering</td>
+</tr>
+<tr>
+<td><strong>Polis</strong></td>
+<td>Contract dat dient als bewijs van een verzekering</td>
+</tr>
+<tr>
+<td><strong>Risicoavers gedrag</strong></td>
+<td>Het zo veel mogelijk vermijden van risico's</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="%F0%9F%A7%AE-formule--risico-berekenen">🧮 Formule — Risico berekenen</h3>
+<p>$$
+\boxed{\text{Risico} = \text{kans op een voorval} \times \text{gemiddeld schadebedrag}}
+$$</p>
+<p><strong>Voorbeeld (fiets):</strong> kans op diefstal $\tfrac{1}{5}$ per jaar; fiets kost € 700.</p>
+<p>$$
+\text{Risico per jaar} = \tfrac{1}{5} \times € 700 = € 140
+$$</p>
+<p>Is een jaarpremie van bv. € 32,80 lager dan € 140? → rationeel om te verzekeren.</p>
+<pre><code class="language-mermaid"><div class="mermaid">flowchart TD
+    subgraph VZ_Calc["🧮 Stap 1 — Bereken"]
+        direction LR
+        VZ_R{{"R = kans × schade"}} ==> VZ_P{{"P = jaarpremie"}}
+    end
+    subgraph VZ_Bes["💡 Stap 2 — Beslisregel"]
+        direction TB
+        VZ_Comp{{"P vs R?"}} -->|"P < R"| VZ_GoA[["✅ VERZEKEREN<br/>wiskundig voordelig"]]
+        VZ_Comp -->|"P > R"| VZ_Vr{{"Schade<br/>draagbaar?"}}
+        VZ_Vr -->|"Nee"| VZ_GoB[["✅ VERZEKEREN<br/>risicoaversie"]]
+        VZ_Vr -->|"Ja"| VZ_Niet[/"❌ Zelf-verzekeren"/]
+    end
+    VZ_P ==> VZ_Comp
+    classDef besluit fill:#fef9c3,stroke:#eab308,stroke-width:2px,color:#713f12
+    classDef succes fill:#dcfce7,stroke:#22c55e,stroke-width:2px,color:#14532d
+    classDef falen fill:#fee2e2,stroke:#ef4444,stroke-width:2px,color:#7f1d1d
+    class VZ_R,VZ_P,VZ_Comp,VZ_Vr besluit
+    class VZ_GoA,VZ_GoB succes
+    class VZ_Niet falen
+</div></code></pre>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>Examen-Focus — Beslisregel verzekeren:</strong> Twee subgraphs = twee stappen. Begin altijd in de <strong>gele subgraph</strong> (berekenen). Daarna stroomt de pijl naar de beslisregel. De dikke pijl <code>==&gt;</code> verbindt de twee stappen; het examen verwacht dat je beiden uitvoert — niet alleen &quot;P &gt; R dus niet verzekeren&quot;.</p>
+</blockquote>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>Begrijp de Logica — Wanneer is verzekeren rationeel?</strong></p>
+<p>Vergelijk altijd <strong>drie</strong> getallen:</p>
+<table>
+<thead>
+<tr>
+<th>Variabele</th>
+<th>Wat?</th>
+<th>Voorbeeld fiets</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$R$</td>
+<td>Verwachte schade = kans × bedrag</td>
+<td>€ 140</td>
+</tr>
+<tr>
+<td>$P$</td>
+<td>Jaarpremie</td>
+<td>€ 32,80</td>
+</tr>
+<tr>
+<td>$EV$</td>
+<td>Eigen vermogen / draagkracht</td>
+<td>€ 200 spaargeld</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Beslisregel:</strong></p>
+<ul>
+<li>$P &lt; R$ → wiskundig gunstig om te verzekeren.</li>
+<li>$P &gt; R$ én schade &gt; $EV$ → toch verzekeren (risicoaversie).</li>
+<li>$P &gt; R$ én schade $\leq EV$ → niet verzekeren (zelf-verzekeren).</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>[!CAUTION]
+<strong>Examenvalkuil:</strong> $P &gt; R$ betekent NIET automatisch &quot;niet verzekeren&quot;. Een verzekeraar moet altijd $P &gt; R$ rekenen, anders gaat hij failliet. Voor de <strong>risico-averse</strong> consument kan het toch rationeel zijn — die betaalt voor <strong>zekerheid</strong>.</p>
+</blockquote>
+<hr>
+<h3 id="verplichte-verzekeringen--solidariteit">Verplichte verzekeringen &amp; solidariteit</h3>
+<p><strong>[Invalshoek: 🏛️ De Markt / Overheid]</strong></p>
+<table>
+<thead>
+<tr>
+<th>Verzekering</th>
+<th>Waarom verplicht?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Zorgverzekering (basispakket)</strong></td>
+<td>Iedereen moet toegang hebben tot zorg; voorkomt averechtse selectie</td>
+</tr>
+<tr>
+<td><strong>WA-autoverzekering</strong></td>
+<td>Bescherming van derden bij schade door verkeersongeval</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Verplichte solidariteit</strong> = zowel de goede als de slechte risico's moeten meebetalen aan de verzekering, waardoor de premie laag blijft.</li>
+</ul>
+<hr>
+<h3 id="%F0%9F%A7%AE-formule--minimale-gemiddelde-premie">🧮 Formule — Minimale gemiddelde premie</h3>
+<p>$$
+\boxed{\text{minimale gemiddelde premie} = \dfrac{\text{totaal uitkeringsbedrag}}{\text{aantal verzekerden}}}
+$$</p>
+<p><strong>Voorbeeld — Zorgverzekering ZONDER verplichte solidariteit:</strong></p>
+<ul>
+<li>$500.000$ verzekerden, kans $\tfrac{1}{2}$, gemiddelde kosten € 2.700.</li>
+<li>Uitkering per jaar: $250.000 \times € 2.700 = € 675.000.000$.</li>
+<li>Minimale premie: $\dfrac{€ 675.000.000}{500.000} = € 1.350$.</li>
+</ul>
+<p><strong>Voorbeeld — ZELFDE verzekeraar MET verplichte solidariteit:</strong></p>
+<ul>
+<li>Nu ook gezonden verplicht: $750.000$ verzekerden, kans $\tfrac{1}{2{,}5}$.</li>
+<li>Uitkering: $300.000 \times € 2.700 = € 810.000.000$.</li>
+<li>Minimale premie: $\dfrac{€ 810.000.000}{750.000} = € 1.080$.</li>
+</ul>
+<p>→ Verplichte solidariteit drukt de gemiddelde premie met <strong>€ 270</strong>.</p>
+<pre><code class="language-mermaid"><div class="mermaid">flowchart LR
+    subgraph Sol_Vrij["❌ Vrijwillig"]
+        direction TB
+        S_V(["Alleen zieken<br/>melden zich"]) ==> S_VH[/"Hoog risico<br/>€ 1.350"/]
+    end
+    subgraph Sol_Vpl["✅ Verplicht (solidariteit)"]
+        direction TB
+        S_P(["Iedereen verplicht<br/>ook gezonden"]) ==> S_PL[["Laag risico<br/>€ 1.080"]]
+    end
+    S_VH -.->|"solidariteit<br/>doorbreekt spiraal"| S_PL
+    classDef falen fill:#fee2e2,stroke:#ef4444,stroke-width:2px,color:#7f1d1d
+    classDef oploss fill:#f3e8ff,stroke:#a855f7,stroke-width:2px,color:#581c87
+    classDef succes fill:#dcfce7,stroke:#22c55e,stroke-width:2px,color:#14532d
+    classDef markt fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e3a8a
+    class S_V markt
+    class S_VH falen
+    class S_P oploss
+    class S_PL succes
+</div></code></pre>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>Examen-Focus — Solidariteit:</strong> Twee subgraphs naast elkaar: rood = vrijwillig (slechte uitkomst), groen = verplicht (goede uitkomst). De gestippelde pijl <code>-.-&gt;</code> loopt van de slechte uitkomst naar de goede — dit is de <strong>doorbreking</strong> van de spiraal door verplichting. Op het examen: leg altijd uit <em>waarom</em> de premie daalt (grotere noemer + lager gemiddeld risico).</p>
+</blockquote>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>Begrijp de Logica — Waarom werkt verplichte solidariteit?</strong></p>
+<ol>
+<li><strong>Noemer groter</strong> (meer verzekerden): vaste kosten worden over meer hoofden verdeeld.</li>
+<li><strong>Kans daalt</strong> (% mensen met schade): door gezonden mee te verplichten daalt het <em>gemiddelde</em> risico van de pool. Bij 500.000 mensen is 1 op 2 ziek (50%); bij 750.000 mensen is 1 op 2,5 ziek (40%).</li>
+<li><strong>Effect:</strong> zelfde verzekeraar, lagere premie voor iedereen — <strong>omdat</strong> de gezonden meebetalen.</li>
+</ol>
+</blockquote>
+<blockquote>
+<p>[!TIP]
+🔁 <strong>Verbinding:</strong> dit is het exact tegenovergestelde mechanisme van <strong>averechtse selectie</strong> (§2.2). Zonder verplichting → spiraal omhoog. Met verplichting → spiraal doorbroken.</p>
+</blockquote>
+<blockquote>
+<p>[!CAUTION]
+<strong>Examenvalkuil:</strong> Veel studenten denken dat solidariteit &quot;zielig&quot; of &quot;links&quot; is. Economisch is het puur wiskunde: grotere pool met lager gemiddeld risico = lagere premie voor iedereen.</p>
+</blockquote>
+<hr>
+<h4 id="omslagstelsel-vs-kapitaaldekkingsstelsel">Omslagstelsel vs. kapitaaldekkingsstelsel</h4>
+<table>
+<thead>
+<tr>
+<th>Kenmerk</th>
+<th><strong>Omslagstelsel</strong></th>
+<th><strong>Kapitaaldekkingsstelsel</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Wie betaalt?</strong></td>
+<td>Werkenden NU betalen voor uitkeringen NU</td>
+<td>Iedere verzekerde spaart voor zichzelf</td>
+</tr>
+<tr>
+<td><strong>Voorbeeld</strong></td>
+<td>AOW, WW, WIA, Zorgverzekeringswet</td>
+<td>Aanvullend pensioen, levensverzekering</td>
+</tr>
+<tr>
+<td><strong>Risico</strong></td>
+<td>Vergrijzing → minder werkenden, meer ouderen</td>
+<td>Beleggingsrisico (slechte beurs = minder pensioen)</td>
+</tr>
+<tr>
+<td><strong>Solidariteit</strong></td>
+<td>Hoog (intergenerationeel)</td>
+<td>Laag (ieder z'n eigen pot)</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>Begrijp de Logica:</strong> een omslagstelsel = &quot;doorgeefluik&quot; — jouw premie verdwijnt direct naar iemand die nu een uitkering krijgt. Een kapitaaldekkingsstelsel = &quot;spaarpot&quot; — jouw premie wordt belegd en later aan jou uitgekeerd.</p>
+</blockquote>
+<hr>
+<h2 id="22-verzekeren-is-niet-eenvoudig">2.2 Verzekeren is niet eenvoudig</h2>
+<h3 id="informatieasymmetrie">Informatieasymmetrie</h3>
+<p><strong>[Invalshoek: 🏛️ De Markt]</strong></p>
+<ul>
+<li><strong>Asymmetrische informatie</strong> = de verzekeraar en de verzekerde beschikken bij het afsluiten van een verzekering <strong>niet over dezelfde informatie</strong>. De verzekerde weet meer over zijn eigen risico dan de verzekeraar.</li>
+</ul>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>Begrijp de Logica — Wie weet meer en waarom is dat een probleem?</strong></p>
+<table>
+<thead>
+<tr>
+<th>Partij</th>
+<th>Weet wél</th>
+<th>Weet niet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Verzekerde</strong></td>
+<td>&quot;Ik rook, fiets door rood, opa stierf jong aan hartaanval&quot;</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Verzekeraar</strong></td>
+<td>Algemene statistieken (leeftijd, postcode)</td>
+<td>Privé-gedrag, gezondheidsrisico, intentie</td>
+</tr>
+</tbody>
+</table>
+<p>De verzekeraar moet één premie kiezen voor mensen waarvan hij het echte risico <strong>niet ziet</strong>. Die premie is per definitie een <strong>gemiddelde</strong>. Daaruit ontstaan <strong>twee</strong> klassieke marktproblemen: <strong>averechtse selectie</strong> (vóór contract) en <strong>moral hazard</strong> (ná contract).</p>
+</blockquote>
+<hr>
+<h3 id="averechtse-selectie">Averechtse selectie</h3>
+<ul>
+<li><strong>Averechtse selectie</strong> = het verschijnsel dat alleen mensen met een meer dan gemiddeld risico zich verzekeren.</li>
+<li>Gevolg: uitkeringen stijgen → premie omhoog → goede risico's haken af → premie stijgt verder → <strong>spiraal</strong> waarbij verzekering onbetaalbaar wordt.</li>
+</ul>
+<pre><code class="language-mermaid"><div class="mermaid">flowchart TD
+    subgraph AS_Start["❓ Asymmetrische info"]
+        direction LR
+        AS_Info{{"🔍 Verzekeraar<br/>weet risico NIET"}} ==> AS_Gem(["Één gemiddelde premie"])
+    end
+    subgraph AS_Sel["🔄 Zelfselectie"]
+        direction LR
+        AS_Goed[/"🟢 Goede risico's<br/>haken af"/]
+        AS_Slecht(["🔴 Slechte risico's<br/>stromen in"])
+    end
+    subgraph AS_Spiral["📈 Opwaartse spiraal"]
+        direction LR
+        AS_Hoog[/"Gemiddeld risico ↑"/] ==> AS_Prem[/"Premie ↑"/]
+    end
+    AS_Gem -->|"te duur"| AS_Goed
+    AS_Gem -->|"koopje!"| AS_Slecht
+    AS_Goed ==> AS_Hoog
+    AS_Prem -.->|"feedback:<br/>meer uitstroom"| AS_Goed
+    classDef risico fill:#ffedd5,stroke:#f97316,stroke-width:2px,color:#7c2d12
+    classDef falen fill:#fee2e2,stroke:#ef4444,stroke-width:2px,color:#7f1d1d
+    classDef markt fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e3a8a
+    class AS_Info risico
+    class AS_Gem markt
+    class AS_Goed,AS_Slecht,AS_Hoog,AS_Prem falen
+</div></code></pre>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>Examen-Focus — Averechtse selectie spiraal:</strong> Drie subgraphs tonen de drie fases: oranje hexagon = <strong>oorzaak</strong> (informatiekloof), rood parallelogram = <strong>zelfselectie</strong> (goede risico's weg), rood spiraal = <strong>escalatie</strong> (premie omhoog). De <code>-.-&gt;</code> feedbackpijl sluit de lus — dit is de <strong>doodsspiraal</strong>. Op het examen: benoem alle drie fases bij naam.</p>
+</blockquote>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>Begrijp de Logica — De doodsspiraal in 5 stappen</strong></p>
+<ol>
+<li><strong>Start:</strong> verzekeraar zet één premie van € 1.000 voor &quot;het gemiddelde risico&quot;.</li>
+<li><strong>Zelfselectie:</strong> wie weet dat hij hoog risico is, denkt: &quot;lekker goedkoop!&quot; → tekent. Wie weet dat hij laag risico is, denkt: &quot;veel te duur!&quot; → tekent NIET.</li>
+<li><strong>Pool verschuift:</strong> alleen hoge risico's blijven → uitkeringen stijgen.</li>
+<li><strong>Premieverhoging:</strong> verzekeraar moet wel naar € 1.300.</li>
+<li><strong>Verdere uitstroom:</strong> ook de &quot;matige&quot; risico's haken af → spiraal naar € 1.700, € 2.500, …</li>
+</ol>
+<p><strong>Eindresultaat:</strong> de markt <strong>stort in</strong> — niemand wil nog verzekeren. Dit heet <strong>marktfalen door asymmetrische informatie</strong>.</p>
+</blockquote>
+<blockquote>
+<p>[!TIP]
+🔁 <strong>Verbinding:</strong> precies daarom is de <strong>basiszorgverzekering verplicht</strong> (§2.1) en geldt <strong>acceptatieplicht</strong> (§2.3) — om de spiraal van tevoren te blokkeren.</p>
+</blockquote>
+<blockquote>
+<p>[!CAUTION]
+<strong>Examenvalkuil:</strong> Averechtse selectie ≠ &quot;verzekeraar selecteert verkeerd&quot;. Het is de <strong>verzekerde</strong> die zichzelf selecteert. &quot;Averechts&quot; = tegen het belang van de verzekeraar in.</p>
+</blockquote>
+<hr>
+<h3 id="moral-hazard-moreel-wangedrag">Moral hazard (moreel wangedrag)</h3>
+<ul>
+<li><strong>Moral hazard</strong> = opzettelijk onvoorzichtig gedrag van een verzekerde, omdat de kosten van dit gedrag niet bij de verzekerde terechtkomen.</li>
+<li><em>Voorbeelden:</em> fiets minder goed op slot, roekeloos rijden, onnodig naar dokter.</li>
+</ul>
+<pre><code class="language-mermaid"><div class="mermaid">flowchart LR
+    subgraph MH_Voor["✅ Vóór verzekering"]
+        direction TB
+        MH_V(["Kosten = 100% bij jou"]) ==> MH_VG[["Voorzichtig gedrag"]]
+    end
+    subgraph MH_Na["⚠️ Ná verzekering"]
+        direction TB
+        MH_N(["Kosten = 0% bij jou<br/>prikkel weg"]) ==> MH_NG[/"Risicovol gedrag"/]
+        MH_NG ==> MH_NK[/"Premies ↑ voor iedereen"/]
+    end
+    MH_V -.->|"tekenen polis →<br/>prikkel verdwijnt"| MH_N
+    classDef succes fill:#dcfce7,stroke:#22c55e,stroke-width:2px,color:#14532d
+    classDef falen fill:#fee2e2,stroke:#ef4444,stroke-width:2px,color:#7f1d1d
+    classDef markt fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e3a8a
+    class MH_V markt
+    class MH_VG succes
+    class MH_N,MH_NG,MH_NK falen
+</div></code></pre>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>Examen-Focus — Moral hazard:</strong> De gestippelde pijl <code>-.-&gt;</code> toont het <strong>omslagpunt</strong>: het tekenen van de polis. Links = groen (vóór), rechts = rood (ná). Dit is het kernprincipe: hetzelfde individu verandert van gedrag door de polis. Op het examen: moral hazard = <strong>ná afsluiten</strong>, averechtse selectie = <strong>vóór afsluiten</strong>.</p>
+</blockquote>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>Begrijp de Logica — Waarom verandert gedrag NA het tekenen?</strong></p>
+<p>Vóór de verzekering: jij draagt 100% van de schade → je bent voorzichtig.
+Na de verzekering: verzekeraar draagt 100% → &quot;de prikkel om voorzichtig te zijn&quot; verdwijnt.</p>
+<p>Dit is geen kwade opzet, maar <strong>rationeel</strong> gedrag: de <strong>marginale kosten</strong> van risico-nemend gedrag zijn voor jou nul, terwijl de <strong>marginale opbrengsten</strong> (gemak, tijdwinst) bij jou blijven.</p>
+</blockquote>
+<blockquote>
+<p>[!TIP]
+<strong>Verschil om te onthouden (examen-klassieker):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Probleem</th>
+<th>Wanneer?</th>
+<th>Wat selecteert/verandert?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Averechtse selectie</strong></td>
+<td><strong>Vóór</strong> contract</td>
+<td>Wie sluit af (samenstelling pool)</td>
+</tr>
+<tr>
+<td><strong>Moral hazard</strong></td>
+<td><strong>Ná</strong> contract</td>
+<td>Gedrag van de verzekerde</td>
+</tr>
+</tbody>
+</table>
+<p>Truc: <strong>A</strong>S = <strong>A</strong>fsluiten (vóór), <strong>M</strong>H = <strong>M</strong>et name <strong>na</strong> afsluiten.</p>
+</blockquote>
+<hr>
+<h2 id="23-financi%C3%ABle-risicos-beperken">2.3 Financiële risico's beperken</h2>
+<p>Verzekeraars gebruiken <strong>3 instrumenten</strong> om averechtse selectie en moral hazard tegen te gaan:</p>
+<pre><code class="language-mermaid"><div class="mermaid">flowchart TD
+    subgraph I_Probl["⚠️ Probleem"]
+        I_Ainfo{{"Asymm. info<br/>→ AS + MH"}}
+    end
+    subgraph I_1["1️⃣ Eigen risico"]
+        direction LR
+        I_ER(["Skin in the game"]) ==> I_ER2[["Anti-MH + Signalling AS"]]
+    end
+    subgraph I_2["2️⃣ Premiedifferentiatie"]
+        direction LR
+        I_PD(["Premie per risicogroep"]) ==> I_PD2[["Goede risico's blijven<br/>+ gedrag beloond"]]
+    end
+    subgraph I_3["3️⃣ Informatie inwinnen"]
+        direction LR
+        I_INF(["Vragenlijst + CIS<br/>+ schadevrije jaren"]) ==> I_INF2[["AS verkleind<br/>fraude opgespoord"]]
+    end
+    I_Ainfo ==> I_ER
+    I_Ainfo ==> I_PD
+    I_Ainfo ==> I_INF
+    classDef falen fill:#fee2e2,stroke:#ef4444,stroke-width:2px,color:#7f1d1d
+    classDef markt fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e3a8a
+    classDef succes fill:#dcfce7,stroke:#22c55e,stroke-width:2px,color:#14532d
+    class I_Ainfo falen
+    class I_ER,I_PD,I_INF markt
+    class I_ER2,I_PD2,I_INF2 succes
+</div></code></pre>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>Examen-Focus — 3 Instrumenten:</strong> De rode hexagon is het <strong>probleem</strong> dat drie dikke pijlen <code>==&gt;</code> uitzendt naar de drie blauwe oplossingen. Elk blauw stadium-node stroomt naar een groen resultaat. Op het examen: voor elke maatregel moet je kunnen benoemen <em>welk</em> probleem (AS, MH of beide) het aanpakt.</p>
+</blockquote>
+<hr>
+<h3 id="1-eigen-risico">1. Eigen risico</h3>
+<p><strong>[Invalshoek: 👤 De Consument / Verzekeraar]</strong></p>
+<ul>
+<li><strong>Eigen risico</strong> = het gedeelte van de schade dat door de verzekerde zelf moet worden betaald. De hoogte ligt vast in de polis.</li>
+<li><strong>Verplicht eigen risico</strong> (zorgverzekering 2017): € 385 per jaar voor basiszorg ≥ 18 jaar.</li>
+<li><strong>Vrijwillig eigen risico</strong>: kies je bovenop het verplichte deel in ruil voor lagere premie.</li>
+</ul>
+<p><strong>Effecten:</strong></p>
+<ul>
+<li>Tegen <strong>moral hazard</strong>: je wordt voorzichtiger, want je betaalt zelf mee.</li>
+<li>Tegen <strong>averechtse selectie</strong>: keuze tussen hoog eigen risico + lage premie óf laag eigen risico + hoge premie → verzekeraar leert welk risicotype je bent (signalling).</li>
+</ul>
+<pre><code class="language-mermaid"><div class="mermaid">flowchart LR
+    subgraph ER_Base["💶 Eigen risico"]
+        direction TB
+        ER_V{{"€ 385 verplicht<br/>+ vrijwillig deel"}}
+    end
+    subgraph ER_Eff1["⚠️ Effect: Moral Hazard"]
+        direction LR
+        ER_MH(["Skin in the game"]) ==> ER_MH2[["✅ Voorzichtiger gedrag"]]
+    end
+    subgraph ER_Eff2["🔍 Effect: Averechtse Selectie"]
+        direction LR
+        ER_Sig(["Hoog ER kiezen<br/>= signaal laag risico"]) ==> ER_AS[["✅ Verzekeraar leert<br/>risicotype"]]
+    end
+    ER_V ==> ER_MH
+    ER_V ==> ER_Sig
+    classDef besluit fill:#fef9c3,stroke:#eab308,stroke-width:2px,color:#713f12
+    classDef markt fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e3a8a
+    classDef succes fill:#dcfce7,stroke:#22c55e,stroke-width:2px,color:#14532d
+    class ER_V besluit
+    class ER_MH,ER_Sig markt
+    class ER_MH2,ER_AS succes
+</div></code></pre>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>Examen-Focus — Eigen risico:</strong> De gele hexagon (eigen risico) zendt twee dikke pijlen <code>==&gt;</code> uit naar twee verschillende effecten. Subgraph links = anti-MH, rechts = anti-AS via signalling. Op het examen: onderscheid altijd het <strong>verplichte</strong> deel (anti-MH) van het <strong>vrijwillige</strong> deel (signalling → anti-AS).</p>
+</blockquote>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>Begrijp de Logica — Eigen risico = &quot;skin in the game&quot;</strong></p>
+<p>Door een deel van de schade weer <strong>bij de verzekerde</strong> neer te leggen, herstel je de prikkel die door de verzekering was weggenomen:</p>
+<ol>
+<li><strong>Moral hazard wordt geremd:</strong> als jij € 385 zelf betaalt voor een bezoek, denk je twee keer na → minder onnodige zorg.</li>
+<li><strong>Averechtse selectie wordt geremd via signalling:</strong> kies jij vrijwillig € 885 eigen risico → jij geeft het signaal &quot;ik denk dat ik weinig zorg nodig heb&quot; → verzekeraar gelooft je → lagere premie.</li>
+</ol>
+</blockquote>
+<blockquote>
+<p>[!TIP]
+🔁 <strong>Verbinding:</strong> solidariteit (§2.1) staat hier op gespannen voet met efficiëntie. Eigen risico = pijnlijk voor chronisch zieken die elk jaar het volle bedrag betalen.</p>
+</blockquote>
+<blockquote>
+<p>[!CAUTION]
+<strong>Examenvalkuil:</strong> Eigen risico werkt <strong>alleen</strong> preventief tegen moral hazard als de verzekerde <strong>vooraf</strong> weet dat hij gaat betalen én zijn gedrag kan aanpassen. Bij echt onverwachte schade (botsing, infarct) heeft eigen risico <strong>geen</strong> preventief effect — alleen kosten-besparend voor de verzekeraar.</p>
+</blockquote>
+<hr>
+<h3 id="2-premiedifferentiatie--bonus-malus">2. Premiedifferentiatie &amp; bonus-malus</h3>
+<ul>
+<li><strong>Premiedifferentiatie</strong> = een risicogroep met een meer dan gemiddeld risico moet daardoor een hogere premie betalen dan een risicogroep met een gemiddeld of laag risico.</li>
+<li><strong>Bonus-malusregeling</strong> = verzekeringsvorm waarbij de premie afhankelijk is van het aantal schades dat je maakt.</li>
+<li><strong>No-claim korting</strong> = korting op de premie als je een heel jaar geen schade claimt.</li>
+</ul>
+<p><strong>Werking bonus-malusladder (auto):</strong></p>
+<pre><code class="language-mermaid"><div class="mermaid">flowchart LR
+    subgraph BM_Ladder["🎯 Bonus-malus ladder"]
+        direction TB
+        BM_S{{"Starttrede 2"}} -->|"🟢 Jaar zonder schade"| BM_Up(["⬆️ Trede +1 bonus"])
+        BM_S -->|"🔴 Schade gemeld"| BM_Dn(["⬇️ Treden omlaag malus"])
+    end
+    BM_Up ==> BM_WR[["Voorzichtig rijden<br/>→ anti-MH"]]
+    BM_Dn -.->|"prikkel tot<br/>voorzichtigheid"| BM_Up
+    classDef besluit fill:#fef9c3,stroke:#eab308,stroke-width:2px,color:#713f12
+    classDef succes fill:#dcfce7,stroke:#22c55e,stroke-width:2px,color:#14532d
+    classDef falen fill:#fee2e2,stroke:#ef4444,stroke-width:2px,color:#7f1d1d
+    class BM_S besluit
+    class BM_Up,BM_WR succes
+    class BM_Dn falen
+</div></code></pre>
+<table>
+<thead>
+<tr>
+<th>Effect</th>
+<th>Uitleg</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tegen <strong>moral hazard</strong></td>
+<td>Claimen kost je korting → je rijdt voorzichtiger / claimt alleen echte schade</td>
+</tr>
+<tr>
+<td>Tegen <strong>averechtse selectie</strong></td>
+<td>Goede rijders betalen lagere premie → stoppen niet → blijven in de groep</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Aandachtspunt:</strong> bij zorgverzekering heeft bonus-malus voor de basisverzekering beperkt effect, want gezondheid is niet altijd beïnvloedbaar.</p>
+<pre><code class="language-mermaid"><div class="mermaid">flowchart TD
+    subgraph PD_Zon["❌ Zonder differentiatie"]
+        direction LR
+        PD_ZD(["Iedereen € 1.000"]) ==> PD_AF[/"Goede risico's<br/>haken af = AS"/]
+    end
+    subgraph PD_Met["✅ Mét differentiatie + bonus-malus"]
+        direction TB
+        PD_MD(["Premie per risicogroep"]) ==> PD_ST(["Goede risico's blijven<br/>€ 600"])
+        PD_ST ==> PD_ST2[["✅ Stabiele pool"]]
+        PD_BM(["Claim → ↑ premie<br/>geen claim → ↓ premie"]) ==> PD_RG[["Voorzichtiger gedrag<br/>anti-MH"]]
+    end
+    PD_AF -.->|"oplossing"| PD_MD
+    PD_AF -.->|"oplossing"| PD_BM
+    classDef falen fill:#fee2e2,stroke:#ef4444,stroke-width:2px,color:#7f1d1d
+    classDef markt fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e3a8a
+    classDef succes fill:#dcfce7,stroke:#22c55e,stroke-width:2px,color:#14532d
+    class PD_ZD,PD_AF falen
+    class PD_MD,PD_ST,PD_BM markt
+    class PD_ST2,PD_RG succes
+</div></code></pre>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>Examen-Focus — Premiedifferentiatie:</strong> Twee subgraphs: rood = probleem (zonder diff.), groen = oplossing. De twee gestippelde <code>-.-&gt;</code> pijlen vanuit de rode parallelogram tonen dat dezelfde oorzaak (AS) <strong>twee</strong> oplossingen triggert. Op het examen: premiedifferentiatie pakt AS aan, bonus-malus pakt MH aan — maar ze kunnen tegelijk ingezet worden.</p>
+</blockquote>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>Begrijp de Logica — Premiedifferentiatie = informatie kopen via gedrag</strong></p>
+<p>De verzekeraar weet niet of jij een goed of slecht risico bent. Maar door de premie afhankelijk te maken van <strong>observeerbare</strong> kenmerken (leeftijd, postcode, schadeverleden) of <strong>gedrag in de tijd</strong> (claims), dwingt hij elke verzekerde om &quot;zichzelf te identificeren&quot;:</p>
+<ol>
+<li><strong>Tegen averechtse selectie:</strong> goede risico's krijgen lagere premie → blijven in de pool.</li>
+<li><strong>Tegen moral hazard:</strong> elke claim verlaagt jouw bonus → jij claimt alleen écht nodig.</li>
+</ol>
+</blockquote>
+<blockquote>
+<p>[!CAUTION]
+<strong>Examenvalkuil:</strong> Premiedifferentiatie staat op spanning met <strong>solidariteit</strong>. Hoe specifieker je differentieert (bv. via DNA-test of AI), hoe minder solidariteit. De wetgever stelt daarom <strong>grenzen</strong> (geen DNA bij zorg, wel leeftijd bij autoverzekering).</p>
+</blockquote>
+<hr>
+<h3 id="3-informatie-inwinnen-acceptatieplicht--risicoselectie">3. Informatie inwinnen, acceptatieplicht &amp; risicoselectie</h3>
+<ul>
+<li><strong>Acceptatieplicht</strong> = verzekeraars zijn wettelijk verplicht om iemand te accepteren voor een verzekering.</li>
+<li><strong>Risicoselectie</strong> = verzekeraars weigeren slechte risico's of accepteren slechte risico's alleen tegen bepaalde voorwaarden zoals een hogere premie.</li>
+</ul>
+<p><strong>Geldt wel / niet:</strong></p>
+<ul>
+<li><strong>Basiszorgverzekering</strong>: acceptatieplicht geldt, risicoselectie <strong>niet toegestaan</strong>.</li>
+<li><strong>Aanvullende zorgverzekering</strong> &amp; <strong>autoverzekering</strong>: acceptatieplicht geldt <strong>niet</strong>, verzekeraar mag informatie vragen en risicoselectie toepassen.</li>
+</ul>
+<p><strong>Informatiemiddelen verzekeraars:</strong></p>
+<ul>
+<li>Vragen naar schadevrije jaren van de vorige verzekeraar.</li>
+<li>Vragenlijsten (leeftijd, geslacht, gezondheid, justitieel verleden).</li>
+<li><strong>Stichting CIS</strong>: centraal informatiesysteem waarin Nederlandse verzekeraars gegevens over misbruik en fraudegevallen delen.</li>
+</ul>
+<pre><code class="language-mermaid"><div class="mermaid">flowchart LR
+    subgraph AP_Bas["🏥 Basiszorgverzekering"]
+        direction TB
+        AP_B{{"Maatschappelijk vitaal"}} ==> AP_AP(["✅ Acceptatieplicht<br/>+ verbod risicoselectie"])
+        AP_AP ==> AP_SOL[["🤝 Hoge solidariteit"]]
+    end
+    subgraph AP_Vrij["🚗 Aanvullend / Auto / Reis"]
+        direction TB
+        AP_V{{"Vrije markt"}} ==> AP_RS(["⚖️ Selectie + differentiatie<br/>toegestaan"])
+        AP_RS ==> AP_EFF[["⚡ Hoge efficiëntie"]]
+    end
+    AP_SOL -.->|"spanning"| AP_EFF
+    classDef oploss fill:#f3e8ff,stroke:#a855f7,stroke-width:2px,color:#581c87
+    classDef succes fill:#dcfce7,stroke:#22c55e,stroke-width:2px,color:#14532d
+    classDef markt fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e3a8a
+    classDef besluit fill:#fef9c3,stroke:#eab308,stroke-width:2px,color:#713f12
+    class AP_B oploss
+    class AP_AP,AP_SOL succes
+    class AP_V,AP_RS markt
+    class AP_EFF besluit
+</div></code></pre>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>Examen-Focus — Acceptatieplicht:</strong> Twee subgraphs staan naast elkaar: paars-groen = <strong>basiszorg</strong> (solidariteit wins), blauw-geel = <strong>aanvullend</strong> (efficiëntie wins). De gestippelde <code>-.-&gt;</code> pijl tussen de twee uitkomsten toont de <strong>spanningsverhouding</strong> — dit is een classic examenthema: solidariteit vs. efficiëntie.</p>
+</blockquote>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>Begrijp de Logica — Acceptatieplicht: solidariteit boven efficiëntie</strong></p>
+<p>Voor een <strong>commerciële verzekeraar</strong> is risicoselectie wiskundig optimaal: weiger de slechte risico's en je hebt een mooie pool. Maar maatschappelijk is dat onaanvaardbaar voor zorg — een chronisch zieke is dan onverzekerbaar.</p>
+<p>Daarom dwingt de overheid:</p>
+<ul>
+<li><strong>Basiszorg:</strong> acceptatieplicht → verzekeraar <strong>moet</strong> iedereen accepteren.</li>
+<li><strong>Aanvullend / auto / reis:</strong> vrije markt → verzekeraar mág selecteren en differentiëren.</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>Eindlogica H2 — De drie instrumenten samengevat</strong></p>
+<table>
+<thead>
+<tr>
+<th>Instrument</th>
+<th>Pakt aan</th>
+<th>Mechanisme</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Eigen risico</strong></td>
+<td>Moral hazard (én iets AS)</td>
+<td>Skin in the game; signalling</td>
+</tr>
+<tr>
+<td><strong>Premiedifferentiatie / bonus-malus</strong></td>
+<td>AS én MH</td>
+<td>Goede risico's blijven; gedrag wordt beloond</td>
+</tr>
+<tr>
+<td><strong>Informatie inwinnen / CIS</strong></td>
+<td>AS én fraude</td>
+<td>Verzekeraar verkleint informatieachterstand</td>
+</tr>
+</tbody>
+</table>
+<p>Verzekeraars bestrijden informatieasymmetrie via deze drie. Tegelijk bewaakt de overheid een <strong>ondergrens</strong> (acceptatieplicht basiszorg, verplichte WA) zodat solidariteit niet wegvalt.</p>
+</blockquote>
+<hr>
+<h2 id="h2-overig--rekenformules-op-een-rij">H2-OVERIG · Rekenformules op een rij</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Formule</th>
+<th>Betekenis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>$\text{Risico} = \text{kans} \times \text{gemiddelde schade}$</td>
+<td>Verwachte schade per periode</td>
+</tr>
+<tr>
+<td>2</td>
+<td>$\text{minimale gemiddelde premie} = \dfrac{\text{totaal uitkeringsbedrag}}{\text{aantal verzekerden}}$</td>
+<td>Break-even premie verzekeraar</td>
+</tr>
+<tr>
+<td>3</td>
+<td>$\text{nieuw bedrag} = \text{oud bedrag} \times \dfrac{\text{nieuwe index}}{\text{oude index}}$</td>
+<td>Reële vergelijkingen via indexcijfer</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Voorbeeld rekenvraag (havo-examen 2010)</strong> — zorgpremie via indexcijfer:</p>
+<p>Premie Delta Lloyd (index 106,5) = € 1.150. Gezocht: premie Unizorg (index 92,1).</p>
+<p>$$
+\text{Premie Unizorg} = € 1.150 \times \dfrac{92{,}1}{106{,}5} = € 994{,}51
+$$</p>
+<hr>
+<h2 id="kernbegrippen--compleet-overzicht">Kernbegrippen — compleet overzicht</h2>
+<h3 id="h1--speltheorie--samenwerken">H1 — Speltheorie &amp; samenwerken</h3>
+<table>
+<thead>
+<tr>
+<th>Begrip</th>
+<th>Korte definitie</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Speltheorie</strong></td>
+<td>Studie van beslissingen waarbij je rekening houdt met de keuze van anderen</td>
+</tr>
+<tr>
+<td><strong>Simultaan / Sequentieel spel</strong></td>
+<td>Tegelijk vs. na elkaar beslissen</td>
+</tr>
+<tr>
+<td><strong>Eenmalig / Herhaald spel</strong></td>
+<td>Eén ronde vs. meerdere rondes</td>
+</tr>
+<tr>
+<td><strong>Coöperatief / Niet-coöperatief spel</strong></td>
+<td>Wel / geen afstemming van strategieën</td>
+</tr>
+<tr>
+<td><strong>Opbrengstenmatrix</strong></td>
+<td>Tabel met uitkomsten van een spel</td>
+</tr>
+<tr>
+<td><strong>Best response-methode</strong></td>
+<td>Arceringsmethode om Nash te vinden</td>
+</tr>
+<tr>
+<td><strong>Nash-evenwicht</strong></td>
+<td>Geen speler heeft reden om te veranderen</td>
+</tr>
+<tr>
+<td><strong>Gevangenendilemma</strong></td>
+<td>Evenwicht dat voor beiden niet optimaal is</td>
+</tr>
+<tr>
+<td><strong>Dominante strategie</strong></td>
+<td>Altijd dezelfde keuze, ongeacht ander</td>
+</tr>
+<tr>
+<td><strong>Individueel / Collectief belang</strong></td>
+<td>Eigen vs. gezamenlijk beste uitkomst</td>
+</tr>
+<tr>
+<td><strong>Nul-som-spel</strong></td>
+<td>Wat de één wint verliest de ander</td>
+</tr>
+<tr>
+<td><strong>Niet-nul-som-spel</strong></td>
+<td>Beide kunnen winnen of verliezen</td>
+</tr>
+<tr>
+<td><strong>Prijzenoorlog</strong></td>
+<td>Strijd tussen concurrenten via prijsverlagingen</td>
+</tr>
+<tr>
+<td><strong>Oligopolie</strong></td>
+<td>Markt met enkele grote aanbieders</td>
+</tr>
+<tr>
+<td><strong>Ultimatumspel</strong></td>
+<td>Sequentieel spel: voorstel – accepteren of afwijzen</td>
+</tr>
+<tr>
+<td><strong>Spelboom</strong></td>
+<td>Visualisatie sequentieel spel</td>
+</tr>
+<tr>
+<td><strong>Backwards induction</strong></td>
+<td>Terugredeneren vanaf laatste beslissing</td>
+</tr>
+<tr>
+<td><strong>Contract</strong></td>
+<td>Schriftelijke afspraak met boete bij breuk</td>
+</tr>
+<tr>
+<td><strong>Sociale normen</strong></td>
+<td>Ongeschreven gedragsregels</td>
+</tr>
+<tr>
+<td><strong>Zelfbinding</strong></td>
+<td>Eigen keuze geloofwaardig onomkeerbaar maken</td>
+</tr>
+<tr>
+<td><strong>Verzonken kosten</strong></td>
+<td>Kosten die bij niet-doorgaan niet terugkeren</td>
+</tr>
+</tbody>
+</table>
+<h3 id="h1--externe-effecten-arbeid-eu-duurzaamheid">H1 — Externe effecten, arbeid, EU, duurzaamheid</h3>
+<table>
+<thead>
+<tr>
+<th>Begrip</th>
+<th>Korte definitie</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Extern effect</strong></td>
+<td>Niet in prijs meeberekend gevolg van productie/consumptie</td>
+</tr>
+<tr>
+<td><strong>Positief / negatief extern effect</strong></td>
+<td>Voordeel / nadeel voor derden</td>
+</tr>
+<tr>
+<td><strong>Maatschappelijke kosten / opbrengsten</strong></td>
+<td>Private + externe effecten</td>
+</tr>
+<tr>
+<td><strong>Collectieve goederen</strong></td>
+<td>Niet-individueel afrekenbaar; door overheid geleverd</td>
+</tr>
+<tr>
+<td><strong>Quasi-collectieve goederen</strong></td>
+<td>Grotendeels overheid betaalt, wel individueel afneembaar</td>
+</tr>
+<tr>
+<td><strong>Individuele / particuliere goederen</strong></td>
+<td>Door markt geleverd, individueel verhandelbaar</td>
+</tr>
+<tr>
+<td><strong>Meeliftgedrag (free-rider)</strong></td>
+<td>Gebruiken zonder betalen</td>
+</tr>
+<tr>
+<td><strong>Collectieve dwang</strong></td>
+<td>Middelen (belasting, wet) om negatieve externe effecten te voorkomen</td>
+</tr>
+<tr>
+<td><strong>(Individuele) arbeidsovereenkomst</strong></td>
+<td>Afspraken werkgever – werknemer</td>
+</tr>
+<tr>
+<td><strong>Arbeidsvoorwaarden</strong></td>
+<td>Voorwaarden waaronder arbeid verricht wordt</td>
+</tr>
+<tr>
+<td><strong>Primaire arbeidsvoorwaarden</strong></td>
+<td>Loon &amp; werktijden</td>
+</tr>
+<tr>
+<td><strong>Secundaire arbeidsvoorwaarden</strong></td>
+<td>Vakantie, pensioen, ziekte, opleiding</td>
+</tr>
+<tr>
+<td><strong>CAO</strong></td>
+<td>Afspraken per bedrijfstak door vakbonden &amp; werkgeversorganisaties</td>
+</tr>
+<tr>
+<td><strong>Algemeen verbindend verklaring</strong></td>
+<td>Cao geldt voor alle werknemers in de bedrijfstak</td>
+</tr>
+<tr>
+<td><strong>Centraal Akkoord</strong></td>
+<td>Landelijke afspraken tussen centrales en regering</td>
+</tr>
+<tr>
+<td><strong>Europese Unie (EU)</strong></td>
+<td>Samenwerkingsverband 27 landen (2021)</td>
+</tr>
+<tr>
+<td><strong>EGKS</strong></td>
+<td>Europese Gemeenschap voor Kolen en Staal (1951)</td>
+</tr>
+<tr>
+<td><strong>EMU</strong></td>
+<td>Economische en Monetaire Unie – gezamenlijk monetair beleid &amp; euro</td>
+</tr>
+<tr>
+<td><strong>Verdrag van Lissabon</strong></td>
+<td>Hervormingsverdrag EU (2007)</td>
+</tr>
+<tr>
+<td><strong>Criteria van Kopenhagen</strong></td>
+<td>Toetredingsvoorwaarden tot de EU</td>
+</tr>
+<tr>
+<td><strong>Brexit</strong></td>
+<td>Uittreden VK uit de EU</td>
+</tr>
+<tr>
+<td><strong>MVO</strong></td>
+<td>Winst + people + planet in beslissingen</td>
+</tr>
+<tr>
+<td><strong>3 P's</strong></td>
+<td>People, Planet, Profit</td>
+</tr>
+<tr>
+<td><strong>Circulaire economie</strong></td>
+<td>Producten en materialen worden hergebruikt en behouden waarde</td>
+</tr>
+</tbody>
+</table>
+<h3 id="h2--risico--informatie">H2 — Risico &amp; informatie</h3>
+<table>
+<thead>
+<tr>
+<th>Begrip</th>
+<th>Korte definitie</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Vrijwillige risico's</strong></td>
+<td>Risico's die je zelf kiest te nemen</td>
+</tr>
+<tr>
+<td><strong>Onvrijwillige risico's</strong></td>
+<td>Risico's waarvoor je niet zelf kiest</td>
+</tr>
+<tr>
+<td><strong>Verzekeren</strong></td>
+<td>Tegen premie financieel risico overdragen aan verzekeraar</td>
+</tr>
+<tr>
+<td><strong>Premie</strong></td>
+<td>Betaling voor verkrijgen van verzekering</td>
+</tr>
+<tr>
+<td><strong>Polis</strong></td>
+<td>Contract als bewijs van verzekering</td>
+</tr>
+<tr>
+<td><strong>Risicoavers gedrag</strong></td>
+<td>Zo veel mogelijk vermijden van risico's</td>
+</tr>
+<tr>
+<td><strong>Verplichte solidariteit</strong></td>
+<td>Goede én slechte risico's samen → lagere premie</td>
+</tr>
+<tr>
+<td><strong>Asymmetrische informatie</strong></td>
+<td>Verzekeraar en verzekerde hebben niet dezelfde informatie</td>
+</tr>
+<tr>
+<td><strong>Averechtse selectie</strong></td>
+<td>Alleen mensen met meer dan gemiddeld risico verzekeren zich</td>
+</tr>
+<tr>
+<td><strong>Moral hazard</strong></td>
+<td>Onvoorzichtig gedrag omdat kosten niet bij verzekerde zelf liggen</td>
+</tr>
+<tr>
+<td><strong>Eigen risico</strong></td>
+<td>Deel van schade dat verzekerde zelf betaalt</td>
+</tr>
+<tr>
+<td><strong>Premiedifferentiatie</strong></td>
+<td>Verschillende premies per risicogroep</td>
+</tr>
+<tr>
+<td><strong>Bonus-malusregeling</strong></td>
+<td>Premie afhankelijk van aantal schadeclaims</td>
+</tr>
+<tr>
+<td><strong>No-claim korting</strong></td>
+<td>Korting bij een heel jaar zonder claim</td>
+</tr>
+<tr>
+<td><strong>Acceptatieplicht</strong></td>
+<td>Verzekeraar is wettelijk verplicht iemand te accepteren</td>
+</tr>
+<tr>
+<td><strong>Risicoselectie</strong></td>
+<td>Slechte risico's weigeren of alleen tegen strengere voorwaarden accepteren</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="examentips--checklist">Examentips — Checklist</h2>
+<ol>
+<li><strong>Best-response met arceringen</strong> altijd expliciet uitvoeren op je examenblad.</li>
+<li><strong>Check de 7 voorwaarden</strong> voordat je iets een gevangenendilemma noemt.</li>
+<li><strong>Sequentieel spel</strong> → altijd spelboom + backwards induction.</li>
+<li><strong>Verzonken kosten</strong> spelen <strong>geen</strong> rol in toekomstige beslissingen (sunk cost fallacy).</li>
+<li><strong>Extern effect</strong> in een vraag? → controleer of het negatief/positief is en wie het betaalt (of juist niet).</li>
+<li><strong>Collectief / quasi-collectief goed</strong> herkennen aan: <em>niet rivaliserend</em> én <em>niet exclusief</em>.</li>
+<li><strong>Risicoformule:</strong> $R = \text{kans} \times \text{gem. schade}$ — pas altijd eerst toe voordat je verzekeren-advies geeft.</li>
+<li><strong>Onderscheid averechtse selectie (vóór) vs. moral hazard (ná) afsluiten</strong> – examenklassieker.</li>
+<li><strong>Minimale premie-formule:</strong> $\dfrac{\text{totale uitkering}}{\text{aantal verzekerden}}$.</li>
+<li><strong>Eigen risico, premiedifferentiatie, informatie inwinnen</strong> — weet per maatregel welk probleem (selectie of hazard) het aanpakt.</li>
+<li><strong>Acceptatieplicht</strong> geldt alleen bij <strong>basis</strong>zorgverzekering — aanvullend mag de verzekeraar selecteren.</li>
+<li><strong>EU-samenwerking</strong> snappen als herhaald coöperatief spel: verdragen = contracten die een gevangenendilemma tussen landen doorbreken.</li>
+</ol>
+<hr>
+<h2 id="%F0%9F%97%BA%EF%B8%8F-visuele-eindsamenvatting--de-grote-lijn-van-h1--h2">🗺️ Visuele eindsamenvatting — De grote lijn van H1 + H2</h2>
+<h3 id="de-rode-draad-in-%C3%A9%C3%A9n-zin">De rode draad in één zin</h3>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>Markten falen</strong> wanneer er <strong>interactie</strong> is tussen weinig spelers (speltheorie), wanneer effecten <strong>buiten de prijs</strong> vallen (externe effecten / collectieve goederen), of wanneer er <strong>informatie ontbreekt</strong> (asymmetrische info). De economie biedt <strong>instituten</strong> (contracten, wetten, CAO, verdragen, eigen risico, acceptatieplicht) om deze marktfalens te repareren.</p>
+</blockquote>
+<h3 id="infographic--verbanden-tussen-alle-hoofdthemas">Infographic — verbanden tussen alle hoofdthema's</h3>
+<pre><code class="language-mermaid"><div class="mermaid">flowchart TD
+    KERN{{"🎯 MARKTFALEN<br/>+ OPLOSSINGEN"}}
+    subgraph ST["🎲 Speltheorie H1.1–1.3"]
+        direction LR
+        ST1(["Simultaan"]) --> ST1a["Matrix · Nash · GD"]
+        ST2(["Sequentieel"]) --> ST2a["Spelboom · BI · Ultimatum"]
+        ST3(["GD Doorbrekers"]) --> ST3a["Contract · Zelfbinding · Herhaling"]
+    end
+    subgraph EX["🌍 Externe Effecten H1.4"]
+        direction LR
+        EX1(["Negatief"]) --> EX1a["Belasting · Verbod"]
+        EX2(["Positief"]) --> EX2a["Subsidie"]
+        EX3(["Collectief goed"]) --> EX3a["Free-rider · Collectieve dwang"]
+    end
+    subgraph SAM["🤝 Samenwerking H1.5"]
+        direction LR
+        SAM1(["Arbeidsmarkt"]) --> SAM1a["CAO · AVV"]
+        SAM2(["EU"]) --> SAM2a["EMU · Euro · Brexit"]
+        SAM3(["MVO"]) --> SAM3a["People · Planet · Profit"]
+    end
+    subgraph RISICO_G["🛡️ Risico H2.1"]
+        direction LR
+        R1(["R = kans × schade"]) --> R1a["Solidariteit · Omslag/Kapitaal"]
+    end
+    subgraph INFO_G["❓ Asymm. Info H2.2"]
+        direction LR
+        I1(["Averechtse selectie"]) --> I1a["vóór contract · spiraal"]
+        I2(["Moral hazard"]) --> I2a["ná contract · gedrag"]
+    end
+    subgraph OPL["🔧 Oplossingen H2.3"]
+        direction LR
+        O1(["Eigen risico"]) --> O1a["anti-MH + signalling"]
+        O2(["Premiediff."]) --> O2a["anti-AS + anti-MH"]
+        O3(["Informatie + CIS"]) --> O3a["acceptatieplicht"]
+    end
+    KERN ==> ST
+    KERN ==> EX
+    KERN ==> SAM
+    KERN ==> RISICO_G
+    KERN ==> INFO_G
+    INFO_G ==> OPL
+    classDef kern fill:#ffedd5,stroke:#f97316,stroke-width:3px,color:#7c2d12
+    classDef blauw fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e3a8a
+    classDef groen fill:#dcfce7,stroke:#22c55e,stroke-width:2px,color:#14532d
+    classDef paars fill:#f3e8ff,stroke:#a855f7,stroke-width:2px,color:#581c87
+    classDef grijs fill:#f1f5f9,stroke:#64748b,stroke-width:1px,color:#334155
+    class KERN kern
+    class ST1,ST2,ST3 blauw
+    class EX1,EX2,EX3 blauw
+    class SAM1,SAM2,SAM3 groen
+    class R1 groen
+    class I1,I2 paars
+    class O1,O2,O3 paars
+    class ST1a,ST2a,ST3a,EX1a,EX2a,EX3a,SAM1a,SAM2a,SAM3a,R1a,I1a,I2a,O1a,O2a,O3a grijs
+</div></code></pre>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>Examen-Focus — Infographic:</strong> Het oranje hexagon (<code>KERN</code>) is het centrale concept: marktfalen. Alle dikke pijlen <code>==&gt;</code> tonen de 6 hoofd-deelgebieden als subgraphs. Blauw = speltheorie/externe effecten, groen = samenwerking/risico, paars = informatieproblemen + oplossingen. Grijze rechthoeken = de examenbegrippen. Gebruik dit overzicht als checklijst bij een open casusvraag: in welke subgraph valt de casus?</p>
+</blockquote>
+<h3 id="het-terugkerende-patroon-probleem-%E2%86%92-keten-%E2%86%92-oplossing">Het terugkerende patroon: probleem → keten → oplossing</h3>
+<pre><code class="language-mermaid"><div class="mermaid">flowchart LR
+    subgraph TP_P["⚠️ Marktfalen"]
+        direction TB
+        TP_Prob{{"PROBLEEM"}}
+        TP_Prob --> TP_P1["• GD"]
+        TP_Prob --> TP_P2["• Extern effect"]
+        TP_Prob --> TP_P3["• Asymm. info"]
+    end
+    subgraph TP_K["🔄 Negatieve Keten"]
+        TP_Ket[/"SPIRAAL<br/>te veel · te weinig<br/>race to bottom"/]
+    end
+    subgraph TP_I["🏛️ Institutionele Oplossing"]
+        direction TB
+        TP_Inst(["Wet"])
+        TP_Inst2(["Contract / CAO"])
+        TP_Inst3(["Verzekering"])
+        TP_Inst4(["Verdrag / Belasting"])
+    end
+    TP_Opt[["✅ Maatschappelijk optimum"]]
+    TP_Prob ==> TP_Ket
+    TP_Ket ==> TP_Inst
+    TP_Ket ==> TP_Inst2
+    TP_Ket ==> TP_Inst3
+    TP_Ket ==> TP_Inst4
+    TP_Inst ==> TP_Opt
+    TP_Inst2 ==> TP_Opt
+    TP_Inst3 ==> TP_Opt
+    TP_Inst4 ==> TP_Opt
+    TP_Opt -.->|"kan opnieuw falen<br/>(techniek · vergrijzing · AI)"| TP_Prob
+    classDef falen fill:#fee2e2,stroke:#ef4444,stroke-width:2px,color:#7f1d1d
+    classDef risico fill:#ffedd5,stroke:#f97316,stroke-width:2px,color:#7c2d12
+    classDef oploss fill:#f3e8ff,stroke:#a855f7,stroke-width:2px,color:#581c87
+    classDef succes fill:#dcfce7,stroke:#22c55e,stroke-width:2px,color:#14532d
+    class TP_Prob,TP_P1,TP_P2,TP_P3 falen
+    class TP_Ket risico
+    class TP_Inst,TP_Inst2,TP_Inst3,TP_Inst4 oploss
+    class TP_Opt succes
+</div></code></pre>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>Examen-Focus — Terugkerend patroon:</strong> De rode subgraph (marktfalen) voedt de oranje spiraal via <code>==&gt;</code>. Vier paarse nodes (oplossingen) convergeren allemaal naar het groene [[optimum]]. De <code>-.-&gt;</code> feedbackpijl sluit de cirkel — dit is het cruciale inzicht voor open vragen: markten kunnen <strong>opnieuw</strong> falen als omstandigheden veranderen. Gebruik dit schema als kapstok bij <em>elke</em> casusanalyse.</p>
+</blockquote>
+<h3 id="welk-probleem-hoort-bij-welk-hoofdstuk-snel-zoek-tabel">Welk probleem hoort bij welk hoofdstuk? (snel-zoek-tabel)</h3>
+<table>
+<thead>
+<tr>
+<th>Probleem in casus</th>
+<th>Theoretische bril</th>
+<th>Waar in samenvatting?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Twee bedrijven, simultaan, prijs- of productie-keuze</td>
+<td><strong>Matrix + Nash + GD</strong></td>
+<td>§1.1</td>
+</tr>
+<tr>
+<td>Bedrijven onderbieden elkaar, marges dalen</td>
+<td><strong>Prijzenoorlog</strong></td>
+<td>§1.2</td>
+</tr>
+<tr>
+<td>Eerst speler A, daarna speler B (overname-bod, aanbesteding)</td>
+<td><strong>Spelboom + backwards induction</strong></td>
+<td>§1.3</td>
+</tr>
+<tr>
+<td>Bedrijf belooft duurzaamheid, klant gelooft het niet</td>
+<td><strong>Zelfbinding + contract</strong></td>
+<td>§1.3</td>
+</tr>
+<tr>
+<td><em>&quot;We hebben er al zoveel ingestoken&quot;</em></td>
+<td><strong>Verzonken kosten (negeer!)</strong></td>
+<td>§1.3</td>
+</tr>
+<tr>
+<td>Vervuiling, geluidsoverlast, vaccinatie, onderwijs</td>
+<td><strong>Extern effect → belasting/subsidie</strong></td>
+<td>§1.4</td>
+</tr>
+<tr>
+<td>Dijken, defensie, openbare verlichting</td>
+<td><strong>Collectief goed + free-rider</strong></td>
+<td>§1.4</td>
+</tr>
+<tr>
+<td>Loonstrijd, vakbond, minimumloon</td>
+<td><strong>CAO + AVV</strong></td>
+<td>§1.5</td>
+</tr>
+<tr>
+<td>Importheffing, euro, Brexit</td>
+<td><strong>EU + EMU</strong></td>
+<td>§1.5</td>
+</tr>
+<tr>
+<td>Wel/niet verzekeren bij bekende kans + bedrag</td>
+<td><strong>Risico = kans × schade</strong></td>
+<td>§2.1</td>
+</tr>
+<tr>
+<td>Premie hoger als je in de hele groep kijkt</td>
+<td><strong>Solidariteit + minimale premie</strong></td>
+<td>§2.1</td>
+</tr>
+<tr>
+<td>AOW vs. aanvullend pensioen</td>
+<td><strong>Omslag vs. kapitaaldekking</strong></td>
+<td>§2.1</td>
+</tr>
+<tr>
+<td>Premie loopt op, gezonde mensen haken af</td>
+<td><strong>Averechtse selectie</strong></td>
+<td>§2.2</td>
+</tr>
+<tr>
+<td>Verzekerde wordt onvoorzichtiger</td>
+<td><strong>Moral hazard</strong></td>
+<td>§2.2</td>
+</tr>
+<tr>
+<td>Eigen risico € 385</td>
+<td><strong>Anti-moral-hazard + signalling</strong></td>
+<td>§2.3</td>
+</tr>
+<tr>
+<td>No-claim, premie per leeftijdsgroep</td>
+<td><strong>Premiedifferentiatie + bonus-malus</strong></td>
+<td>§2.3</td>
+</tr>
+<tr>
+<td><em>&quot;Verzekeraar moet mij accepteren&quot;</em></td>
+<td><strong>Acceptatieplicht (alleen basiszorg)</strong></td>
+<td>§2.3</td>
+</tr>
+</tbody>
+</table>
+<h3 id="drie-examen-truc-vragen-om-jezelf-te-trainen">Drie examen-truc-vragen om jezelf te trainen</h3>
+<ol>
+<li><strong>&quot;Waarom?&quot;</strong> — Bij elk antwoord dat je geeft, dwing jezelf één stap door te vragen: <em>Waarom werkt dat zo?</em></li>
+<li><strong>&quot;En als…?&quot;</strong> — Verander één voorwaarde in de casus (van eenmalig naar herhaald, van symmetrisch naar asymmetrisch, van privaat naar collectief). Verandert je antwoord? Dat bewijst dat je de logica snapt.</li>
+<li><strong>&quot;Welke partij wil dit?&quot;</strong> — Markeer in elke casus: 👤 consument · 🏭 producent · 🏛️ overheid. Hun belangen botsen vaak — dat is meestal de kern van de vraag.</li>
+</ol>
+<blockquote>
+<p>[!TIP]
+<strong>🎯 Slotadvies:</strong> Examenvragen testen zelden of je de definitie kunt opdreunen. Ze testen of je in een <strong>nieuwe casus</strong> het juiste mechanisme herkent en de <strong>causale keten</strong> kunt opschrijven. De <em>Begrijp de Logica</em>-blokken zijn je belangrijkste oefenmateriaal — sla deze samenvatting open naast elke oefenexamenvraag.</p>
+</blockquote>
+
+</body>
+</html>

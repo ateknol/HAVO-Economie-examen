@@ -32,20 +32,22 @@ Dit document werkt op **drie lagen** per onderwerp. Lees ze altijd in deze volgo
 
 ```mermaid
 flowchart LR
-    DEF{{"1️⃣ Definitie<br/>weet wat het is"}} --> LOG(["2️⃣ Begrijp de Logica 🧠<br/>weet WAAROM"])
-    LOG --> VAL[/"3️⃣ Valkuil ⚠️<br/>vermijd punt-aftrek"/]
-    VAL --> EX([4️⃣ Examen<br/>pas toe in casus])
-
-    classDef stap1 fill:#e0e7ff,stroke:#4338ca,stroke-width:2px,color:#1e1b4b
-    classDef stap2 fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d
-    classDef stap3 fill:#fee2e2,stroke:#dc2626,stroke-width:2px,color:#7f1d1d
-    classDef stap4 fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f
-
-    class DEF stap1
-    class LOG stap2
-    class VAL stap3
-    class EX stap4
+    subgraph Methode["📖 Leerproces — 4 Lagen"]
+        direction LR
+        D1{{"1️⃣ Definitie"}} ==> D2(["2️⃣ Logica 🧠"]) ==> D3[/"3️⃣ Valkuil ⚠️"/] ==> D4[["4️⃣ Examen 🎯"]]
+    end
+    classDef stap1 fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e3a8a
+    classDef stap2 fill:#dcfce7,stroke:#22c55e,stroke-width:2px,color:#14532d
+    classDef stap3 fill:#fee2e2,stroke:#ef4444,stroke-width:2px,color:#7f1d1d
+    classDef stap4 fill:#fef9c3,stroke:#eab308,stroke-width:2px,color:#713f12
+    class D1 stap1
+    class D2 stap2
+    class D3 stap3
+    class D4 stap4
 ```
+
+> [!IMPORTANT]
+> **Examen-Focus — Leeswijzer:** De dikke pijl `==>` toont de **vaste leesvolgorde**. Sla stap 2 (Logica) nooit over — examenvragen testen de keten, niet de definitie.
 
 ---
 
@@ -91,32 +93,33 @@ flowchart LR
 
 ```mermaid
 flowchart TD
-    Tijd{{"⏱️ Tijd?"}}
-    Tijd -->|"Tegelijk"| Sim(["Simultaan spel"])
-    Tijd -->|"Om de beurt"| Seq(["Sequentieel spel"])
-    Sim --> Mat["📊 Opbrengsten-MATRIX<br/>+ best response → Nash"]
-    Seq --> Boom["🌳 SPEL-BOOM<br/>+ backwards induction"]
-
-    Herh{{"🔁 Hoe vaak?"}}
-    Herh -->|"Eén keer"| Een(["Eenmalig"])
-    Herh -->|"Vaker"| Rep(["Herhaald"])
-    Een --> Eig["💼 Eigen belang wint<br/>klassiek GD"]
-    Rep --> Soc["🤝 Reputatie + sociale<br/>norm tellen mee"]
-
-    Sam{{"🤝 Samen mogelijk?"}}
-    Sam -->|"Ja"| Coop(["Coöperatief"])
-    Sam -->|"Nee"| Niet(["Niet-coöperatief"])
-    Coop --> Con["📜 Contract / CAO /<br/>EU-verdrag"]
-    Niet --> Kar["⚖️ Kartelverbod<br/>→ ieder voor zich"]
-
-    classDef vraag fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f
-    classDef proces fill:#e0e7ff,stroke:#4338ca,stroke-width:2px,color:#1e1b4b
-    classDef overheid fill:#f3e8ff,stroke:#9333ea,stroke-width:2px,color:#581c87
-
-    class Tijd,Herh,Sam vraag
-    class Sim,Seq,Een,Rep,Coop,Niet proces
-    class Mat,Boom,Eig,Soc,Con,Kar overheid
+    subgraph Dim1["⏱️ Dimensie 1 — Tijd"]
+        direction LR
+        T{{"Wanneer?"}} -->|"tegelijk"| Sim(["Simultaan"]) ==> Mat["📊 Matrix + Nash"]
+        T -->|"om beurt"| Seq(["Sequentieel"]) ==> Boom["🌳 Spelboom + BI"]
+    end
+    subgraph Dim2["🔁 Dimensie 2 — Herhaling"]
+        direction LR
+        H{{"Hoe vaak?"}} -->|"1×"| Een(["Eenmalig"]) ==> GDC["💼 GD klassiek"]
+        H -->|"vaker"| Rep(["Herhaald"]) ==> Soc["🤝 Reputatie"]
+    end
+    subgraph Dim3["🤝 Dimensie 3 — Overleg"]
+        direction LR
+        S{{"Overleg?"}} -->|"ja"| Coop(["Coöperatief"]) ==> Con["📜 Contract"]
+        S -->|"nee"| Niet(["Niet-coöp."]) ==> Kar["⚖️ Ieder voor zich"]
+    end
+    classDef besluit fill:#fef9c3,stroke:#eab308,stroke-width:2px,color:#713f12
+    classDef markt fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e3a8a
+    classDef succes fill:#dcfce7,stroke:#22c55e,stroke-width:2px,color:#14532d
+    classDef grijs fill:#f1f5f9,stroke:#64748b,stroke-width:1px,color:#334155
+    class T,H,S besluit
+    class Sim,Een,Coop markt
+    class Seq,Rep,Niet succes
+    class Mat,Boom,GDC,Soc,Con,Kar grijs
 ```
+
+> [!IMPORTANT]
+> **Examen-Focus — 3 Dimensies:** Elke subgraph is één dimensie. De **gele hexagons** zijn de sleutelvragen — op het examen stel je deze 3 vragen bij iedere casus. De **blauwe stadium-nodes** zijn type A, de **groene** type B. De grijze rechthoeken tonen het bijbehorende analysemodel.
 
 > [!IMPORTANT]
 > **Begrijp de Logica — Waarom maakt elke dimensie uit?**
@@ -180,28 +183,25 @@ Toegepast op het Bibi/Stefan-voorbeeld → Nash = $(\text{Bibi: Geen}\,;\, \text
 
 ```mermaid
 flowchart TD
-    Start(["Spelers kiezen<br/>strategie (X, Y)"])
-    Vraag{{"Kan iemand ALLÉÉN<br/>verbeteren door te wisselen?"}}
-    Wissel(["Wissel naar betere strategie"])
-    Geen[/"❌ Geen Nash"/]
-    Nash[["✅ NASH-EVENWICHT<br/>niemand wisselt eenzijdig"]]
-
-    Start --> Vraag
-    Vraag -->|"Ja"| Geen
-    Geen --> Wissel
-    Wissel --> Start
-    Vraag -->|"Nee, beide vast"| Nash
-
-    classDef proces fill:#e0e7ff,stroke:#4338ca,stroke-width:2px,color:#1e1b4b
-    classDef vraag fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f
-    classDef fout fill:#fee2e2,stroke:#dc2626,stroke-width:2px,color:#7f1d1d
-    classDef goed fill:#d1fae5,stroke:#059669,stroke-width:2px,color:#064e3b
-
-    class Start,Wissel proces
-    class Vraag vraag
-    class Geen fout
-    class Nash goed
+    subgraph Nash_Check["🔍 Nash-Evenwicht Check"]
+        direction TB
+        N_Start(["Kies strategieën"]) ==> N_Vraag{{"Eenzijdig<br/>verbeteren?"}}
+        N_Vraag ==>|"✅ Nee"| N_Uitk[["🏆 Nash-evenwicht"]]
+        N_Vraag -->|"❌ Ja"| N_Wissel[/"Andere strategie"/]
+        N_Wissel -.->|"iteratie"| N_Start
+    end
+    classDef besluit fill:#fef9c3,stroke:#eab308,stroke-width:2px,color:#713f12
+    classDef succes fill:#dcfce7,stroke:#22c55e,stroke-width:2px,color:#14532d
+    classDef falen fill:#fee2e2,stroke:#ef4444,stroke-width:2px,color:#7f1d1d
+    classDef markt fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e3a8a
+    class N_Vraag besluit
+    class N_Uitk succes
+    class N_Wissel falen
+    class N_Start markt
 ```
+
+> [!IMPORTANT]
+> **Examen-Focus — Nash-check:** De **gestippelde terugpijl** (`-.->`) is de feedbackloop — de iteratie stopt pas bij het **groene [[Nash-evenwicht]]**. De rode parallelogram toont dat een niet-Nash uitkomst onstabiel is: iemand wil altijd wisselen.
 
 > [!IMPORTANT]
 > **Begrijp de Logica — Waarom is Nash een "evenwicht"?**
@@ -253,26 +253,28 @@ $$
 
 ```mermaid
 flowchart TD
-    GD{{"🔒 GEVANGENEN-<br/>DILEMMA"}}
-    Ind(["Individueel belang<br/>= Bekennen<br/>dominante strategie"])
-    Col(["Collectief belang<br/>= Beide NIET bekennen<br/>optimaal: 1 + 1 jaar"])
-    Uit[/"Uitkomst Nash:<br/>Beide bekennen<br/>→ 3 + 3 jaar cel"/]
-    Sam[/"Vereist samenwerking<br/>+ vertrouwen<br/>contract / herhaling"/]
-
-    GD --> Ind --> Uit
-    GD --> Col --> Sam
-    Uit -. "niet-optimaal<br/>evenwicht" .-> Sam
-
-    classDef term fill:#f3e8ff,stroke:#9333ea,stroke-width:2px,color:#581c87
-    classDef proces fill:#e0e7ff,stroke:#4338ca,stroke-width:2px,color:#1e1b4b
-    classDef fout fill:#fee2e2,stroke:#dc2626,stroke-width:2px,color:#7f1d1d
-    classDef goed fill:#d1fae5,stroke:#059669,stroke-width:2px,color:#064e3b
-
-    class GD term
-    class Ind,Col proces
-    class Uit fout
-    class Sam goed
+    GD_Kern{{"🔒 Gevangenen-<br/>dilemma"}}
+    subgraph GD_Ind["👤 Individueel belang"]
+        direction LR
+        GD_Dom(["Bekennen = dominant"]) ==> GD_Slecht[/"😢 Nash: 3+3 jaar"/]
+    end
+    subgraph GD_Col["🤝 Collectief belang"]
+        direction LR
+        GD_Opt(["Niet bekennen = optimaal"]) ==> GD_Goed[["😊 1+1 jaar"]]
+    end
+    GD_Kern ==> GD_Dom
+    GD_Kern ==> GD_Opt
+    GD_Slecht -.->|"❌ paradox"| GD_Goed
+    classDef risico fill:#ffedd5,stroke:#f97316,stroke-width:3px,color:#7c2d12
+    classDef falen fill:#fee2e2,stroke:#ef4444,stroke-width:2px,color:#7f1d1d
+    classDef succes fill:#dcfce7,stroke:#22c55e,stroke-width:2px,color:#14532d
+    class GD_Kern risico
+    class GD_Dom,GD_Slecht falen
+    class GD_Opt,GD_Goed succes
 ```
+
+> [!IMPORTANT]
+> **Examen-Focus — GD:** Twee subgraphs staan naast elkaar: **rood** = wat rationeel gebeurt, **groen** = wat collectief beter is. De gestippelde pijl `-.->` markeert de paradox — de uitkomst wijst van de slechte Nash-uitkomst naar het collectieve optimum dat *niet* bereikt wordt. Op het examen: leg altijd uit waarom de rode uitkomst ondanks de groene optie het Nash-evenwicht is.
 
 > [!IMPORTANT]
 > **Begrijp de Logica — Waarom is dit een "dilemma"?**
@@ -359,24 +361,37 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    A(["Bedrijf A verlaagt prijs"]) --> B(["Marktaandeel A groeit tijdelijk"])
-    B --> C(["Bedrijf B reageert: óók verlagen"])
-    C --> D[/"Neerwaartse prijsspiraal"/]
-    D --> Q{{"Wie houdt vol?"}}
-    Q -->|"Zwakste valt om"| F[["Overblijver = winnaar<br/>prijzen stijgen weer"]]
-    Q -->|"Beide overleven"| G[["Verlies voor allen<br/>klassiek GD-resultaat"]]
-
-    classDef proces fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d
-    classDef vraag fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f
-    classDef fout fill:#fee2e2,stroke:#dc2626,stroke-width:2px,color:#7f1d1d
-    classDef goed fill:#d1fae5,stroke:#059669,stroke-width:2px,color:#064e3b
-
-    class A,B,C proces
-    class D fout
-    class Q vraag
-    class F goed
-    class G fout
+    subgraph PO_Trig["⚡ Trigger"]
+        direction LR
+        PO_Ol{{"🏪 Oligopolie"}} ==> PO_A(["Bedrijf A ↓ prijs"])
+    end
+    subgraph PO_Spiral["🔄 Neerwaartse Spiraal"]
+        direction TB
+        PO_B(["Marktaandeel A ↑"]) ==> PO_C(["Bedrijf B reageert ↓"])
+        PO_C ==> PO_D[/"📉 Prijsspiraal"/]
+    end
+    subgraph PO_Uit["📊 Uitkomst"]
+        direction LR
+        PO_Q{{"Wie overleeft?"}}
+        PO_Q -->|"zwakste weg"| PO_Win[["🏆 Winnaar"]]
+        PO_Q -->|"beide overleven"| PO_GD[/"💸 GD-verlies"/]
+    end
+    PO_A ==> PO_B
+    PO_D ==> PO_Q
+    classDef risico fill:#ffedd5,stroke:#f97316,stroke-width:2px,color:#7c2d12
+    classDef markt fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e3a8a
+    classDef falen fill:#fee2e2,stroke:#ef4444,stroke-width:2px,color:#7f1d1d
+    classDef succes fill:#dcfce7,stroke:#22c55e,stroke-width:2px,color:#14532d
+    classDef besluit fill:#fef9c3,stroke:#eab308,stroke-width:2px,color:#713f12
+    class PO_Ol risico
+    class PO_A,PO_B,PO_C markt
+    class PO_D,PO_GD falen
+    class PO_Win succes
+    class PO_Q besluit
 ```
+
+> [!IMPORTANT]
+> **Examen-Focus — Prijzenoorlog cascade:** Drie subgraphs tonen de drie fases: oranje = **startconditie** (oligopolie), blauw = **actie** (de spiraal), geel = **beslissingsmoment** (wie overleeft?). De dikke pijl `==>` doorloopt de hoofdlijn; voor het examen: herken in welke fase de casustekst zich bevindt.
 
 **Voorbeeld — Restaurants T en S** (€ winst):
 
@@ -404,21 +419,27 @@ $$
 
 ```mermaid
 flowchart TD
-    OL{{"Oligopolie<br/>+ homogeen product"}}
-    OL --> Z(["Prijzen zichtbaar<br/>pomp, folder"])
-    OL --> S(["Snelle substitutie<br/>klant wisselt 1×"])
-    Z --> SP[/"Iedereen verlaagt"/]
-    S --> SP
-    SP --> V[["Lagere winst voor allemaal<br/>= Nash, maar GD-uitkomst"]]
-
-    classDef term fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d
-    classDef proces fill:#dbeafe,stroke:#2563eb,stroke-width:2px,color:#1e3a8a
-    classDef fout fill:#fee2e2,stroke:#dc2626,stroke-width:2px,color:#7f1d1d
-
-    class OL term
-    class Z,S proces
-    class SP,V fout
+    subgraph OL_Cond["🏭 Vereiste Condities"]
+        direction LR
+        OL_K{{"Oligopolie<br/>+ homogeen"}} --> OL_Z(["👁️ Zichtbare prijzen"])
+        OL_K --> OL_S(["🔄 Snelle substitutie"])
+    end
+    subgraph OL_Eff["📉 Gevolg"]
+        direction LR
+        OL_Sp[/"Iedereen verlaagt"/] ==> OL_V[["💸 Nash = GD-uitkomst"]]
+    end
+    OL_Z ==> OL_Sp
+    OL_S ==> OL_Sp
+    classDef risico fill:#ffedd5,stroke:#f97316,stroke-width:2px,color:#7c2d12
+    classDef markt fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e3a8a
+    classDef falen fill:#fee2e2,stroke:#ef4444,stroke-width:2px,color:#7f1d1d
+    class OL_K risico
+    class OL_Z,OL_S markt
+    class OL_Sp,OL_V falen
 ```
+
+> [!IMPORTANT]
+> **Examen-Focus — Oligopolie mechanisme:** De twee blauwe stadium-nodes zijn de **condities** die tegelijk aanwezig moeten zijn. Beide pijlen `==>` stromen samen naar de rode parallelogram (spiraal). Ontbreekt één conditie (bv. product is heterogeen) → geen prijzenoorlog.
 
 > [!CAUTION]
 > **Examenvalkuil:** Prijzenoorlog (= concurreren via prijsverlaging) **mag** in Nederland; **prijsafspraken** (kartelvorming) zijn juist **verboden** door de Mededingingswet (ACM controleert). Verwar deze twee nooit.
@@ -476,31 +497,37 @@ Bij een **sequentieel spel** volgen beslissingen elkaar op. De latere speler hee
 
 ```mermaid
 flowchart LR
-    U(((Unilever)))
-    N1(((Nestlé)))
-    N2(((Nestlé)))
-    R1["(4,5 ; 4,5)"]
-    R2["(6 ; 5,5) ⭐"]
-    R3["(5,5 ; 6) ⭐"]
-    R4["(5 ; 5)"]
-
+    subgraph Sp_U["🏢 Unilever — 1e zet"]
+        U(((U)))
+    end
+    subgraph Sp_N["🏢 Nestlé — reageert"]
+        N1(((N₁)))
+        N2(((N₂)))
+    end
+    subgraph Sp_R["📊 Uitkomsten (Unilever ; Nestlé)"]
+        R1["4,5 ; 4,5"]
+        R2[["⭐ 6 ; 5,5"]]
+        R3[["⭐ 5,5 ; 6"]]
+        R4["5 ; 5"]
+    end
     U -->|"ja"| N1
     U -->|"nee"| N2
     N1 -->|"ja"| R1
-    N1 -->|"nee"| R2
-    N2 -->|"ja"| R3
+    N1 ==>|"nee ✓"| R2
+    N2 ==>|"ja ✓"| R3
     N2 -->|"nee"| R4
-
-    classDef speler1 fill:#dbeafe,stroke:#2563eb,stroke-width:2px,color:#1e3a8a
-    classDef speler2 fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d
-    classDef gekozen fill:#fef3c7,stroke:#d97706,stroke-width:3px,color:#78350f
-    classDef niet fill:#f1f5f9,stroke:#94a3b8,stroke-width:1px,color:#475569
-
-    class U speler1
-    class N1,N2 speler2
+    classDef s1 fill:#dbeafe,stroke:#3b82f6,stroke-width:3px,color:#1e3a8a
+    classDef s2 fill:#dcfce7,stroke:#22c55e,stroke-width:2px,color:#14532d
+    classDef gekozen fill:#fef9c3,stroke:#eab308,stroke-width:3px,color:#713f12
+    classDef niet fill:#f1f5f9,stroke:#64748b,stroke-width:1px,color:#334155
+    class U s1
+    class N1,N2 s2
     class R2,R3 gekozen
     class R1,R4 niet
 ```
+
+> [!IMPORTANT]
+> **Examen-Focus — Spelboom:** De **dikke pijlen** `==>` tonen het backwards-induction-pad (de gekozen takken). De gele [[dubbele rechthoeken]] zijn de ⭐-uitkomsten. Op het examen: werk altijd van rechts naar links — begin bij de gele vakjes, trek de dikke pijlen terug naar de blauwe cirkel.
 
 **Stappen:**
 
@@ -541,27 +568,27 @@ flowchart LR
 
 ```mermaid
 flowchart LR
-    A(["Bedrijf belooft<br/>'wij doen X'"])
-    B[/"❌ Niemand gelooft het"/]
-    C{{"+ Zelfbinding<br/>certificaat, investering,<br/>contract met boete"}}
-    D(["Onomkeerbaar"])
-    E(["Geloofwaardig ✅"])
-    F[["Klant/partner past<br/>gedrag aan → win-win"]]
-
-    A -->|"geen bewijs"| B
-    A --> C
-    C --> D --> E --> F
-
-    classDef proces fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d
-    classDef term fill:#dbeafe,stroke:#2563eb,stroke-width:2px,color:#1e3a8a
-    classDef fout fill:#fee2e2,stroke:#dc2626,stroke-width:2px,color:#7f1d1d
-    classDef goed fill:#d1fae5,stroke:#059669,stroke-width:2px,color:#064e3b
-
-    class A,D,E proces
-    class C term
-    class B fout
-    class F goed
+    subgraph ZB_Zon["❌ Zonder zelfbinding"]
+        direction LR
+        ZB_Bel(["Belofte"]) --x ZB_NGB[/"Niet geloofwaardig"/]
+    end
+    subgraph ZB_Met["✅ Met zelfbinding"]
+        direction LR
+        ZB_Cert(["Belofte +<br/>🔒 Onomkeerbaar"]) ==> ZB_Gel(["Geloofwaardig"]) ==> ZB_Win[["🤝 Win-win"]]
+    end
+    ZB_Bel -.->|"+ certificaat<br/>+ boete"| ZB_Cert
+    classDef falen fill:#fee2e2,stroke:#ef4444,stroke-width:2px,color:#7f1d1d
+    classDef succes fill:#dcfce7,stroke:#22c55e,stroke-width:2px,color:#14532d
+    classDef markt fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e3a8a
+    classDef oploss fill:#f3e8ff,stroke:#a855f7,stroke-width:2px,color:#581c87
+    class ZB_Bel markt
+    class ZB_NGB falen
+    class ZB_Cert oploss
+    class ZB_Gel,ZB_Win succes
 ```
+
+> [!IMPORTANT]
+> **Examen-Focus — Zelfbinding:** Let op de `--x` (kruis-pijl) in het rode blok — dit symboliseert een **blokkade**: de belofte zonder bewijs komt niet aan. De gestippelde pijl `-.->` verbindt de twee werelden: met de juiste toevoeging (certificaat/boete) wordt de belofte wél geloofwaardig. Paarse node = oplossingsmechanisme.
 
 > [!IMPORTANT]
 > **Begrijp de Logica — Waarom werkt zelfbinding?**
@@ -607,32 +634,36 @@ flowchart LR
 
 ```mermaid
 flowchart TD
-    PR(["Private prijs<br/>wat de markt rekent"])
-    KEUS([Beslissing<br/>consument / producent])
-    EX{{"Extern effect<br/>niet in de prijs"}}
-    SUB[/"⚠️ Suboptimaal:<br/>te veel bij negatief<br/>te weinig bij positief"/]
-    OV{{"🏛️ Overheid corrigeert"}}
-    INT(["Internaliseren =<br/>extern effect IN de prijs"])
-    OPT[["✅ Maatschappelijk optimum"]]
-
-    PR --> KEUS --> SUB
-    EX -. "wordt genegeerd" .-> KEUS
-
-    OV -->|"belasting / subsidie / norm"| INT --> OPT
-    SUB --> OV
-
-    classDef proces fill:#dbeafe,stroke:#2563eb,stroke-width:2px,color:#1e3a8a
-    classDef term fill:#f3e8ff,stroke:#9333ea,stroke-width:2px,color:#581c87
-    classDef fout fill:#fee2e2,stroke:#dc2626,stroke-width:2px,color:#7f1d1d
-    classDef goed fill:#d1fae5,stroke:#059669,stroke-width:2px,color:#064e3b
-    classDef overheid fill:#f3e8ff,stroke:#9333ea,stroke-width:2px,color:#581c87
-
-    class PR,KEUS,INT proces
-    class EX term
-    class SUB fout
-    class OPT goed
-    class OV overheid
+    subgraph EX_Markt["🏪 Markt (privaat)"]
+        direction LR
+        EX_PR(["💰 Private prijs"]) ==> EX_Bes(["Beslissing"])
+    end
+    EX_Ext{{"🌍 Extern effect"}} --x|"genegeerd"| EX_Bes
+    EX_Falen[/"⚠️ Suboptimaal<br/>te veel / te weinig"/]
+    subgraph EX_Cor["🏛️ Overheid corrigeert"]
+        direction LR
+        EX_OV{{"Beleid"}} -->|"belasting"| EX_Bel(["Internaliseren −"])
+        EX_OV -->|"subsidie"| EX_Sub2(["Internaliseren +"])
+    end
+    EX_Opt[["✅ Maatschappelijk optimum"]]
+    EX_Bes ==> EX_Falen
+    EX_Falen ==> EX_OV
+    EX_Bel ==> EX_Opt
+    EX_Sub2 ==> EX_Opt
+    classDef markt fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e3a8a
+    classDef risico fill:#ffedd5,stroke:#f97316,stroke-width:2px,color:#7c2d12
+    classDef falen fill:#fee2e2,stroke:#ef4444,stroke-width:2px,color:#7f1d1d
+    classDef oploss fill:#f3e8ff,stroke:#a855f7,stroke-width:2px,color:#581c87
+    classDef succes fill:#dcfce7,stroke:#22c55e,stroke-width:2px,color:#14532d
+    class EX_PR,EX_Bes markt
+    class EX_Ext risico
+    class EX_Falen falen
+    class EX_OV,EX_Bel,EX_Sub2 oploss
+    class EX_Opt succes
 ```
+
+> [!IMPORTANT]
+> **Examen-Focus — Extern effect:** De `--x` kruis-pijl toont dat het oranje hexagon (extern effect) door de markt **geblokkeerd/genegeerd** wordt. Volg dan de rode parallelogram (suboptimaal) → paarse subgraph (overheidsbeleid) → groen resultaat. Dit is de standaard examenketen: **marktfalen → overheid ingrijpen → optimum**.
 
 > [!IMPORTANT]
 > **Begrijp de Logica — Waarom faalt de markt hier?**
@@ -722,29 +753,31 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    V{{"👥 Vakbond<br/>werknemers"}}
-    WG{{"🏭 Werkgevers-<br/>organisatie"}}
-    CAO(["📜 CAO bedrijfstak<br/>geldt voor leden"])
-    AVV[/"🏛️ Minister SZW:<br/>Algemeen Verbindend Verklaren"/]
-    All[["✅ Geldt voor ALLE werknemers<br/>in de bedrijfstak<br/>(ook niet-aangesloten)"]]
-
-    V <-->|"overleg"| WG
-    V --> CAO
-    WG --> CAO
-    CAO --> AVV --> All
-
-    classDef cons fill:#dbeafe,stroke:#2563eb,stroke-width:2px,color:#1e3a8a
-    classDef prod fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d
+    subgraph CAO_Part["🤝 Sociale Partners"]
+        direction LR
+        CAO_V{{"👥 Vakbond"}} <-->|"onderhandelen"| CAO_WG{{"🏭 Werkgevers"}}
+    end
+    subgraph CAO_Proc["📜 CAO Proces"]
+        direction LR
+        CAO_C(["CAO bedrijfstak"]) ==> CAO_AVV[/"🏛️ AVV Minister SZW"/]
+    end
+    CAO_V ==> CAO_C
+    CAO_WG ==> CAO_C
+    CAO_Res[["✅ Geldt voor ALLE werknemers<br/>bedrijfstak"]]
+    CAO_AVV ==> CAO_Res
+    classDef markt fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e3a8a
+    classDef succes fill:#dcfce7,stroke:#22c55e,stroke-width:2px,color:#14532d
     classDef proces fill:#e0e7ff,stroke:#4338ca,stroke-width:2px,color:#1e1b4b
-    classDef overheid fill:#f3e8ff,stroke:#9333ea,stroke-width:2px,color:#581c87
-    classDef goed fill:#d1fae5,stroke:#059669,stroke-width:2px,color:#064e3b
-
-    class V cons
-    class WG prod
-    class CAO proces
-    class AVV overheid
-    class All goed
+    classDef oploss fill:#f3e8ff,stroke:#a855f7,stroke-width:2px,color:#581c87
+    class CAO_V markt
+    class CAO_WG succes
+    class CAO_C proces
+    class CAO_AVV oploss
+    class CAO_Res succes
 ```
+
+> [!IMPORTANT]
+> **Examen-Focus — CAO:** De dubbele pijl `<-->` toont de *onderhandeling* tussen blauw (werknemers) en groen (werkgevers). Beide stromen via `==>` naar de blauwe stadium-node (CAO). De paarse parallelogram (AVV) is de **overheids-stempel** die de CAO voor de hele bedrijfstak geldig maakt. Eindresultaat: het groene [[uitkomst-blok]].
 
 > [!IMPORTANT]
 > **Begrijp de Logica — Waarom een CAO en niet 1000 individuele contracten?**
@@ -785,26 +818,28 @@ timeline
 
 ```mermaid
 flowchart TD
-    IL{{"27 individuele landen"}}
-    GD[/"❌ GD: handelsoorlogen,<br/>devaluaties, subsidie-wedloop,<br/>race to the bottom"/]
-    EU(["EU: gemeenschappelijke regels<br/>= contract met boete"])
-    Inst[["🏛️ ECB · Hof van Justitie ·<br/>EMU + euro · vrije markt"]]
-    WIN[["✅ Lagere transactiekosten,<br/>grotere markt, vrede"]]
-
-    IL -->|"iedereen eigen belang"| GD
-    IL -->|"verdragen"| EU
-    EU --> Inst --> WIN
-
-    classDef term fill:#f3e8ff,stroke:#9333ea,stroke-width:2px,color:#581c87
-    classDef proces fill:#e0e7ff,stroke:#4338ca,stroke-width:2px,color:#1e1b4b
-    classDef fout fill:#fee2e2,stroke:#dc2626,stroke-width:2px,color:#7f1d1d
-    classDef goed fill:#d1fae5,stroke:#059669,stroke-width:2px,color:#064e3b
-
-    class IL term
-    class EU,Inst proces
-    class GD fout
-    class WIN goed
+    subgraph EU_Zon["❌ Zonder EU — GD scenario"]
+        direction LR
+        EU_27{{"27 landen<br/>eigen belang"}} ==> EU_GD[/"Handelsoorlogen<br/>Valuta-race<br/>Subsidie-wedloop"/]
+    end
+    subgraph EU_Met["✅ Met EU — Coöperatief spel"]
+        direction LR
+        EU_Verd(["Verdragen + Regels"]) ==> EU_Inst(["🏛️ ECB · Hof · EMU"])
+        EU_Inst ==> EU_Win[["💶 Lagere kosten<br/>grotere markt · vrede"]]
+    end
+    EU_27 -.->|"verdragen sluiten"| EU_Verd
+    classDef risico fill:#ffedd5,stroke:#f97316,stroke-width:2px,color:#7c2d12
+    classDef falen fill:#fee2e2,stroke:#ef4444,stroke-width:2px,color:#7f1d1d
+    classDef oploss fill:#f3e8ff,stroke:#a855f7,stroke-width:2px,color:#581c87
+    classDef succes fill:#dcfce7,stroke:#22c55e,stroke-width:2px,color:#14532d
+    class EU_27 risico
+    class EU_GD falen
+    class EU_Verd,EU_Inst oploss
+    class EU_Win succes
 ```
+
+> [!IMPORTANT]
+> **Examen-Focus — EU als coöperatief spel:** Twee subgraphs: rood = het GD-scenario **zonder** EU, groen = de oplossing **met** EU. De gestippelde pijl `-.->` toont de transitie: de 27 landen kiezen ervoor verdragen te sluiten. Paarse nodes = de EU-instituten die het GD doorbreken. Dit diagram is de EU-samenvatting in één oogopslag.
 
 > [!IMPORTANT]
 > **Begrijp de Logica — De EU als gigantisch coöperatief spel**
@@ -891,29 +926,28 @@ Is een jaarpremie van bv. € 32,80 lager dan € 140? → rationeel om te verze
 
 ```mermaid
 flowchart TD
-    Start{{"Premie P  vs<br/>verwacht risico R = kans × schade"}}
-    Lager(["P < R"])
-    Hoger(["P > R"])
-    Vraag{{"Kun je de schade zelf dragen?<br/>(eigen vermogen?)"}}
-    GoA[["✅ VERZEKEREN<br/>wiskundig gunstig + zekerheid"]]
-    GoB[["✅ VERZEKEREN<br/>risicoavers, betaalt voor zekerheid"]]
-    Niet[/"❌ NIET verzekeren<br/>zelf-verzekeren"/]
-
-    Start --> Lager --> GoA
-    Start --> Hoger --> Vraag
-    Vraag -->|"Nee, te groot"| GoB
-    Vraag -->|"Ja, genoeg spaargeld"| Niet
-
-    classDef vraag fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f
-    classDef proces fill:#dbeafe,stroke:#2563eb,stroke-width:2px,color:#1e3a8a
-    classDef goed fill:#d1fae5,stroke:#059669,stroke-width:2px,color:#064e3b
-    classDef fout fill:#fee2e2,stroke:#dc2626,stroke-width:2px,color:#7f1d1d
-
-    class Start,Vraag vraag
-    class Lager,Hoger proces
-    class GoA,GoB goed
-    class Niet fout
+    subgraph VZ_Calc["🧮 Stap 1 — Bereken"]
+        direction LR
+        VZ_R{{"R = kans × schade"}} ==> VZ_P{{"P = jaarpremie"}}
+    end
+    subgraph VZ_Bes["💡 Stap 2 — Beslisregel"]
+        direction TB
+        VZ_Comp{{"P vs R?"}} -->|"P < R"| VZ_GoA[["✅ VERZEKEREN<br/>wiskundig voordelig"]]
+        VZ_Comp -->|"P > R"| VZ_Vr{{"Schade<br/>draagbaar?"}}
+        VZ_Vr -->|"Nee"| VZ_GoB[["✅ VERZEKEREN<br/>risicoaversie"]]
+        VZ_Vr -->|"Ja"| VZ_Niet[/"❌ Zelf-verzekeren"/]
+    end
+    VZ_P ==> VZ_Comp
+    classDef besluit fill:#fef9c3,stroke:#eab308,stroke-width:2px,color:#713f12
+    classDef succes fill:#dcfce7,stroke:#22c55e,stroke-width:2px,color:#14532d
+    classDef falen fill:#fee2e2,stroke:#ef4444,stroke-width:2px,color:#7f1d1d
+    class VZ_R,VZ_P,VZ_Comp,VZ_Vr besluit
+    class VZ_GoA,VZ_GoB succes
+    class VZ_Niet falen
 ```
+
+> [!IMPORTANT]
+> **Examen-Focus — Beslisregel verzekeren:** Twee subgraphs = twee stappen. Begin altijd in de **gele subgraph** (berekenen). Daarna stroomt de pijl naar de beslisregel. De dikke pijl `==>` verbindt de twee stappen; het examen verwacht dat je beiden uitvoert — niet alleen "P > R dus niet verzekeren".
 
 > [!IMPORTANT]
 > **Begrijp de Logica — Wanneer is verzekeren rationeel?**
@@ -971,28 +1005,27 @@ $$
 
 ```mermaid
 flowchart LR
-    V(["VRIJWILLIG verzekeren:<br/>alleen zieken doen mee"])
-    H[/"Hoog gemiddeld risico"/]
-    HP[["❌ Hoge premie<br/>€ 1.350"]]
-    P(["VERPLICHT verzekeren:<br/>iedereen doet mee"])
-    L([Laag gemiddeld risico])
-    LP[["✅ Lage premie<br/>€ 1.080"]]
-
-    V --> H --> HP
-    P --> L --> LP
-
-    classDef proces fill:#dbeafe,stroke:#2563eb,stroke-width:2px,color:#1e3a8a
-    classDef warn fill:#fee2e2,stroke:#dc2626,stroke-width:2px,color:#7f1d1d
-    classDef goed fill:#d1fae5,stroke:#059669,stroke-width:2px,color:#064e3b
-    classDef proc2 fill:#f3e8ff,stroke:#9333ea,stroke-width:2px,color:#581c87
-
-    class V proces
-    class P proc2
-    class H warn
-    class L goed
-    class HP warn
-    class LP goed
+    subgraph Sol_Vrij["❌ Vrijwillig"]
+        direction TB
+        S_V(["Alleen zieken<br/>melden zich"]) ==> S_VH[/"Hoog risico<br/>€ 1.350"/]
+    end
+    subgraph Sol_Vpl["✅ Verplicht (solidariteit)"]
+        direction TB
+        S_P(["Iedereen verplicht<br/>ook gezonden"]) ==> S_PL[["Laag risico<br/>€ 1.080"]]
+    end
+    S_VH -.->|"solidariteit<br/>doorbreekt spiraal"| S_PL
+    classDef falen fill:#fee2e2,stroke:#ef4444,stroke-width:2px,color:#7f1d1d
+    classDef oploss fill:#f3e8ff,stroke:#a855f7,stroke-width:2px,color:#581c87
+    classDef succes fill:#dcfce7,stroke:#22c55e,stroke-width:2px,color:#14532d
+    classDef markt fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e3a8a
+    class S_V markt
+    class S_VH falen
+    class S_P oploss
+    class S_PL succes
 ```
+
+> [!IMPORTANT]
+> **Examen-Focus — Solidariteit:** Twee subgraphs naast elkaar: rood = vrijwillig (slechte uitkomst), groen = verplicht (goede uitkomst). De gestippelde pijl `-.->` loopt van de slechte uitkomst naar de goede — dit is de **doorbreking** van de spiraal door verplichting. Op het examen: leg altijd uit *waarom* de premie daalt (grotere noemer + lager gemiddeld risico).
 
 > [!IMPORTANT]
 > **Begrijp de Logica — Waarom werkt verplichte solidariteit?**
@@ -1050,31 +1083,33 @@ flowchart LR
 
 ```mermaid
 flowchart TD
-    A{{"❓ Verzekeraar kent risico niet<br/>asymmetrische info"}}
-    B(["Eén gemiddelde premie"])
-    C(["🔴 Slechte risico's:<br/>'lekker goedkoop!'<br/>→ verzekeren zich"])
-    D(["🟢 Goede risico's:<br/>'te duur!'<br/>→ HAKEN AF"])
-    E[/"Gemiddeld risico stijgt"/]
-    F[/"Premie omhoog"/]
-
-    A --> B
-    B --> C
-    B --> D
-    D --> E
-    E --> F
-    F --> D
-
-    classDef term fill:#f3e8ff,stroke:#9333ea,stroke-width:2px,color:#581c87
-    classDef proces fill:#dbeafe,stroke:#2563eb,stroke-width:2px,color:#1e3a8a
-    classDef fout fill:#fee2e2,stroke:#dc2626,stroke-width:2px,color:#7f1d1d
-    classDef goed fill:#d1fae5,stroke:#059669,stroke-width:2px,color:#064e3b
-
-    class A term
-    class B proces
-    class C fout
-    class D goed
-    class E,F fout
+    subgraph AS_Start["❓ Asymmetrische info"]
+        direction LR
+        AS_Info{{"🔍 Verzekeraar<br/>weet risico NIET"}} ==> AS_Gem(["Één gemiddelde premie"])
+    end
+    subgraph AS_Sel["🔄 Zelfselectie"]
+        direction LR
+        AS_Goed[/"🟢 Goede risico's<br/>haken af"/]
+        AS_Slecht(["🔴 Slechte risico's<br/>stromen in"])
+    end
+    subgraph AS_Spiral["📈 Opwaartse spiraal"]
+        direction LR
+        AS_Hoog[/"Gemiddeld risico ↑"/] ==> AS_Prem[/"Premie ↑"/]
+    end
+    AS_Gem -->|"te duur"| AS_Goed
+    AS_Gem -->|"koopje!"| AS_Slecht
+    AS_Goed ==> AS_Hoog
+    AS_Prem -.->|"feedback:<br/>meer uitstroom"| AS_Goed
+    classDef risico fill:#ffedd5,stroke:#f97316,stroke-width:2px,color:#7c2d12
+    classDef falen fill:#fee2e2,stroke:#ef4444,stroke-width:2px,color:#7f1d1d
+    classDef markt fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e3a8a
+    class AS_Info risico
+    class AS_Gem markt
+    class AS_Goed,AS_Slecht,AS_Hoog,AS_Prem falen
 ```
+
+> [!IMPORTANT]
+> **Examen-Focus — Averechtse selectie spiraal:** Drie subgraphs tonen de drie fases: oranje hexagon = **oorzaak** (informatiekloof), rood parallelogram = **zelfselectie** (goede risico's weg), rood spiraal = **escalatie** (premie omhoog). De `-.->` feedbackpijl sluit de lus — dit is de **doodsspiraal**. Op het examen: benoem alle drie fases bij naam.
 
 > [!IMPORTANT]
 > **Begrijp de Logica — De doodsspiraal in 5 stappen**
@@ -1102,24 +1137,26 @@ flowchart TD
 
 ```mermaid
 flowchart LR
-    VZ(["VÓÓR verzekering<br/>kosten = 100% bij jou<br/>baten = 100% bij jou"])
-    VG[["✅ Voorzichtig gedrag"]]
-    NA(["NA verzekering<br/>kosten = 0% bij jou<br/>baten = 100% bij jou<br/>→ prikkel weg"])
-    RG[/"⚠️ Risicovol gedrag<br/>= MORAL HAZARD"/]
-    KOS[["Premies stijgen<br/>voor IEDEREEN"]]
-
-    VZ --> VG
-    NA --> RG --> KOS
-
-    classDef proces fill:#dbeafe,stroke:#2563eb,stroke-width:2px,color:#1e3a8a
-    classDef goed fill:#d1fae5,stroke:#059669,stroke-width:2px,color:#064e3b
-    classDef fout fill:#fee2e2,stroke:#dc2626,stroke-width:2px,color:#7f1d1d
-
-    class VZ,NA proces
-    class VG goed
-    class RG fout
-    class KOS fout
+    subgraph MH_Voor["✅ Vóór verzekering"]
+        direction TB
+        MH_V(["Kosten = 100% bij jou"]) ==> MH_VG[["Voorzichtig gedrag"]]
+    end
+    subgraph MH_Na["⚠️ Ná verzekering"]
+        direction TB
+        MH_N(["Kosten = 0% bij jou<br/>prikkel weg"]) ==> MH_NG[/"Risicovol gedrag"/]
+        MH_NG ==> MH_NK[/"Premies ↑ voor iedereen"/]
+    end
+    MH_V -.->|"tekenen polis →<br/>prikkel verdwijnt"| MH_N
+    classDef succes fill:#dcfce7,stroke:#22c55e,stroke-width:2px,color:#14532d
+    classDef falen fill:#fee2e2,stroke:#ef4444,stroke-width:2px,color:#7f1d1d
+    classDef markt fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e3a8a
+    class MH_V markt
+    class MH_VG succes
+    class MH_N,MH_NG,MH_NK falen
 ```
+
+> [!IMPORTANT]
+> **Examen-Focus — Moral hazard:** De gestippelde pijl `-.->` toont het **omslagpunt**: het tekenen van de polis. Links = groen (vóór), rechts = rood (ná). Dit is het kernprincipe: hetzelfde individu verandert van gedrag door de polis. Op het examen: moral hazard = **ná afsluiten**, averechtse selectie = **vóór afsluiten**.
 
 > [!IMPORTANT]
 > **Begrijp de Logica — Waarom verandert gedrag NA het tekenen?**
@@ -1147,25 +1184,34 @@ Verzekeraars gebruiken **3 instrumenten** om averechtse selectie en moral hazard
 
 ```mermaid
 flowchart TD
-    Probl{{"⚠️ PROBLEEM<br/>asymmetrische info<br/>→ AS + MH"}}
-    I1(["1️⃣ Eigen risico<br/>skin in the game<br/>→ tegen MH + signalling tegen AS"])
-    I2(["2️⃣ Premiedifferentiatie<br/>+ bonus-malus<br/>→ tegen AS + MH"])
-    I3(["3️⃣ Informatie inwinnen<br/>vragenlijst, CIS, schadevrije jaren<br/>→ uitzondering acceptatieplicht"])
-
-    Probl --> I1
-    Probl --> I2
-    Probl --> I3
-
-    classDef term fill:#fee2e2,stroke:#dc2626,stroke-width:2px,color:#7f1d1d
-    classDef cons fill:#dbeafe,stroke:#2563eb,stroke-width:2px,color:#1e3a8a
-    classDef prod fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d
-    classDef overheid fill:#f3e8ff,stroke:#9333ea,stroke-width:2px,color:#581c87
-
-    class Probl term
-    class I1 cons
-    class I2 prod
-    class I3 overheid
+    subgraph I_Probl["⚠️ Probleem"]
+        I_Ainfo{{"Asymm. info<br/>→ AS + MH"}}
+    end
+    subgraph I_1["1️⃣ Eigen risico"]
+        direction LR
+        I_ER(["Skin in the game"]) ==> I_ER2[["Anti-MH + Signalling AS"]]
+    end
+    subgraph I_2["2️⃣ Premiedifferentiatie"]
+        direction LR
+        I_PD(["Premie per risicogroep"]) ==> I_PD2[["Goede risico's blijven<br/>+ gedrag beloond"]]
+    end
+    subgraph I_3["3️⃣ Informatie inwinnen"]
+        direction LR
+        I_INF(["Vragenlijst + CIS<br/>+ schadevrije jaren"]) ==> I_INF2[["AS verkleind<br/>fraude opgespoord"]]
+    end
+    I_Ainfo ==> I_ER
+    I_Ainfo ==> I_PD
+    I_Ainfo ==> I_INF
+    classDef falen fill:#fee2e2,stroke:#ef4444,stroke-width:2px,color:#7f1d1d
+    classDef markt fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e3a8a
+    classDef succes fill:#dcfce7,stroke:#22c55e,stroke-width:2px,color:#14532d
+    class I_Ainfo falen
+    class I_ER,I_PD,I_INF markt
+    class I_ER2,I_PD2,I_INF2 succes
 ```
+
+> [!IMPORTANT]
+> **Examen-Focus — 3 Instrumenten:** De rode hexagon is het **probleem** dat drie dikke pijlen `==>` uitzendt naar de drie blauwe oplossingen. Elk blauw stadium-node stroomt naar een groen resultaat. Op het examen: voor elke maatregel moet je kunnen benoemen *welk* probleem (AS, MH of beide) het aanpakt.
 
 ---
 
@@ -1184,21 +1230,30 @@ flowchart TD
 
 ```mermaid
 flowchart LR
-    ER{{"💶 Eigen risico € 385<br/>verplicht"}}
-    MH[["✅ Tegen MORAL HAZARD<br/>denk 2× na bij claim"]]
-    Vrij(["+ vrijwillig deel<br/>€ 885"])
-    SIG(["SIGNALLING<br/>lage risico's kiezen<br/>hoog eigen risico"])
-    AS[["✅ Tegen AVERECHTSE<br/>SELECTIE"]]
-
-    ER --> MH
-    ER --> Vrij --> SIG --> AS
-
-    classDef cons fill:#dbeafe,stroke:#2563eb,stroke-width:2px,color:#1e3a8a
-    classDef goed fill:#d1fae5,stroke:#059669,stroke-width:2px,color:#064e3b
-
-    class ER,Vrij,SIG cons
-    class MH,AS goed
+    subgraph ER_Base["💶 Eigen risico"]
+        direction TB
+        ER_V{{"€ 385 verplicht<br/>+ vrijwillig deel"}}
+    end
+    subgraph ER_Eff1["⚠️ Effect: Moral Hazard"]
+        direction LR
+        ER_MH(["Skin in the game"]) ==> ER_MH2[["✅ Voorzichtiger gedrag"]]
+    end
+    subgraph ER_Eff2["🔍 Effect: Averechtse Selectie"]
+        direction LR
+        ER_Sig(["Hoog ER kiezen<br/>= signaal laag risico"]) ==> ER_AS[["✅ Verzekeraar leert<br/>risicotype"]]
+    end
+    ER_V ==> ER_MH
+    ER_V ==> ER_Sig
+    classDef besluit fill:#fef9c3,stroke:#eab308,stroke-width:2px,color:#713f12
+    classDef markt fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e3a8a
+    classDef succes fill:#dcfce7,stroke:#22c55e,stroke-width:2px,color:#14532d
+    class ER_V besluit
+    class ER_MH,ER_Sig markt
+    class ER_MH2,ER_AS succes
 ```
+
+> [!IMPORTANT]
+> **Examen-Focus — Eigen risico:** De gele hexagon (eigen risico) zendt twee dikke pijlen `==>` uit naar twee verschillende effecten. Subgraph links = anti-MH, rechts = anti-AS via signalling. Op het examen: onderscheid altijd het **verplichte** deel (anti-MH) van het **vrijwillige** deel (signalling → anti-AS).
 
 > [!IMPORTANT]
 > **Begrijp de Logica — Eigen risico = "skin in the game"**
@@ -1226,20 +1281,19 @@ flowchart LR
 
 ```mermaid
 flowchart LR
-    S{{"Start trede 2"}}
-    Up(["⬆️ Trede +1<br/>meer korting<br/>(bonus)"])
-    Dn(["⬇️ Treden omlaag<br/>minder korting<br/>(malus)"])
-
-    S -->|"Jaar zonder schade"| Up
-    S -->|"1 of meer schades"| Dn
-
-    classDef start fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f
-    classDef goed fill:#d1fae5,stroke:#059669,stroke-width:2px,color:#064e3b
-    classDef fout fill:#fee2e2,stroke:#dc2626,stroke-width:2px,color:#7f1d1d
-
-    class S start
-    class Up goed
-    class Dn fout
+    subgraph BM_Ladder["🎯 Bonus-malus ladder"]
+        direction TB
+        BM_S{{"Starttrede 2"}} -->|"🟢 Jaar zonder schade"| BM_Up(["⬆️ Trede +1 bonus"])
+        BM_S -->|"🔴 Schade gemeld"| BM_Dn(["⬇️ Treden omlaag malus"])
+    end
+    BM_Up ==> BM_WR[["Voorzichtig rijden<br/>→ anti-MH"]]
+    BM_Dn -.->|"prikkel tot<br/>voorzichtigheid"| BM_Up
+    classDef besluit fill:#fef9c3,stroke:#eab308,stroke-width:2px,color:#713f12
+    classDef succes fill:#dcfce7,stroke:#22c55e,stroke-width:2px,color:#14532d
+    classDef falen fill:#fee2e2,stroke:#ef4444,stroke-width:2px,color:#7f1d1d
+    class BM_S besluit
+    class BM_Up,BM_WR succes
+    class BM_Dn falen
 ```
 
 | Effect | Uitleg |
@@ -1251,28 +1305,28 @@ flowchart LR
 
 ```mermaid
 flowchart TD
-    ZD(["❌ ZONDER differentiatie<br/>iedereen € 1.000"])
-    AF[/"Goede risico's haken af<br/>= AVERECHTSE SELECTIE"/]
-    MD(["✅ MÉT differentiatie<br/>premie per risicogroep"])
-    ST([Goede risico's BLIJVEN<br/>betalen € 600])
-    ST2[["✅ Pool stabiel"]]
-    BO(["✅ BONUS-MALUS<br/>jaarlijks dynamisch"])
-    CL(["Claim → premie ⬆<br/>geen claim → premie ⬇"])
-    RG[["Verzekerde rijdt<br/>voorzichtiger (-MH)"]]
-
-    ZD --> AF
-    MD --> ST --> ST2
-    BO --> CL --> RG
-
-    classDef proces fill:#dbeafe,stroke:#2563eb,stroke-width:2px,color:#1e3a8a
-    classDef fout fill:#fee2e2,stroke:#dc2626,stroke-width:2px,color:#7f1d1d
-    classDef goed fill:#d1fae5,stroke:#059669,stroke-width:2px,color:#064e3b
-
-    class ZD fout
-    class AF fout
-    class MD,ST,BO,CL proces
-    class ST2,RG goed
+    subgraph PD_Zon["❌ Zonder differentiatie"]
+        direction LR
+        PD_ZD(["Iedereen € 1.000"]) ==> PD_AF[/"Goede risico's<br/>haken af = AS"/]
+    end
+    subgraph PD_Met["✅ Mét differentiatie + bonus-malus"]
+        direction TB
+        PD_MD(["Premie per risicogroep"]) ==> PD_ST(["Goede risico's blijven<br/>€ 600"])
+        PD_ST ==> PD_ST2[["✅ Stabiele pool"]]
+        PD_BM(["Claim → ↑ premie<br/>geen claim → ↓ premie"]) ==> PD_RG[["Voorzichtiger gedrag<br/>anti-MH"]]
+    end
+    PD_AF -.->|"oplossing"| PD_MD
+    PD_AF -.->|"oplossing"| PD_BM
+    classDef falen fill:#fee2e2,stroke:#ef4444,stroke-width:2px,color:#7f1d1d
+    classDef markt fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e3a8a
+    classDef succes fill:#dcfce7,stroke:#22c55e,stroke-width:2px,color:#14532d
+    class PD_ZD,PD_AF falen
+    class PD_MD,PD_ST,PD_BM markt
+    class PD_ST2,PD_RG succes
 ```
+
+> [!IMPORTANT]
+> **Examen-Focus — Premiedifferentiatie:** Twee subgraphs: rood = probleem (zonder diff.), groen = oplossing. De twee gestippelde `-.->` pijlen vanuit de rode parallelogram tonen dat dezelfde oorzaak (AS) **twee** oplossingen triggert. Op het examen: premiedifferentiatie pakt AS aan, bonus-malus pakt MH aan — maar ze kunnen tegelijk ingezet worden.
 
 > [!IMPORTANT]
 > **Begrijp de Logica — Premiedifferentiatie = informatie kopen via gedrag**
@@ -1305,29 +1359,29 @@ flowchart TD
 
 ```mermaid
 flowchart LR
-    BAS{{"🏥 BASISZORG<br/>maatschappelijk vitaal"}}
-    AP(["✅ Acceptatieplicht +<br/>verbod op risicoselectie"])
-    SOL[["HOGE solidariteit<br/>jong betaalt mee voor oud,<br/>gezond voor chronisch ziek"]]
-
-    AAN{{"🚗 AANVULLEND / AUTO / REIS<br/>vrije markt"}}
-    VRIJ(["⚖️ Verzekeraar MAG<br/>selecteren + differentiëren"])
-    EFF[["HOGE efficiëntie,<br/>lagere solidariteit"]]
-
-    BAS --> AP --> SOL
-    AAN --> VRIJ --> EFF
-
-    classDef overheid fill:#f3e8ff,stroke:#9333ea,stroke-width:2px,color:#581c87
-    classDef cons fill:#dbeafe,stroke:#2563eb,stroke-width:2px,color:#1e3a8a
-    classDef prod fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d
-    classDef goed fill:#d1fae5,stroke:#059669,stroke-width:2px,color:#064e3b
-
-    class BAS overheid
-    class AP cons
-    class SOL goed
-    class AAN prod
-    class VRIJ prod
-    class EFF goed
+    subgraph AP_Bas["🏥 Basiszorgverzekering"]
+        direction TB
+        AP_B{{"Maatschappelijk vitaal"}} ==> AP_AP(["✅ Acceptatieplicht<br/>+ verbod risicoselectie"])
+        AP_AP ==> AP_SOL[["🤝 Hoge solidariteit"]]
+    end
+    subgraph AP_Vrij["🚗 Aanvullend / Auto / Reis"]
+        direction TB
+        AP_V{{"Vrije markt"}} ==> AP_RS(["⚖️ Selectie + differentiatie<br/>toegestaan"])
+        AP_RS ==> AP_EFF[["⚡ Hoge efficiëntie"]]
+    end
+    AP_SOL -.->|"spanning"| AP_EFF
+    classDef oploss fill:#f3e8ff,stroke:#a855f7,stroke-width:2px,color:#581c87
+    classDef succes fill:#dcfce7,stroke:#22c55e,stroke-width:2px,color:#14532d
+    classDef markt fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e3a8a
+    classDef besluit fill:#fef9c3,stroke:#eab308,stroke-width:2px,color:#713f12
+    class AP_B oploss
+    class AP_AP,AP_SOL succes
+    class AP_V,AP_RS markt
+    class AP_EFF besluit
 ```
+
+> [!IMPORTANT]
+> **Examen-Focus — Acceptatieplicht:** Twee subgraphs staan naast elkaar: paars-groen = **basiszorg** (solidariteit wins), blauw-geel = **aanvullend** (efficiëntie wins). De gestippelde `-.->` pijl tussen de twee uitkomsten toont de **spanningsverhouding** — dit is een classic examenthema: solidariteit vs. efficiëntie.
 
 > [!IMPORTANT]
 > **Begrijp de Logica — Acceptatieplicht: solidariteit boven efficiëntie**
@@ -1473,82 +1527,112 @@ $$
 > [!IMPORTANT]
 > **Markten falen** wanneer er **interactie** is tussen weinig spelers (speltheorie), wanneer effecten **buiten de prijs** vallen (externe effecten / collectieve goederen), of wanneer er **informatie ontbreekt** (asymmetrische info). De economie biedt **instituten** (contracten, wetten, CAO, verdragen, eigen risico, acceptatieplicht) om deze marktfalens te repareren.
 
-### Mind map — verbanden tussen alle hoofdthema's
+### Infographic — verbanden tussen alle hoofdthema's
 
 ```mermaid
-mindmap
-  root(("🎯 Marktfalen<br/>+ oplossingen"))
-    🎲 Speltheorie H1
-      Simultaan
-        Matrix + Nash
-        Gevangenendilemma
-        Dominante strategie
-      Sequentieel
-        Spelboom
-        Backwards induction
-        Ultimatumspel
-      Doorbrekers GD
-        Contract
-        Sociale norm
-        Zelfbinding
-        Herhaling
-    🌍 Externe effecten H1.4
-      Negatief
-        Belasting
-        Verbod
-      Positief
-        Subsidie
-      Collectieve goederen
-        Free-rider
-        Collectieve dwang
-    🤝 Samenwerking H1.5
-      Arbeidsmarkt
-        CAO
-        AVV
-      EU
-        EMU + euro
-        Vrije markt
-        Brexit
-      MVO
-        People Planet Profit
-        Circulair
-    🛡️ Risico H2.1
-      Risico = kans × schade
-      Solidariteit
-      Omslag vs kapitaaldekking
-    ❓ Asymmetrische info H2.2
-      Averechtse selectie
-      Moral hazard
-    🔧 Oplossingen H2.3
-      Eigen risico
-      Premiedifferentiatie
-      Bonus-malus
-      Acceptatieplicht
-      CIS
+flowchart TD
+    KERN{{"🎯 MARKTFALEN<br/>+ OPLOSSINGEN"}}
+    subgraph ST["🎲 Speltheorie H1.1–1.3"]
+        direction LR
+        ST1(["Simultaan"]) --> ST1a["Matrix · Nash · GD"]
+        ST2(["Sequentieel"]) --> ST2a["Spelboom · BI · Ultimatum"]
+        ST3(["GD Doorbrekers"]) --> ST3a["Contract · Zelfbinding · Herhaling"]
+    end
+    subgraph EX["🌍 Externe Effecten H1.4"]
+        direction LR
+        EX1(["Negatief"]) --> EX1a["Belasting · Verbod"]
+        EX2(["Positief"]) --> EX2a["Subsidie"]
+        EX3(["Collectief goed"]) --> EX3a["Free-rider · Collectieve dwang"]
+    end
+    subgraph SAM["🤝 Samenwerking H1.5"]
+        direction LR
+        SAM1(["Arbeidsmarkt"]) --> SAM1a["CAO · AVV"]
+        SAM2(["EU"]) --> SAM2a["EMU · Euro · Brexit"]
+        SAM3(["MVO"]) --> SAM3a["People · Planet · Profit"]
+    end
+    subgraph RISICO_G["🛡️ Risico H2.1"]
+        direction LR
+        R1(["R = kans × schade"]) --> R1a["Solidariteit · Omslag/Kapitaal"]
+    end
+    subgraph INFO_G["❓ Asymm. Info H2.2"]
+        direction LR
+        I1(["Averechtse selectie"]) --> I1a["vóór contract · spiraal"]
+        I2(["Moral hazard"]) --> I2a["ná contract · gedrag"]
+    end
+    subgraph OPL["🔧 Oplossingen H2.3"]
+        direction LR
+        O1(["Eigen risico"]) --> O1a["anti-MH + signalling"]
+        O2(["Premiediff."]) --> O2a["anti-AS + anti-MH"]
+        O3(["Informatie + CIS"]) --> O3a["acceptatieplicht"]
+    end
+    KERN ==> ST
+    KERN ==> EX
+    KERN ==> SAM
+    KERN ==> RISICO_G
+    KERN ==> INFO_G
+    INFO_G ==> OPL
+    classDef kern fill:#ffedd5,stroke:#f97316,stroke-width:3px,color:#7c2d12
+    classDef blauw fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e3a8a
+    classDef groen fill:#dcfce7,stroke:#22c55e,stroke-width:2px,color:#14532d
+    classDef paars fill:#f3e8ff,stroke:#a855f7,stroke-width:2px,color:#581c87
+    classDef grijs fill:#f1f5f9,stroke:#64748b,stroke-width:1px,color:#334155
+    class KERN kern
+    class ST1,ST2,ST3 blauw
+    class EX1,EX2,EX3 blauw
+    class SAM1,SAM2,SAM3 groen
+    class R1 groen
+    class I1,I2 paars
+    class O1,O2,O3 paars
+    class ST1a,ST2a,ST3a,EX1a,EX2a,EX3a,SAM1a,SAM2a,SAM3a,R1a,I1a,I2a,O1a,O2a,O3a grijs
 ```
+
+> [!IMPORTANT]
+> **Examen-Focus — Infographic:** Het oranje hexagon (`KERN`) is het centrale concept: marktfalen. Alle dikke pijlen `==>` tonen de 6 hoofd-deelgebieden als subgraphs. Blauw = speltheorie/externe effecten, groen = samenwerking/risico, paars = informatieproblemen + oplossingen. Grijze rechthoeken = de examenbegrippen. Gebruik dit overzicht als checklijst bij een open casusvraag: in welke subgraph valt de casus?
 
 ### Het terugkerende patroon: probleem → keten → oplossing
 
 ```mermaid
 flowchart LR
-    PROB{{"⚠️ MARKTFALEN<br/>• GD<br/>• extern effect<br/>• asymm. info"}}
-    KET[/"🔄 NEGATIEVE KETEN<br/>• spiraal<br/>• race to bottom<br/>• te veel/te weinig"/]
-    INST(["🏛️ INSTITUTIONELE OPLOSSING<br/>• wet<br/>• contract / CAO<br/>• verzekering<br/>• verdrag / belasting"])
-    OPT[["✅ HERSTELD EVENWICHT<br/>maatschappelijk optimum"]]
-
-    PROB --> KET --> INST --> OPT
-    OPT -. "kan opnieuw falen<br/>bij verandering<br/>(techniek, vergrijzing, AI)" .-> PROB
-
-    classDef warn fill:#fee2e2,stroke:#dc2626,stroke-width:2px,color:#7f1d1d
-    classDef proces fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f
-    classDef overheid fill:#f3e8ff,stroke:#9333ea,stroke-width:2px,color:#581c87
-    classDef goed fill:#d1fae5,stroke:#059669,stroke-width:2px,color:#064e3b
-
-    class PROB warn
-    class KET proces
-    class INST overheid
-    class OPT goed
+    subgraph TP_P["⚠️ Marktfalen"]
+        direction TB
+        TP_Prob{{"PROBLEEM"}}
+        TP_Prob --> TP_P1["• GD"]
+        TP_Prob --> TP_P2["• Extern effect"]
+        TP_Prob --> TP_P3["• Asymm. info"]
+    end
+    subgraph TP_K["🔄 Negatieve Keten"]
+        TP_Ket[/"SPIRAAL<br/>te veel · te weinig<br/>race to bottom"/]
+    end
+    subgraph TP_I["🏛️ Institutionele Oplossing"]
+        direction TB
+        TP_Inst(["Wet"])
+        TP_Inst2(["Contract / CAO"])
+        TP_Inst3(["Verzekering"])
+        TP_Inst4(["Verdrag / Belasting"])
+    end
+    TP_Opt[["✅ Maatschappelijk optimum"]]
+    TP_Prob ==> TP_Ket
+    TP_Ket ==> TP_Inst
+    TP_Ket ==> TP_Inst2
+    TP_Ket ==> TP_Inst3
+    TP_Ket ==> TP_Inst4
+    TP_Inst ==> TP_Opt
+    TP_Inst2 ==> TP_Opt
+    TP_Inst3 ==> TP_Opt
+    TP_Inst4 ==> TP_Opt
+    TP_Opt -.->|"kan opnieuw falen<br/>(techniek · vergrijzing · AI)"| TP_Prob
+    classDef falen fill:#fee2e2,stroke:#ef4444,stroke-width:2px,color:#7f1d1d
+    classDef risico fill:#ffedd5,stroke:#f97316,stroke-width:2px,color:#7c2d12
+    classDef oploss fill:#f3e8ff,stroke:#a855f7,stroke-width:2px,color:#581c87
+    classDef succes fill:#dcfce7,stroke:#22c55e,stroke-width:2px,color:#14532d
+    class TP_Prob,TP_P1,TP_P2,TP_P3 falen
+    class TP_Ket risico
+    class TP_Inst,TP_Inst2,TP_Inst3,TP_Inst4 oploss
+    class TP_Opt succes
 ```
+
+> [!IMPORTANT]
+> **Examen-Focus — Terugkerend patroon:** De rode subgraph (marktfalen) voedt de oranje spiraal via `==>`. Vier paarse nodes (oplossingen) convergeren allemaal naar het groene [[optimum]]. De `-.->` feedbackpijl sluit de cirkel — dit is het cruciale inzicht voor open vragen: markten kunnen **opnieuw** falen als omstandigheden veranderen. Gebruik dit schema als kapstok bij *elke* casusanalyse.
 
 ### Welk probleem hoort bij welk hoofdstuk? (snel-zoek-tabel)
 
