@@ -97,12 +97,16 @@
   .payoff .pf-head { background:#f8fafc; font-weight:700; color:#0f172a; font-size:11px; }
   .payoff .pf-side { background:#f8fafc; font-weight:700; color:#0f172a; font-size:11px; writing-mode:initial; }
   .payoff td.pf-cell { padding:.6rem .5rem; min-width:90px; }
-  .payoff td.pf-nash { background:#fef9c3; border:2px solid #eab308; }
-  .payoff td.pf-pareto { background:#dcfce7; border:2px solid #16a34a; }
+  .payoff td.pf-nash { background:#f5f3ff; border:3px solid #7c3aed; box-shadow:inset 0 0 0 1px rgba(124,58,237,.25); }
+  .payoff td.pf-pareto { background:#dcfce7; border:3px solid #16a34a; }
+  .payoff td.pf-pareto .pf-tag { color:#15803d !important; }
+  .pf-legend { font-size:10.5px; color:#475569; margin-top:.5rem; line-height:1.65; padding:.35rem .625rem; background:#f8fafc; border-radius:6px; border:1px solid #e2e8f0; }
+  .pf-wrap { margin-top:.25rem; }
+
   .payoff .pf-row { display:flex; flex-direction:column; gap:2px; font-family:'JetBrains Mono', ui-monospace, monospace; }
   .payoff .pf-row span.a { color:#1d4ed8; font-weight:700; }
   .payoff .pf-row span.b { color:#be123c; font-weight:700; }
-  .payoff .pf-tag { display:block; font-size:9px; color:#854d0e; font-weight:700; margin-top:2px; text-transform:uppercase; letter-spacing:.03em; }
+  .payoff .pf-tag { display:block; font-size:9px; color:#4c1d95; font-weight:700; margin-top:2px; text-transform:uppercase; letter-spacing:.03em; }
   .payoff td.pf-pareto .pf-tag { color:#166534; }
 
   /* Missing source warning */
@@ -264,7 +268,22 @@
   .sec-header { display:flex; align-items:center; gap:.625rem; margin-bottom:.5rem; }
   .sec-icon { width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
 
-    @media print {
+  
+  /* ===== UPGRADED INTERACTION ELEMENTS ===== */
+  .q-ask { font-size:14px; line-height:1.75; color:#1e293b; padding:.75rem 1rem; background:#f8fafc; border-radius:10px; border-left:3px solid #6366f1; margin-bottom:.5rem; }
+  .ans-model { background:#f0fdf4; border:1px solid #bbf7d0; border-radius:12px; padding:.875rem 1rem; margin-top:.375rem; }
+  .ans-header { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:#15803d; margin-bottom:.5rem; }
+  .ans-step { display:grid; grid-template-columns:34px 1fr; gap:.375rem; padding:.3rem 0; border-bottom:1px solid #d1fae5; align-items:start; font-size:13px; }
+  .ans-step:last-child { border-bottom:none; }
+  .ans-pts { font-size:10px; font-weight:800; background:#16a34a; color:#fff; border-radius:999px; width:26px; height:26px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .ans-note { font-size:11.5px; color:#15803d; font-style:italic; margin-top:.375rem; padding:.375rem .625rem; background:#dcfce7; border-radius:6px; }
+  .logic-box { background:#faf5ff; border:1px solid #ddd6fe; border-radius:12px; padding:.875rem 1rem; margin-top:.375rem; }
+  .logic-title { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:#6d28d9; margin-bottom:.625rem; }
+  .logic-step { display:grid; grid-template-columns:24px 1fr; gap:.5rem; padding:.25rem 0; font-size:13px; color:#1e293b; line-height:1.6; }
+  .logic-step .n { width:22px; height:22px; border-radius:50%; background:#7c3aed; color:#fff; font-size:10px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px; }
+  .logic-arrow { text-align:center; color:#a78bfa; font-size:16px; line-height:1; padding:.1rem 0; }
+  .logic-kicker { font-size:12px; font-weight:600; color:#4c1d95; background:#ede9fe; border-radius:8px; padding:.5rem .75rem; margin-top:.5rem; }
+  @media print {
     .sidebar, .no-print, .help-fab, .tour-backdrop { display:none !important; }
     .app-grid { grid-template-columns:1fr; }
     .qcard { break-inside:avoid; }
@@ -1057,7 +1076,7 @@ risicos haken af"| C
         <p class="text-sm text-slate-600">Elke examenvraag heeft twee knoppen:</p>
         <div class="demo-anim">
           <div class="flex gap-2 justify-center flex-wrap">
-            <button class="reveal-btn pulse" style="pointer-events:none">Toon Uitwerking ▸</button>
+            <button class="reveal-btn pulse" style="pointer-events:none">📋 Bekijk de uitwerking</button>
             <button class="reveal-btn pulse" style="background:#7e22ce;pointer-events:none">Begrijp de Logica 🧠</button>
           </div>
           <p class="text-[11px] text-slate-500 text-center mt-3">De groene knop toont het officiële antwoordmodel met puntenverdeling.<br/>De paarse knop legt de economische redenering in eenvoudige stappen uit.</p>
@@ -1168,14 +1187,14 @@ add({id:'23-1-4',year:'2023',tv:'tv1',op:'Brood op de plank',q:4,pts:2,par:null,
 
 add({id:'23-1-5',year:'2023',tv:'tv1',op:'Brood op de plank — Broodfonds',q:5,pts:3,par:'2.2',
   casus:'<p><strong>Opgave 1 · Brood op de plank</strong> <em>(vervolg)</em></p><p>Zzp\'ers willen niet alleen het risico op inkomensverlies bij langdurige arbeidsongeschiktheid afdekken, maar ook het risico op inkomensverlies bij kortdurende ziekte. Zzp\'ers kunnen hiervoor:</p><ul style="margin:.25rem 0 .5rem 1.2rem; padding:0; list-style:disc;"><li>een inkomensverzekering afsluiten of</li><li>met een groep mensen uit hun netwerk een zogenoemd broodfonds oprichten (zie bron 2).</li></ul><p>Bij een broodfonds is er volgens de deelnemers <strong>geen sprake van asymmetrische informatie</strong>, en het risico op averechtse selectie en moral hazard is heel klein.</p><p><em>Gebruik bron 2.</em></p>',
-  sources:[{type:'text',title:'Bron 2 · Informatie voor leden van broodfonds "Brood op de Plank"',html:'<p>Een broodfonds is een <em>voorziening voor inkomensverlies bij ziekte, ontwikkeld dóór en vóór ondernemers</em>. "Brood op de Plank" bestaat uit <strong>50 zzp\'ers die elkaar kennen en vertrouwen</strong>. Daardoor is er sprake van een sociale norm om voor elkaar te zorgen.</p><ul style="margin:.35rem 0 .25rem 1rem; padding:0; list-style:disc;"><li>Maandelijkse inleg tot buffer van 36 × maandelijkse inleg is bereikt. <strong>Dit geld blijft van jou.</strong></li><li>Van je inleg worden alleen schenkingen aan zieke deelnemers betaald.</li><li>Extra: eenmalige inschrijfkosten + maandelijkse contributie voor overige kosten (geen deel van je inleg).</li><li>Bij uitstap: ingelegde bedrag − uitgekeerde schenkingen terug.</li><li>Zieken krijgen max. 2 jaar € 2.500/mnd schenkingen (50 × € 50).</li><li>Tijdens ziekte blijft deelnemer inleg + contributie betalen.</li></ul>'},{type:'table',title:'Bron 2 (vervolg) · Kosten van deelname aan het broodfonds',html:'<table><tbody><tr><td>Maandelijkse inleg (excl. contributie)</td><td class="num">€ 112,50</td></tr><tr><td>Maandelijkse contributie</td><td class="num">€ 10,00</td></tr><tr><td>Eenmalige inschrijfkosten</td><td class="num">€ 225,00</td></tr><tr><td>Max. schenking zieke (50 × € 50)</td><td class="num">€ 2.500 / mnd</td></tr></tbody></table>'}],
+  sources:[{type:'text',title:'Bron 2 · Informatie voor leden van broodfonds "Brood op de Plank"',html:'<p>Een broodfonds is een <em>voorziening voor inkomensverlies bij ziekte, ontwikkeld dóór en vóór ondernemers</em>. "Brood op de Plank" bestaat uit <strong>50 zzp\'ers die elkaar kennen en vertrouwen</strong>. Daardoor is er sprake van een sociale norm om voor elkaar te zorgen.</p><ul style="margin:.35rem 0 .25rem 1rem; padding:0; list-style:disc;"><li>Maandelijkse inleg tot buffer van 36 × maandelijkse inleg is bereikt. <strong>Dit geld blijft van jou.</strong></li><li>Van je inleg worden alleen schenkingen aan zieke deelnemers betaald.</li><li>Extra: eenmalige inschrijfkosten + maandelijkse contributie voor overige kosten (geen deel van je inleg).</li><li>Bij uitstap: ingelegde bedrag − uitgekeerde schenkingen terug.</li><li>Zieken krijgen max. 2 jaar € 2.500 per maand schenkingen (50 × € 50).</li><li>Tijdens ziekte blijft deelnemer inleg + contributie betalen.</li></ul>'},{type:'table',title:'Bron 2 (vervolg) · Kosten van deelname aan het broodfonds',html:'<table><tbody><tr><td>Maandelijkse inleg (excl. contributie)</td><td class="num">€ 112,50</td></tr><tr><td>Maandelijkse contributie</td><td class="num">€ 10,00</td></tr><tr><td>Eenmalige inschrijfkosten</td><td class="num">€ 225,00</td></tr><tr><td>Max. schenking zieke (50 × € 50)</td><td class="num">€ 2.500 per maand</td></tr></tbody></table>'}],
   ask:'Leg uit waarom er bij het broodfonds geen sprake is van asymmetrische informatie, en dat het risico op averechtse selectie en moral hazard heel klein is.',
   model:[{t:'Deelnemers kennen elkaar persoonlijk → geen asymmetrische informatie (beide kanten weten het risico).',p:1},{t:'Sociale norm + elkaar kennen → averechtse selectie klein (geen anonieme "slechte" risico\'s die zich aansluiten).',p:1},{t:'Sociale controle → men brengt gezondheid niet bewust in gevaar t.o.v. vrienden → moral hazard klein.',p:1}],
   logic:{steps:['Klassiek verzekeringsprobleem: verzekeraar weet individueel risico niet.','Broodfonds = geen anonieme markt — iedereen kent elkaar persoonlijk.','Informatie is symmetrisch → averechtse selectie verdwijnt.','Sociale controle: "lui doen" tegenover vrienden kost reputatie → moral hazard weg.'],kicker:'Vertrouwen vervangt contract-instrumenten in een kleine gemeenschap.'}});
 
 add({id:'23-1-6',year:'2023',tv:'tv1',op:'Brood op de plank — Broodfonds',q:6,pts:3,par:'2.3',
   casus:'<p><strong>Opgave 1 · Brood op de plank</strong> <em>(vervolg)</em></p><p>Eén van de deelnemers aan broodfonds \'Brood op de Plank\' heeft zijn deelname opgezegd. De overige deelnemers hebben zzp\'er <strong>Nelleke</strong> uitgenodigd om deel te nemen aan het broodfonds Brood op de Plank (zie bron 2). Ze overweegt of ze de uitnodiging aan zal nemen.</p><p>Nelleke rekent erop dat de komende twee jaar gemiddeld <strong>4 % van de 50 deelnemers</strong> aan het broodfonds schenkingen krijgt van het broodfonds in verband met ziekte. Ze neemt aan dat ze na twee jaar uit het broodfonds stapt, en wil weten hoeveel zij dan <strong>per saldo</strong> heeft betaald als ze zelf gezond is gebleven.</p><p><em>Gebruik bron 2.</em></p>',
-  sources:[{type:'table',title:'Bron 2 · Kosten van deelname aan het broodfonds',html:'<table><tbody><tr><td>Maandelijkse inleg (excl. contributie)</td><td class="num">€ 112,50</td></tr><tr><td>Maandelijkse contributie</td><td class="num">€ 10,00</td></tr><tr><td>Eenmalige inschrijfkosten</td><td class="num">€ 225,00</td></tr><tr><td>Schenking zieke deelnemer (max. 24 mnd)</td><td class="num">€ 2.500 / mnd</td></tr></tbody></table>'}],
+  sources:[{type:'table',title:'Bron 2 · Kosten van deelname aan het broodfonds',html:'<table><tbody><tr><td>Maandelijkse inleg (excl. contributie)</td><td class="num">€ 112,50</td></tr><tr><td>Maandelijkse contributie</td><td class="num">€ 10,00</td></tr><tr><td>Eenmalige inschrijfkosten</td><td class="num">€ 225,00</td></tr><tr><td>Schenking zieke deelnemer (max. 24 maanden)</td><td class="num">€ 2.500 per maand</td></tr></tbody></table>'}],
   ask:'Bereken het bedrag dat Nelleke over een periode van twee jaar per saldo moet betalen bij deelname aan het broodfonds.',
   model:[{t:'Totaalbetalingen over 2 jaar: inschrijf €225 + 24×(€10 + €112,50) = €225 + €2.940 = €3.165.',p:1},{t:'Totale uitkeringen in fonds: 0,04 × 50 × €2.500 × 24 = €120.000 → per deelnemer €120.000/50 = €2.400. Nelleke\'s aandeel in uitgegeven inleg = €2.400.',p:1},{t:'Inleg betaald: 24×€112,50 = €2.700. Restitutie: €2.700 − €2.400 = €300. Saldo = €3.165 − €300 = €2.865.',p:1}]});
 
@@ -1268,14 +1287,14 @@ add({id:'23-1-21',year:'2023',tv:'tv1',op:'Olieprijzenoorlog',q:21,pts:2,par:'1.
 
 add({id:'23-1-22',year:'2023',tv:'tv1',op:'Olieprijzenoorlog',q:22,pts:2,par:'1.1',
   casus:'<p><strong>Opgave 5 · Olieprijzenoorlog in het vat</strong> <em>(vervolg)</em></p><p>Het gevecht om marktaandeel kan opgevat worden als een <strong>simultaan spel</strong>.</p><p><em>Gebruik bron 1.</em></p>',
-  sources:[{type:'matrix',title:'Bron 1 · Pay-offmatrix · Verandering in omzet uit verkoop ruwe olie',html:'<table class="payoff"><thead><tr><th class="pf-corner">RU ▼  /  SA ▶</th><th class="pf-head">SA: handhaven</th><th class="pf-head">SA: aanbod verlagen</th></tr></thead><tbody><tr><th class="pf-side">RU: handhaven</th><td class="pf-cell pf-nash"><div class="pf-row"><span class="a">RU: ↓</span><span class="b">SA: ↓</span><span class="pf-tag">Nash · suboptimaal</span></div></td><td class="pf-cell"><div class="pf-row"><span class="a">RU: ↑↑</span><span class="b">SA: ↓↓</span></div></td></tr><tr><th class="pf-side">RU: aanbod verlagen</th><td class="pf-cell"><div class="pf-row"><span class="a">RU: ↓↓</span><span class="b">SA: ↑↑</span></div></td><td class="pf-cell pf-pareto"><div class="pf-row"><span class="a">RU: ↑</span><span class="b">SA: ↑</span><span class="pf-tag">Collectief optimaal</span></div></td></tr></tbody></table><div style="margin-top:.4rem; font-size:10.5px; color:#475569">↑ = omzet positief · ↓ = omzet negatief · dubbele pijl = groter effect.</div>'}],
+  sources:[{type:'matrix',title:'Bron 1 · Pay-offmatrix · Verandering in omzet uit verkoop ruwe olie',html:'<table class="payoff"><thead><tr><th class="pf-corner">RU ▼  /  SA ▶</th><th class="pf-head">SA: handhaven</th><th class="pf-head">SA: aanbod verlagen</th></tr></thead><tbody><tr><th class="pf-side">RU: handhaven</th><td class="pf-cell pf-nash"><div class="pf-row"><span class="a">RU: ↓</span><span class="b">SA: ↓</span><span class="pf-tag">Nash · suboptimaal</span></div></td><td class="pf-cell"><div class="pf-row"><span class="a">RU: ↑↑</span><span class="b">SA: ↓↓</span></div></td></tr><tr><th class="pf-side">RU: aanbod verlagen</th><td class="pf-cell"><div class="pf-row"><span class="a">RU: ↓↓</span><span class="b">SA: ↑↑</span></div></td><td class="pf-cell pf-pareto"><div class="pf-row"><span class="a">RU: ↑</span><span class="b">SA: ↑</span><span class="pf-tag">Collectief optimaal</span></div></td></tr></tbody></table><div style="margin-top:.4rem; font-size:10.5px; color:#475569">↑ = omzet positief · ↓ = omzet negatief · dubbele pijl = groter effect.</div><p class=\"pf-legend\">&#x1F535; Blauw = Rusland (rijspeler) &nbsp;&middot;&nbsp; &#x1F534; Rood = Saoedi-Arabi&euml; (kolomspeler) &nbsp;&middot;&nbsp; &#x1F7E3; Paarse cel = Nash-evenwicht &nbsp;&middot;&nbsp; &#x1F7E2; Groene cel = Collectief optimum</p>'}],
   ask:'Leg uit dat beide landen zich in een gevangenendilemma bevinden.\n• Leg uit of beide landen een dominante strategie hebben.\n• Beredeneer dat er sprake is van een gevangenendilemma.',
   model:[{t:'Dominante strategie beide = "handhaven": ongeacht ander is resultaat "minder slecht"/beter (↓>↓↓ én ↑↑>↑).',p:1},{t:'Nash = (handhaven,handhaven) = (↓;↓). Maar (verlagen,verlagen) = (↑;↑) is voor beide beter → suboptimaal Nash = GD.',p:1}],
-  logic:{steps:['Simultaan: beide kiezen tegelijk zonder de keuze van de ander te weten.','RU vergelijkt kolommen: "handhaven" geeft ↓ of ↑↑; "verlagen" geeft ↓↓ of ↑ → "handhaven" domineert.','SA vergelijkt rijen, zelfde conclusie → ook "handhaven".','Nash = (handhaven; handhaven) = (↓;↓).','(verlagen;verlagen) = (↑;↑) is voor BEIDE beter → Nash is suboptimaal → gevangenendilemma.'],kicker:'Klassiek PD: individueel rationeel ≠ collectief optimaal.',graph:'matrix-22'}});
+  logic:{steps:['Simultaan: beide kiezen tegelijk zonder de keuze van de ander te weten.','RU vergelijkt kolommen: "handhaven" geeft ↓ of ↑↑; "verlagen" geeft ↓↓ of ↑ → "handhaven" domineert.','SA vergelijkt rijen, zelfde conclusie → ook "handhaven".','Nash = (handhaven; handhaven) = (↓;↓).','(verlagen;verlagen) = (↑;↑) is voor BEIDE beter → Nash is suboptimaal → gevangenendilemma.'],kicker:'Klassiek PD: wat goed is voor jou persoonlijk is niet altijd goed voor iedereen samen.',graph:'matrix-22'}});
 
 add({id:'23-1-23',year:'2023',tv:'tv1',op:'Olieprijzenoorlog',q:23,pts:2,par:null,
   casus:'<p><strong>Opgave 5 · Olieprijzenoorlog in het vat</strong> <em>(vervolg)</em></p><p>De vraag betreft de <strong>cel rechtsonder</strong> in de pay-offmatrix van bron 1: beide landen verlagen het aanbod.</p><p><em>Gebruik bron 1.</em></p>',
-  sources:[{type:'matrix',title:'Bron 1 · Pay-offmatrix · cel rechtsonder gemarkeerd',html:'<table class="payoff"><thead><tr><th class="pf-corner">RU ▼  /  SA ▶</th><th class="pf-head">SA: handhaven</th><th class="pf-head">SA: aanbod verlagen</th></tr></thead><tbody><tr><th class="pf-side">RU: handhaven</th><td class="pf-cell"><div class="pf-row"><span class="a">RU: ↓</span><span class="b">SA: ↓</span></div></td><td class="pf-cell"><div class="pf-row"><span class="a">RU: ↑↑</span><span class="b">SA: ↓↓</span></div></td></tr><tr><th class="pf-side">RU: aanbod verlagen</th><td class="pf-cell"><div class="pf-row"><span class="a">RU: ↓↓</span><span class="b">SA: ↑↑</span></div></td><td class="pf-cell pf-pareto"><div class="pf-row"><span class="a">RU: ↑</span><span class="b">SA: ↑</span><span class="pf-tag">◀ deze cel</span></div></td></tr></tbody></table>'}],
+  sources:[{type:'matrix',title:'Bron 1 · Pay-offmatrix · cel rechtsonder gemarkeerd',html:'<table class="payoff"><thead><tr><th class="pf-corner">RU ▼  /  SA ▶</th><th class="pf-head">SA: handhaven</th><th class="pf-head">SA: aanbod verlagen</th></tr></thead><tbody><tr><th class="pf-side">RU: handhaven</th><td class="pf-cell"><div class="pf-row"><span class="a">RU: ↓</span><span class="b">SA: ↓</span></div></td><td class="pf-cell"><div class="pf-row"><span class="a">RU: ↑↑</span><span class="b">SA: ↓↓</span></div></td></tr><tr><th class="pf-side">RU: aanbod verlagen</th><td class="pf-cell"><div class="pf-row"><span class="a">RU: ↓↓</span><span class="b">SA: ↑↑</span></div></td><td class="pf-cell pf-pareto"><div class="pf-row"><span class="a">RU: ↑</span><span class="b">SA: ↑</span><span class="pf-tag">◀ deze cel</span></div></td></tr></tbody></table><p class=\"pf-legend\">&#x1F535; Blauw = Rusland (rijspeler) &nbsp;&middot;&nbsp; &#x1F534; Rood = Saoedi-Arabi&euml; (kolomspeler) &nbsp;&middot;&nbsp; &#x1F7E3; Paarse cel = Nash-evenwicht &nbsp;&middot;&nbsp; &#x1F7E2; Groene cel = Collectief optimum</p>'}],
   ask:'Verklaar de uitkomst in de cel rechtsonder. Betrek in je antwoord de prijselasticiteit van de vraag.',
   model:[{t:'Beide verlagen aanbod → marktprijs van olie stijgt.',p:1},{t:'Als omzet stijgt bij hogere prijs, is de vraag prijsinelastisch (|Ev|<1).',p:1}]});
 
@@ -1445,7 +1464,7 @@ add({id:'23-2-22',year:'2023',tv:'tv2',op:'Prijs van medicijnen',q:22,pts:2,par:
 
 add({id:'23-2-23',year:'2023',tv:'tv2',op:'Verzekerd van data',q:23,pts:2,par:'1.1',
   casus:'<p><strong>Opgave 5 · Verzekerd van data</strong></p><p>Een toenemend aantal bedrijven wordt getroffen door <strong>computerincidenten</strong> die voor veel schade zorgen. Los van technische storingen kan er sprake zijn van <strong>cybercriminaliteit</strong> als bijvoorbeeld het netwerk van een bedrijf wordt gehackt.</p><p>Twee bedrijven, <strong>ABC en XYZ</strong>, zijn groothandels in specialistische gereedschappen en zijn elkaars grootste concurrent. Stel dat beide bedrijven <strong>tegelijk</strong> door cybercriminelen worden gehackt. De hackers hebben alle klantgegevens gestolen, en zullen de klantgegevens pas weer teruggeven als er <strong>losgeld</strong> is betaald. ABC en XYZ maken een afweging:</p><ul style="margin:.2rem 0 .2rem 1.2rem; padding:0; list-style:disc;"><li>Als ze losgeld betalen hebben ze onmiddellijk weer toegang tot de klantgegevens.</li><li>Als ze geen losgeld betalen, dan moeten ze een gespecialiseerd IT-bedrijf inhuren. Dat IT-bedrijf heeft enkele weken nodig om de klantgegevens weer terug te halen.</li></ul><p>De bedrijven hebben de klantgegevens voortdurend nodig, om omzet en vertrouwen van klanten te behouden.</p><p>In bron 1 staat een matrix waarin de gevolgen voor beide bedrijven wordt weergegeven.</p><p><em>Gebruik bron 1.</em></p>',
-  sources:[{type:'matrix',title:'Bron 1 · Pay-offmatrix resultaatverandering bij gelijktijdig hackincident (× € mln)',html:'<table class="payoff"><thead><tr><th class="pf-corner">ABC ▼  /  XYZ ▶</th><th class="pf-head">XYZ: wel losgeld</th><th class="pf-head">XYZ: geen losgeld</th></tr></thead><tbody><tr><th class="pf-side">ABC: wel losgeld</th><td class="pf-cell pf-nash"><div class="pf-row"><span class="a">ABC: −5</span><span class="b">XYZ: −4</span><span class="pf-tag">Nash · suboptimaal</span></div></td><td class="pf-cell"><div class="pf-row"><span class="a">ABC: −2</span><span class="b">XYZ: −5</span></div></td></tr><tr><th class="pf-side">ABC: geen losgeld</th><td class="pf-cell"><div class="pf-row"><span class="a">ABC: −6</span><span class="b">XYZ: −2</span></div></td><td class="pf-cell pf-pareto"><div class="pf-row"><span class="a">ABC: −4</span><span class="b">XYZ: −3</span><span class="pf-tag">Collectief optimaal</span></div></td></tr></tbody></table>'}],
+  sources:[{type:'matrix',title:'Bron 1 · Pay-offmatrix resultaatverandering bij gelijktijdig hackincident (× € mln)',html:'<table class="payoff"><thead><tr><th class="pf-corner">ABC ▼  /  XYZ ▶</th><th class="pf-head">XYZ: wel losgeld</th><th class="pf-head">XYZ: geen losgeld</th></tr></thead><tbody><tr><th class="pf-side">ABC: wel losgeld</th><td class="pf-cell pf-nash"><div class="pf-row"><span class="a">ABC: −5</span><span class="b">XYZ: −4</span><span class="pf-tag">Nash · suboptimaal</span></div></td><td class="pf-cell"><div class="pf-row"><span class="a">ABC: −2</span><span class="b">XYZ: −5</span></div></td></tr><tr><th class="pf-side">ABC: geen losgeld</th><td class="pf-cell"><div class="pf-row"><span class="a">ABC: −6</span><span class="b">XYZ: −2</span></div></td><td class="pf-cell pf-pareto"><div class="pf-row"><span class="a">ABC: −4</span><span class="b">XYZ: −3</span><span class="pf-tag">Collectief optimaal</span></div></td></tr></tbody></table><p class=\"pf-legend\">&#x1F535; Bovenste getal = Bedrijf ABC (rijspeler) &nbsp;&middot;&nbsp; &#x1F534; Onderste getal = Bedrijf XYZ (kolomspeler) &nbsp;&middot;&nbsp; &#x1F7E3; Paarse cel = Nash-evenwicht (Gevangenendilemma) &nbsp;&middot;&nbsp; &#x1F7E2; Groene cel = Collectief optimum &nbsp;&middot;&nbsp; Bedragen = verandering in miljoenen euro&apos;s</p>'}],
   ask:'Toon aan dat beide bedrijven in een gevangenendilemma terecht komen.\n• Leg de dominante strategie uit (met getallen).\n• Leg uit dat er sprake is van een gevangenendilemma.',
   model:[{t:'ABC dominant: als XYZ wel betaalt: −5>−6; als XYZ niet: −2>−4. XYZ dominant idem: −4>−5 en −2>−3. Beide "wel betalen" dominant.',p:1},{t:'Nash = (wel; wel) = (−5;−4). (geen; geen) = (−4;−3) is voor beide beter → Nash suboptimaal → GD.',p:1}],
   logic:{steps:['Beide bedrijven kiezen tegelijk (zonder overleg).','ABC: "wel betalen" levert altijd minder verlies op dan "geen betalen" (ongeacht XYZ).','XYZ: identieke logica.','Nash = (wel, wel). Maar (geen, geen) = (−4, −3) zou beter zijn voor beide.','Collectief optimum verloren omdat individuele keuze domineert.'],kicker:'Klassiek PD in cybercriminaliteits-context.'}});
@@ -1879,7 +1898,7 @@ add({id:'25-1-15',year:'2025',tv:'tv1',op:'CO₂-rechten',q:15,pts:1,par:'1.4',
 
 add({id:'25-1-16',year:'2025',tv:'tv1',op:'CO₂-rechten',q:16,pts:2,par:'1.1',
   casus:'<p><strong>Opgave 3 · CO₂-rechten</strong> <em>(vervolg)</em></p><p>Bedrijven kunnen ook ervoor kiezen om <strong>duurzamer te produceren</strong> waardoor zij minder emissierechten hoeven op te kopen. Een econoom onderzoekt de casus van twee bedrijven: <strong>Gas</strong> en <strong>Kolen</strong>. In het model van de econoom staan winstveranderingen voor beide bedrijven voor het komende jaar.</p>',
-  sources:[{type:'matrix',title:'Bron · Pay-offmatrix CO₂-keuze · winstverandering (× € mln)',html:'<table class="payoff"><thead><tr><th class="pf-corner">Gas ▼  /  Kolen ▶</th><th class="pf-head">Kolen: kopen</th><th class="pf-head">Kolen: investeren</th></tr></thead><tbody><tr><th class="pf-side">Gas: kopen</th><td class="pf-cell pf-pareto"><div class="pf-row"><span class="a">Gas: 70</span><span class="b">Kolen: 80</span><span class="pf-tag">Nash ∧ Pareto-optimaal</span></div></td><td class="pf-cell"><div class="pf-row"><span class="a">Gas: 50</span><span class="b">Kolen: 40</span></div></td></tr><tr><th class="pf-side">Gas: investeren</th><td class="pf-cell"><div class="pf-row"><span class="a">Gas: 30</span><span class="b">Kolen: 60</span></div></td><td class="pf-cell"><div class="pf-row"><span class="a">Gas: 35</span><span class="b">Kolen: 45</span></div></td></tr></tbody></table><div style="margin-top:.3rem; font-size:10.5px; color:#475569">Let op: Nash-uitkomst is tegelijk collectief optimum → géén gevangenendilemma.</div>'}],
+  sources:[{type:'matrix',title:'Bron · Pay-offmatrix CO₂-keuze · winstverandering (× € mln)',html:'<table class="payoff"><thead><tr><th class="pf-corner">Gas ▼  /  Kolen ▶</th><th class="pf-head">Kolen: kopen</th><th class="pf-head">Kolen: investeren</th></tr></thead><tbody><tr><th class="pf-side">Gas: kopen</th><td class="pf-cell pf-pareto"><div class="pf-row"><span class="a">Gas: 70</span><span class="b">Kolen: 80</span><span class="pf-tag">Nash ∧ Pareto-optimaal</span></div></td><td class="pf-cell"><div class="pf-row"><span class="a">Gas: 50</span><span class="b">Kolen: 40</span></div></td></tr><tr><th class="pf-side">Gas: investeren</th><td class="pf-cell"><div class="pf-row"><span class="a">Gas: 30</span><span class="b">Kolen: 60</span></div></td><td class="pf-cell"><div class="pf-row"><span class="a">Gas: 35</span><span class="b">Kolen: 45</span></div></td></tr></tbody></table><div style="margin-top:.3rem; font-size:10.5px; color:#475569">Let op: Nash-uitkomst is tegelijk collectief optimum → géén gevangenendilemma.</div><p class=\"pf-legend\">&#x1F535; Bovenste getal = Gas-centrale (rijspeler) &nbsp;&middot;&nbsp; &#x1F534; Onderste getal = Kolencentrale (kolomspeler) &nbsp;&middot;&nbsp; &#x1F7E3; Paarse cel = Nash-evenwicht tevens Collectief optimum &nbsp;&middot;&nbsp; Bedragen in miljoenen euro&apos;s</p>'}],
   ask:'Leg uit of beide bedrijven in een gevangenendilemma terecht komen. Ga als volgt te werk:\n• Leg met behulp van getallen uit hoe de dominante strategie van beide bedrijven tot stand komt.\n• Leg uit of er sprake is van een gevangenendilemma.',
   model:[{t:'Gas dominant: 70>30, 50>35 → "kopen". Kolen dominant: 80>40, 60>45 → "kopen". Nash = (70;80).',p:1},{t:'(70;80) is óók collectief optimaal (geen cel Pareto-beter) → GEEN gevangenendilemma.',p:1}],
   note:'Dominante strategie + Nash ≠ automatisch PD. Altijd checken of Nash suboptimaal is.',
@@ -1929,7 +1948,7 @@ add({id:'25-1-24',year:'2025',tv:'tv1',op:'AOW-leeftijd',q:24,pts:2,par:null,
 add({id:'25-1-25',year:'2025',tv:'tv1',op:'AOW-leeftijd',q:25,pts:2,par:null,
   casus:'<p><strong>Opgave 4 · AOW-leeftijd</strong> <em>(vervolg)</em></p><p>De onderzoeker zegt over maatregel 3: <em class="quote">"Dit leidt ertoe dat een alleenstaande oudere met een AOW-uitkering als enige inkomstenbron, jaarlijks een paar duizend euro meer belasting in box 1 moet betalen ten opzichte van de huidige situatie."</em></p><p><em>Gebruik bron 1, 2 en 3.</em></p>',
   sources:[{type:'table',title:'Bron 3 · Tarieven box 1 — niet-AOW\'ers vs. AOW\'ers',html:'<table><thead><tr><th>Schijf</th><th>Inkomen per jaar</th><th>Niet-AOW\'er</th><th>AOW\'er</th></tr></thead><tbody><tr><td>1</td><td>tot € 38.704</td><td class="num">36,93 %</td><td class="num">19,03 %*</td></tr><tr><td>2</td><td>€ 38.704 – € 73.032</td><td class="num">36,93 %</td><td class="num">36,93 %</td></tr><tr><td>3</td><td>&gt; € 73.032</td><td class="num">49,50 %</td><td class="num">49,50 %</td></tr></tbody></table><div style="margin-top:.3rem; font-size:10.5px; color:#475569">* AOW\'ers betalen géén AOW-premie; verschil t.o.v. niet-AOW\'er = 36,93 − 19,03 = 17,90 procentpunt.</div>'}],
-  ask:'Bereken het extra bedrag aan belasting dat een alleenstaande AOW\'er (bruto € 1.330,76/mnd) moet gaan betalen als maatregel 3 wordt ingevoerd.',
+  ask:'Bereken het extra bedrag aan belasting dat een alleenstaande AOW\'er (bruto € 1.330,76 per maand) moet gaan betalen als maatregel 3 wordt ingevoerd.',
   model:[{t:'Jaarinkomen = 12 × € 1.330,76 = € 15.969,12 (volledig in schijf 1).',p:1},{t:'Extra belasting = € 15.969,12 × (36,93 % − 19,03 %) = € 15.969,12 × 17,90 % = € 2.858.',p:1}]});
 
 add({id:'25-1-26',year:'2025',tv:'tv1',op:'AI in de verzekeringssector',q:26,pts:1,par:'2.1',
@@ -2040,13 +2059,13 @@ add({id:'25-2-16',year:'2025',tv:'tv2',op:'Verzekeraar neemt geen risico',q:16,p
 
 add({id:'25-2-17',year:'2025',tv:'tv2',op:'Verzekeraar neemt geen risico',q:17,pts:2,par:'2.2',
   casus:'<p><strong>Opgave 4 · Verzekeraar neemt geen risico</strong> <em>(vervolg)</em></p><p>Zorgverzekeraars <strong>A</strong> en <strong>C</strong> zijn beide van plan om een campagne te voeren. Deze campagne is gericht op studenten. De kosten van de campagne zijn voor A en C <strong>gelijk</strong> en een <strong>vast bedrag</strong>. Een econoom maakt een <strong>pay-offmatrix</strong> (zie bron 2). In deze matrix zijn de winstveranderingen van de verzekeraars niet gelijk aan elkaar als één verzekeraar geen campagne voert en de andere verzekeraar wel.</p><p>Als verzekeraar A bijvoorbeeld wel campagne voert en verzekeraar C niet, zal de winst van verzekeraar A met <strong>10%</strong> stijgen. Als verzekeraar A geen campagne voert en verzekeraar C wel, zal de winst van verzekeraar C met <strong>9%</strong> stijgen.</p><p><em>Gebruik bron 1 en 2.</em></p>',
-  sources:[{type:'matrix',title:'Bron 2 · Pay-offmatrix · procentuele winstveranderingen zorgverzekeraars A vs C',html:'<table class="payoff"><thead><tr><th class="pf-corner">A ▼  /  C ▶</th><th class="pf-head">C: geen campagne</th><th class="pf-head">C: wel campagne</th></tr></thead><tbody><tr><th class="pf-side">A: geen campagne</th><td class="pf-cell pf-pareto"><div class="pf-row"><span class="a">A: 0 %</span><span class="b">C: 0 %</span><span class="pf-tag">Collectief optimaal</span></div></td><td class="pf-cell"><div class="pf-row"><span class="a">A: −5 %</span><span class="b">C: +9 %</span></div></td></tr><tr><th class="pf-side">A: wel campagne</th><td class="pf-cell"><div class="pf-row"><span class="a">A: +10 %</span><span class="b">C: −6 %</span></div></td><td class="pf-cell pf-nash"><div class="pf-row"><span class="a">A: −1 %</span><span class="b">C: −1 %</span><span class="pf-tag">Nash · suboptimaal</span></div></td></tr></tbody></table>'}],
+  sources:[{type:'matrix',title:'Bron 2 · Pay-offmatrix · procentuele winstveranderingen zorgverzekeraars A vs C',html:'<table class="payoff"><thead><tr><th class="pf-corner">A ▼  /  C ▶</th><th class="pf-head">C: geen campagne</th><th class="pf-head">C: wel campagne</th></tr></thead><tbody><tr><th class="pf-side">A: geen campagne</th><td class="pf-cell pf-pareto"><div class="pf-row"><span class="a">A: 0 %</span><span class="b">C: 0 %</span><span class="pf-tag">Collectief optimaal</span></div></td><td class="pf-cell"><div class="pf-row"><span class="a">A: −5 %</span><span class="b">C: +9 %</span></div></td></tr><tr><th class="pf-side">A: wel campagne</th><td class="pf-cell"><div class="pf-row"><span class="a">A: +10 %</span><span class="b">C: −6 %</span></div></td><td class="pf-cell pf-nash"><div class="pf-row"><span class="a">A: −1 %</span><span class="b">C: −1 %</span><span class="pf-tag">Nash · suboptimaal</span></div></td></tr></tbody></table><p class=\"pf-legend\">&#x1F535; Bovenste percentage = Verzekeraar A (rijspeler) &nbsp;&middot;&nbsp; &#x1F534; Onderste percentage = Verzekeraar C (kolomspeler) &nbsp;&middot;&nbsp; &#x1F7E3; Paarse cel = Nash-evenwicht (allebei verlies) &nbsp;&middot;&nbsp; &#x1F7E2; Groene cel = Collectief optimum (allebei 0%)</p>'}],
   ask:'Leg dit verschil in winstveranderingen uit aan de hand van de gemiddelde constante kosten van de verzekeraars.',
   model:[{t:'A heeft groter marktaandeel → campagnekosten worden verdeeld over méér klanten → lagere gem. constante kosten per klant.',p:1},{t:'Lagere GCK → lagere kostprijs per klant → bij A alleen campagne: +10%; bij alleen C (kleinere afzet, hogere GCK): +9%.',p:1}]});
 
 add({id:'25-2-18',year:'2025',tv:'tv2',op:'Verzekeraar neemt geen risico',q:18,pts:2,par:'1.1',
   casus:'<p><strong>Opgave 4 · Verzekeraar neemt geen risico</strong> <em>(vervolg)</em></p><p><em>Gebruik bron 2.</em></p>',
-  sources:[{type:'matrix',title:'Bron 2 · Pay-offmatrix · procentuele winstveranderingen zorgverzekeraars A vs C',html:'<table class="payoff"><thead><tr><th class="pf-corner">A ▼  /  C ▶</th><th class="pf-head">C: geen campagne</th><th class="pf-head">C: wel campagne</th></tr></thead><tbody><tr><th class="pf-side">A: geen campagne</th><td class="pf-cell pf-pareto"><div class="pf-row"><span class="a">A: 0 %</span><span class="b">C: 0 %</span><span class="pf-tag">Collectief optimaal</span></div></td><td class="pf-cell"><div class="pf-row"><span class="a">A: −5 %</span><span class="b">C: +9 %</span></div></td></tr><tr><th class="pf-side">A: wel campagne</th><td class="pf-cell"><div class="pf-row"><span class="a">A: +10 %</span><span class="b">C: −6 %</span></div></td><td class="pf-cell pf-nash"><div class="pf-row"><span class="a">A: −1 %</span><span class="b">C: −1 %</span><span class="pf-tag">Nash · suboptimaal</span></div></td></tr></tbody></table>'}],
+  sources:[{type:'matrix',title:'Bron 2 · Pay-offmatrix · procentuele winstveranderingen zorgverzekeraars A vs C',html:'<table class="payoff"><thead><tr><th class="pf-corner">A ▼  /  C ▶</th><th class="pf-head">C: geen campagne</th><th class="pf-head">C: wel campagne</th></tr></thead><tbody><tr><th class="pf-side">A: geen campagne</th><td class="pf-cell pf-pareto"><div class="pf-row"><span class="a">A: 0 %</span><span class="b">C: 0 %</span><span class="pf-tag">Collectief optimaal</span></div></td><td class="pf-cell"><div class="pf-row"><span class="a">A: −5 %</span><span class="b">C: +9 %</span></div></td></tr><tr><th class="pf-side">A: wel campagne</th><td class="pf-cell"><div class="pf-row"><span class="a">A: +10 %</span><span class="b">C: −6 %</span></div></td><td class="pf-cell pf-nash"><div class="pf-row"><span class="a">A: −1 %</span><span class="b">C: −1 %</span><span class="pf-tag">Nash · suboptimaal</span></div></td></tr></tbody></table><p class=\"pf-legend\">&#x1F535; Bovenste percentage = Verzekeraar A (rijspeler) &nbsp;&middot;&nbsp; &#x1F534; Onderste percentage = Verzekeraar C (kolomspeler) &nbsp;&middot;&nbsp; &#x1F7E3; Paarse cel = Nash-evenwicht (allebei verlies) &nbsp;&middot;&nbsp; &#x1F7E2; Groene cel = Collectief optimum (allebei 0%)</p>'}],
   ask:'Leg met behulp van getallen uit de matrix in bron 2 uit of er sprake is van een gevangenendilemma. Doe het als volgt:\n• Leg uit of beide verzekeraars een dominante strategie hebben.\n• Beredeneer vervolgens of er sprake is van een gevangenendilemma.',
   model:[{t:'A dominant: 10>0, −1>−5 → "campagne". C dominant: 9>0, −1>−6 → "campagne".',p:1},{t:'Nash = (campagne, campagne) = (−1%;−1%). (geen, geen) = (0%;0%) is voor beide beter → GD.',p:1}],
   logic:{steps:['A vergelijkt: als C geen campagne: max(0, 10)=10 → wel. Als C wel: max(−5, −1)=−1 → wel. Dominant: campagne.','C dominant analoog.','Nash = (campagne; campagne) = (−1;−1).','(geen;geen) = (0;0) is PARETO-BETER voor beide.','Suboptimaal Nash → gevangenendilemma.']}});
@@ -2120,43 +2139,81 @@ let progress = loadProgress();
    SVG — matrices
    =================================================================== */
 function matrixSVG22() {
-  return `<svg viewBox="0 0 420 280" class="mx-auto max-w-full h-auto"><g>
-    <rect x="0" y="0" width="420" height="280" fill="#fff"/>
-    <text x="210" y="18" text-anchor="middle" font-size="11" fill="#334155" font-weight="700">Rusland (kolommen) · Saoedi-Arabië (rijen)</text>
-    <text x="140" y="55" text-anchor="middle" class="matrix-hdr">handhaven</text>
-    <text x="280" y="55" text-anchor="middle" class="matrix-hdr">verlagen</text>
-    <text x="50" y="120" text-anchor="middle" class="matrix-hdr" transform="rotate(-90 50 120)">handhaven</text>
-    <text x="50" y="210" text-anchor="middle" class="matrix-hdr" transform="rotate(-90 50 210)">verlagen</text>
-    <rect x="80" y="70" width="140" height="90" class="matrix-nash"/>
-    <text x="150" y="105" class="matrix-txt">RU: ↓</text><text x="150" y="130" class="matrix-txt">SA: ↓</text>
-    <text x="150" y="153" text-anchor="middle" font-size="10" fill="#854d0e" font-weight="700">Nash (PD)</text>
-    <rect x="220" y="70" width="140" height="90" class="matrix-cell"/>
-    <text x="290" y="105" class="matrix-txt">RU: ↑↑</text><text x="290" y="130" class="matrix-txt">SA: ↓↓</text>
-    <rect x="80" y="160" width="140" height="90" class="matrix-cell"/>
-    <text x="150" y="195" class="matrix-txt">RU: ↓↓</text><text x="150" y="220" class="matrix-txt">SA: ↑↑</text>
-    <rect x="220" y="160" width="140" height="90" class="matrix-cell" fill="#dcfce7" stroke="#16a34a"/>
-    <text x="290" y="195" class="matrix-txt">RU: ↑</text><text x="290" y="220" class="matrix-txt">SA: ↑</text>
-    <text x="290" y="243" text-anchor="middle" font-size="10" fill="#15803d" font-weight="700">Collectief optimaal</text>
-  </g></svg>`;
+  return `<div class="pf-wrap">
+    <p class="pf-title">&#x1F4CA; Opbrengstenmatrix &mdash; Rusland (rijen) vs. Saoedi-Arabi&euml; (kolommen)</p>
+    <table class="payoff">
+      <thead><tr>
+        <th class="pf-corner">Rusland &darr; / Saoedi-Arabi&euml; &rarr;</th>
+        <th class="pf-head">SA: aanbod <strong>handhaven</strong></th>
+        <th class="pf-head">SA: aanbod <strong>verlagen</strong></th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <th class="pf-side">RU: aanbod <strong>handhaven</strong></th>
+          <td class="pf-cell pf-nash"><div class="pf-row">
+            <span class="a">&#x1F535; Rusland: omzet daalt (&darr;)</span>
+            <span class="b">&#x1F534; Saoedi-Arabi&euml;: omzet daalt (&darr;)</span>
+            <span class="pf-tag">&#x1F7E3; Nash-evenwicht &bull; Gevangenendilemma</span>
+          </div></td>
+          <td class="pf-cell"><div class="pf-row">
+            <span class="a">&#x1F535; Rusland: omzet stijgt sterk (&uarr;&uarr;)</span>
+            <span class="b">&#x1F534; Saoedi-Arabi&euml;: omzet daalt sterk (&darr;&darr;)</span>
+          </div></td>
+        </tr>
+        <tr>
+          <th class="pf-side">RU: aanbod <strong>verlagen</strong></th>
+          <td class="pf-cell"><div class="pf-row">
+            <span class="a">&#x1F535; Rusland: omzet daalt sterk (&darr;&darr;)</span>
+            <span class="b">&#x1F534; Saoedi-Arabi&euml;: omzet stijgt sterk (&uarr;&uarr;)</span>
+          </div></td>
+          <td class="pf-cell pf-pareto"><div class="pf-row">
+            <span class="a">&#x1F535; Rusland: omzet stijgt (&uarr;)</span>
+            <span class="b">&#x1F534; Saoedi-Arabi&euml;: omzet stijgt (&uarr;)</span>
+            <span class="pf-tag">&#x2705; Collectief optimum &bull; beiden beter af</span>
+          </div></td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="pf-legend">&#x1F535; Blauw = Rusland (rijspeler) &nbsp;&middot;&nbsp; &#x1F534; Rood = Saoedi-Arabi&euml; (kolomspeler) &nbsp;&middot;&nbsp; &#x1F7E3; Paarse cel = Nash-evenwicht (Gevangenendilemma) &nbsp;&middot;&nbsp; &#x1F7E2; Groene cel = Collectief optimum</p>
+  </div>`;
 }
 function matrixSVG16() {
-  return `<svg viewBox="0 0 440 300" class="mx-auto max-w-full h-auto"><g>
-    <rect x="0" y="0" width="440" height="300" fill="#fff"/>
-    <text x="220" y="18" text-anchor="middle" font-size="11" fill="#334155" font-weight="700">Gas (rijen) · Kolen (kolommen) — €mln</text>
-    <text x="140" y="55" text-anchor="middle" class="matrix-hdr">kopen</text>
-    <text x="310" y="55" text-anchor="middle" class="matrix-hdr">investeren</text>
-    <text x="50" y="120" text-anchor="middle" class="matrix-hdr" transform="rotate(-90 50 120)">kopen</text>
-    <text x="50" y="220" text-anchor="middle" class="matrix-hdr" transform="rotate(-90 50 220)">investeren</text>
-    <rect x="80" y="70" width="160" height="100" class="matrix-nash" fill="#dcfce7" stroke="#16a34a"/>
-    <text x="160" y="105" class="matrix-txt">Gas: 70</text><text x="160" y="130" class="matrix-txt">Kolen: 80</text>
-    <text x="160" y="155" text-anchor="middle" font-size="10" fill="#15803d" font-weight="700">Nash + collectief</text>
-    <rect x="240" y="70" width="160" height="100" class="matrix-cell"/>
-    <text x="320" y="105" class="matrix-txt">Gas: 50</text><text x="320" y="130" class="matrix-txt">Kolen: 40</text>
-    <rect x="80" y="170" width="160" height="100" class="matrix-cell"/>
-    <text x="160" y="210" class="matrix-txt">Gas: 30</text><text x="160" y="235" class="matrix-txt">Kolen: 60</text>
-    <rect x="240" y="170" width="160" height="100" class="matrix-cell"/>
-    <text x="320" y="210" class="matrix-txt">Gas: 35</text><text x="320" y="235" class="matrix-txt">Kolen: 45</text>
-  </g></svg>`;
+  return `<div class="pf-wrap">
+    <p class="pf-title">&#x1F4CA; Opbrengstenmatrix &mdash; Gas (rijen) vs. Kolen (kolommen) &mdash; bedragen in miljoenen euro&apos;s</p>
+    <table class="payoff">
+      <thead><tr>
+        <th class="pf-corner">Gas &darr; / Kolen &rarr;</th>
+        <th class="pf-head">Kolen: CO&sup2;-rechten <strong>kopen</strong></th>
+        <th class="pf-head">Kolen: <strong>investeren</strong> in schone energie</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <th class="pf-side">Gas: CO&sup2;-rechten <strong>kopen</strong></th>
+          <td class="pf-cell pf-nash"><div class="pf-row">
+            <span class="a">&#x1F535; Gas: 70 miljoen euro</span>
+            <span class="b">&#x1F534; Kolen: 80 miljoen euro</span>
+            <span class="pf-tag">&#x1F7E3; Nash-evenwicht &eacute;&eacute;n Collectief optimum</span>
+          </div></td>
+          <td class="pf-cell"><div class="pf-row">
+            <span class="a">&#x1F535; Gas: 50 miljoen euro</span>
+            <span class="b">&#x1F534; Kolen: 40 miljoen euro</span>
+          </div></td>
+        </tr>
+        <tr>
+          <th class="pf-side">Gas: <strong>investeren</strong> in schone energie</th>
+          <td class="pf-cell"><div class="pf-row">
+            <span class="a">&#x1F535; Gas: 30 miljoen euro</span>
+            <span class="b">&#x1F534; Kolen: 60 miljoen euro</span>
+          </div></td>
+          <td class="pf-cell"><div class="pf-row">
+            <span class="a">&#x1F535; Gas: 35 miljoen euro</span>
+            <span class="b">&#x1F534; Kolen: 45 miljoen euro</span>
+          </div></td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="pf-legend">&#x1F535; Blauw = Gas-centrale (rijspeler) &nbsp;&middot;&nbsp; &#x1F534; Rood = Kolencentrale (kolomspeler) &nbsp;&middot;&nbsp; &#x1F7E3; Paarse cel = Nash-evenwicht &eacute;&eacute;n Collectief optimum &nbsp;&middot;&nbsp; Bedragen in miljoenen euro&apos;s</p>
+  </div>`;
 }
 function svgFor(key) {
   if (key==='matrix-22') return matrixSVG22();
@@ -2179,13 +2236,13 @@ function renderLogic(logic) {
   });
   if (logic.kicker) body += `<div class="logic-kicker">💡 ${expandAbbr(logic.kicker)}</div>`;
   if (logic.graph) body += `<div class="mt-3">${svgFor(logic.graph)}</div>`;
-  return `<div class="logic-box"><div class="logic-title">🧠 Begrijp de Logica</div>${body}</div>`;
+  return `<div class="logic-box"><div class="logic-title">🧠 Stap voor stap de logica</div>${body}</div>`;
 }
 
 function renderModel(model, note) {
   let body = '';
-  model.forEach(s => { body += `<div class="ans-step"><span class="ans-pts">${s.p}p</span><span>${s.t}</span></div>`; });
-  let h = `<div class="ans-model"><div class="ans-title">✅ Antwoordmodel</div>${body}</div>`;
+  model.forEach(s => { body += `<div class="ans-step"><span class="ans-pts">${s.p}p</span><span>${expandAbbr(s.t)}</span></div>`; });
+  let h = `<div class="ans-model"><div class="ans-header">✅ Correcte uitwerking</div><div class="ans-title">✅ Antwoordmodel</div>${body}</div>`;
   if (note) h += `<div class="ans-note">ℹ️ ${note}</div>`;
   return h;
 }
@@ -2249,10 +2306,10 @@ function renderCard(q) {
     </div>
     ${q.casus ? `<div class="q-context verbatim"><span class="casus-tag">📄 Originele casus · verbatim</span>${q.casus}</div>` : (q.context ? `<div class="q-context"><strong class="text-slate-700">📄 Context:</strong> ${q.context}</div>` : '')}
     ${renderSources(q)}
-    <div class="q-ask ${currentMode==='recall'?'q-hidden-text':''}" data-recall><strong class="text-indigo-700">Vraag ${q.q}:</strong> ${q.ask}</div>
+    <div class="q-ask ${currentMode==='recall'?'q-hidden-text':''}" data-recall><strong class="text-indigo-700">Vraag ${q.q}:</strong> ${expandAbbr(q.ask||"")}</div>
     <div class="flex flex-wrap gap-2 items-center">
-      <button class="reveal-btn" data-target="answer-${q.id}">Toon Uitwerking ▸</button>
-      ${q.logic ? `<button class="reveal-btn" data-target="logic-${q.id}" style="background:#7e22ce">Begrijp de Logica 🧠</button>` : ''}
+      <button class="reveal-btn" data-target="answer-${q.id}">📋 Bekijk de uitwerking</button>
+      ${q.logic ? `<button class="reveal-btn" data-target="logic-${q.id}" style="background:#7c3aed">🧠 Zie de logica-stappen</button>` : ''}
     </div>
     <div id="answer-${q.id}" style="display:none">${renderModel(q.model, q.note)}</div>
     ${q.logic ? `<div id="logic-${q.id}" style="display:none">${renderLogic(q.logic)}</div>` : ''}
