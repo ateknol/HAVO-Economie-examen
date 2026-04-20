@@ -224,6 +224,12 @@ pre code {
 	border-color: rgba(255, 255, 255, 0.18);
 }
 
+
+/* Mermaid v11 rendering guard */
+pre.mermaid, div.mermaid {
+  min-height: 40px;
+  overflow-x: auto;
+}
 </style>
 
 <style>
@@ -354,17 +360,25 @@ code {
 
 </style>
 
-<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({
+    startOnLoad: true,
+    securityLevel: 'loose',
+    theme: 'base',
+    themeVariables: {
+      primaryColor: '#dbeafe',
+      primaryTextColor: '#1e3a8a',
+      primaryBorderColor: '#3b82f6',
+      lineColor: '#475569',
+      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif',
+      fontSize: '13px'
+    }
+  });
+</script>
 </head>
 <body>
-  <script>
-    mermaid.initialize({
-      startOnLoad: true,
-      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
-          ? 'dark'
-          : 'default'
-    });
-  </script>
+
 <h1 id="volledige-samenvatting--havo-economie">Volledige Samenvatting · HAVO Economie</h1>
 <h2 id="hoofdstuk-1--samenwerken-is-een-spel--hoofdstuk-2--risico--informatie">Hoofdstuk 1 — <em>Samenwerken is een spel</em>  ·  Hoofdstuk 2 — <em>Risico &amp; Informatie</em></h2>
 <blockquote>
@@ -622,7 +636,7 @@ $$</p>
 <pre><code class="language-mermaid"><div class="mermaid">flowchart TD
     subgraph Nash_Check["🔍 Nash-Evenwicht Check"]
         direction TB
-        N_Start(["Kies strategieën"]) ==> N_Vraag{{"Eenzijdig<br/>verbeteren?"}}
+        N_Start(["Kies strategieën"]) ==> N_Vraag{{"Eenzijdig verbeteren?"}}
         N_Vraag ==>|"✅ Nee"| N_Uitk[["🏆 Nash-evenwicht"]]
         N_Vraag -->|"❌ Ja"| N_Wissel[/"Andere strategie"/]
         N_Wissel -.->|"iteratie"| N_Start
@@ -685,7 +699,7 @@ $$</p>
 $$</p>
 <p><em>Toelichting:</em> &quot;0&quot; = vrijuit (geen cel), uitkomsten in <strong>jaren cel</strong> dus <strong>lager is beter</strong>.</p>
 <pre><code class="language-mermaid"><div class="mermaid">flowchart TD
-    GD_Kern{{"🔒 Gevangenen-<br/>dilemma"}}
+    GD_Kern{{"🔒 Gevangenendilemma"}}
     subgraph GD_Ind["👤 Individueel belang"]
         direction LR
         GD_Dom(["Bekennen = dominant"]) ==> GD_Slecht[/"😢 Nash: 3+3 jaar"/]
@@ -908,7 +922,7 @@ $$</p>
 <pre><code class="language-mermaid"><div class="mermaid">flowchart TD
     subgraph OL_Cond["🏭 Vereiste Condities"]
         direction LR
-        OL_K{{"Oligopolie<br/>+ homogeen"}} --> OL_Z(["👁️ Zichtbare prijzen"])
+        OL_K{{"Oligopolie + homogeen"}} --> OL_Z(["👁️ Zichtbare prijzen"])
         OL_K --> OL_S(["🔄 Snelle substitutie"])
     end
     subgraph OL_Eff["📉 Gevolg"]
@@ -1094,7 +1108,7 @@ $$</p>
         direction LR
         ZB_Cert(["Belofte +<br/>🔒 Onomkeerbaar"]) ==> ZB_Gel(["Geloofwaardig"]) ==> ZB_Win[["🤝 Win-win"]]
     end
-    ZB_Bel -.->|"+ certificaat<br/>+ boete"| ZB_Cert
+    ZB_Bel -.->|"+ certificaat + boete"| ZB_Cert
     classDef falen fill:#fee2e2,stroke:#ef4444,stroke-width:2px,color:#7f1d1d
     classDef succes fill:#dcfce7,stroke:#22c55e,stroke-width:2px,color:#14532d
     classDef markt fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e3a8a
@@ -1153,7 +1167,7 @@ $$</p>
         EX_PR(["💰 Private prijs"]) ==> EX_Bes(["Beslissing"])
     end
     EX_Ext{{"🌍 Extern effect"}} --x|"genegeerd"| EX_Bes
-    EX_Falen[/"⚠️ Suboptimaal<br/>te veel / te weinig"/]
+    EX_Falen[/"Suboptimaal · te veel of te weinig"/]
     subgraph EX_Cor["🏛️ Overheid corrigeert"]
         direction LR
         EX_OV{{"Beleid"}} -->|"belasting"| EX_Bel(["Internaliseren −"])
@@ -1381,7 +1395,7 @@ $$</p>
 <pre><code class="language-mermaid"><div class="mermaid">flowchart TD
     subgraph EU_Zon["❌ Zonder EU — GD scenario"]
         direction LR
-        EU_27{{"27 landen<br/>eigen belang"}} ==> EU_GD[/"Handelsoorlogen<br/>Valuta-race<br/>Subsidie-wedloop"/]
+        EU_27{{"27 landen · eigen belang"}} ==> EU_GD[/"Handelsoorlogen · Valuta-race · Subsidie-wedloop"/]
     end
     subgraph EU_Met["✅ Met EU — Coöperatief spel"]
         direction LR
@@ -1540,7 +1554,7 @@ $$</p>
     subgraph VZ_Bes["💡 Stap 2 — Beslisregel"]
         direction TB
         VZ_Comp{{"P vs R?"}} -->|"P < R"| VZ_GoA[["✅ VERZEKEREN<br/>wiskundig voordelig"]]
-        VZ_Comp -->|"P > R"| VZ_Vr{{"Schade<br/>draagbaar?"}}
+        VZ_Comp -->|"P > R"| VZ_Vr{{"Schade draagbaar?"}}
         VZ_Vr -->|"Nee"| VZ_GoB[["✅ VERZEKEREN<br/>risicoaversie"]]
         VZ_Vr -->|"Ja"| VZ_Niet[/"❌ Zelf-verzekeren"/]
     end
@@ -1642,13 +1656,13 @@ $$</p>
 <pre><code class="language-mermaid"><div class="mermaid">flowchart LR
     subgraph Sol_Vrij["❌ Vrijwillig"]
         direction TB
-        S_V(["Alleen zieken<br/>melden zich"]) ==> S_VH[/"Hoog risico<br/>€ 1.350"/]
+        S_V(["Alleen zieken<br/>melden zich"]) ==> S_VH[/"Hoog risico · €\xa01.350"/]
     end
     subgraph Sol_Vpl["✅ Verplicht (solidariteit)"]
         direction TB
         S_P(["Iedereen verplicht<br/>ook gezonden"]) ==> S_PL[["Laag risico<br/>€ 1.080"]]
     end
-    S_VH -.->|"solidariteit<br/>doorbreekt spiraal"| S_PL
+    S_VH -.->|"solidariteit doorbreekt spiraal"| S_PL
     classDef falen fill:#fee2e2,stroke:#ef4444,stroke-width:2px,color:#7f1d1d
     classDef oploss fill:#f3e8ff,stroke:#a855f7,stroke-width:2px,color:#581c87
     classDef succes fill:#dcfce7,stroke:#22c55e,stroke-width:2px,color:#14532d
@@ -1758,11 +1772,11 @@ $$</p>
 <pre><code class="language-mermaid"><div class="mermaid">flowchart TD
     subgraph AS_Start["❓ Asymmetrische info"]
         direction LR
-        AS_Info{{"🔍 Verzekeraar<br/>weet risico NIET"}} ==> AS_Gem(["Één gemiddelde premie"])
+        AS_Info{{"🔍 Verzekeraar weet risico NIET"}} ==> AS_Gem(["Één gemiddelde premie"])
     end
     subgraph AS_Sel["🔄 Zelfselectie"]
         direction LR
-        AS_Goed[/"🟢 Goede risico's<br/>haken af"/]
+        AS_Goed[/"🟢 Goede risicos haken af"/]
         AS_Slecht(["🔴 Slechte risico's<br/>stromen in"])
     end
     subgraph AS_Spiral["📈 Opwaartse spiraal"]
@@ -1772,7 +1786,7 @@ $$</p>
     AS_Gem -->|"te duur"| AS_Goed
     AS_Gem -->|"koopje!"| AS_Slecht
     AS_Goed ==> AS_Hoog
-    AS_Prem -.->|"feedback:<br/>meer uitstroom"| AS_Goed
+    AS_Prem -.->|"feedback: meer uitstroom"| AS_Goed
     classDef risico fill:#ffedd5,stroke:#f97316,stroke-width:2px,color:#7c2d12
     classDef falen fill:#fee2e2,stroke:#ef4444,stroke-width:2px,color:#7f1d1d
     classDef markt fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e3a8a
@@ -1820,7 +1834,7 @@ $$</p>
         MH_N(["Kosten = 0% bij jou<br/>prikkel weg"]) ==> MH_NG[/"Risicovol gedrag"/]
         MH_NG ==> MH_NK[/"Premies ↑ voor iedereen"/]
     end
-    MH_V -.->|"tekenen polis →<br/>prikkel verdwijnt"| MH_N
+    MH_V -.->|"tekenen polis → prikkel verdwijnt"| MH_N
     classDef succes fill:#dcfce7,stroke:#22c55e,stroke-width:2px,color:#14532d
     classDef falen fill:#fee2e2,stroke:#ef4444,stroke-width:2px,color:#7f1d1d
     classDef markt fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e3a8a
@@ -1870,7 +1884,7 @@ Na de verzekering: verzekeraar draagt 100% → &quot;de prikkel om voorzichtig t
 <p>Verzekeraars gebruiken <strong>3 instrumenten</strong> om averechtse selectie en moral hazard tegen te gaan:</p>
 <pre><code class="language-mermaid"><div class="mermaid">flowchart TD
     subgraph I_Probl["⚠️ Probleem"]
-        I_Ainfo{{"Asymm. info<br/>→ AS + MH"}}
+        I_Ainfo{{"Asymm. info → AS + MH"}}
     end
     subgraph I_1["1️⃣ Eigen risico"]
         direction LR
@@ -1914,7 +1928,7 @@ Na de verzekering: verzekeraar draagt 100% → &quot;de prikkel om voorzichtig t
 <pre><code class="language-mermaid"><div class="mermaid">flowchart LR
     subgraph ER_Base["💶 Eigen risico"]
         direction TB
-        ER_V{{"€ 385 verplicht<br/>+ vrijwillig deel"}}
+        ER_V{{"€ 385 verplicht + vrijwillig deel"}}
     end
     subgraph ER_Eff1["⚠️ Effect: Moral Hazard"]
         direction LR
@@ -1969,7 +1983,7 @@ Na de verzekering: verzekeraar draagt 100% → &quot;de prikkel om voorzichtig t
         BM_S -->|"🔴 Schade gemeld"| BM_Dn(["⬇️ Treden omlaag malus"])
     end
     BM_Up ==> BM_WR[["Voorzichtig rijden<br/>→ anti-MH"]]
-    BM_Dn -.->|"prikkel tot<br/>voorzichtigheid"| BM_Up
+    BM_Dn -.->|"prikkel tot voorzichtigheid"| BM_Up
     classDef besluit fill:#fef9c3,stroke:#eab308,stroke-width:2px,color:#713f12
     classDef succes fill:#dcfce7,stroke:#22c55e,stroke-width:2px,color:#14532d
     classDef falen fill:#fee2e2,stroke:#ef4444,stroke-width:2px,color:#7f1d1d
@@ -1999,7 +2013,7 @@ Na de verzekering: verzekeraar draagt 100% → &quot;de prikkel om voorzichtig t
 <pre><code class="language-mermaid"><div class="mermaid">flowchart TD
     subgraph PD_Zon["❌ Zonder differentiatie"]
         direction LR
-        PD_ZD(["Iedereen € 1.000"]) ==> PD_AF[/"Goede risico's<br/>haken af = AS"/]
+        PD_ZD(["Iedereen € 1.000"]) ==> PD_AF[/"Goede risicos haken af = AS"/]
     end
     subgraph PD_Met["✅ Mét differentiatie + bonus-malus"]
         direction TB
@@ -2453,7 +2467,7 @@ $$</p>
 </blockquote>
 <h3 id="infographic--verbanden-tussen-alle-hoofdthemas">Infographic — verbanden tussen alle hoofdthema's</h3>
 <pre><code class="language-mermaid"><div class="mermaid">flowchart TD
-    KERN{{"🎯 MARKTFALEN<br/>+ OPLOSSINGEN"}}
+    KERN{{"🎯 MARKTFALEN + OPLOSSINGEN"}}
     subgraph ST["🎲 Speltheorie H1.1–1.3"]
         direction LR
         ST1(["Simultaan"]) --> ST1a["Matrix · Nash · GD"]
@@ -2521,7 +2535,7 @@ $$</p>
         TP_Prob --> TP_P3["• Asymm. info"]
     end
     subgraph TP_K["🔄 Negatieve Keten"]
-        TP_Ket[/"SPIRAAL<br/>te veel · te weinig<br/>race to bottom"/]
+        TP_Ket[/"Spiraal · te veel · te weinig · race to bottom"/]
     end
     subgraph TP_I["🏛️ Institutionele Oplossing"]
         direction TB
@@ -2540,7 +2554,7 @@ $$</p>
     TP_Inst2 ==> TP_Opt
     TP_Inst3 ==> TP_Opt
     TP_Inst4 ==> TP_Opt
-    TP_Opt -.->|"kan opnieuw falen<br/>(techniek · vergrijzing · AI)"| TP_Prob
+    TP_Opt -.->|"kan opnieuw falen (techniek · vergrijzing)"| TP_Prob
     classDef falen fill:#fee2e2,stroke:#ef4444,stroke-width:2px,color:#7f1d1d
     classDef risico fill:#ffedd5,stroke:#f97316,stroke-width:2px,color:#7c2d12
     classDef oploss fill:#f3e8ff,stroke:#a855f7,stroke-width:2px,color:#581c87
